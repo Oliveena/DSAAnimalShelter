@@ -12,6 +12,18 @@ import java.util.List;
 public class AnimalRegistry {
 
     private final List<Animal> animalList = new ArrayList<>();
+    private final int maxCapacity;
+
+    public AnimalRegistry() {
+        this.maxCapacity = 20; // default capacity
+    }
+
+    public AnimalRegistry(int maxCapacity) {
+        if (maxCapacity <= 0) {
+            throw new IllegalArgumentException("Capacity must be greater than zero.");
+        }
+        this.maxCapacity = maxCapacity;
+    }
 
     /**
      * Adds a new animal to the registry.
@@ -19,11 +31,16 @@ public class AnimalRegistry {
      * @param animal the animal to add
      */
     public void addAnimal(Animal animal) {
-        if (animal != null) {
-            animalList.add(animal);
-        } else {
+        if (animal == null) {
             System.out.println("Attempted to add a null animal.");
+            return;
         }
+
+        if (isAtCapacity()) {
+            throw new IllegalStateException("Shelter is at full capacity (" + maxCapacity + ").");
+        }
+
+        animalList.add(animal);
     }
 
     /**
@@ -87,4 +104,28 @@ public class AnimalRegistry {
     public boolean isEmpty() {
         return animalList.isEmpty();
     }
+
+    /**
+     * Returns the maximum capacity of the shelter.
+     *
+     * @return max number of animals allowed
+     */
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    /**
+     * Checks if the shelter is at full capacity.
+     *
+     * @return true if shelter is full, false otherwise
+     */
+    public boolean isAtCapacity() {
+        return animalList.size() >= maxCapacity;
+    }
+
+    public int getAnimalCount() {
+        return animalList.size();
+    }
+
+
 }

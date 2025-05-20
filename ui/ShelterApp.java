@@ -43,6 +43,12 @@ public class ShelterApp {
     }
 
     private void addAnimal() {
+
+        if (registry.isAtCapacity()) {
+            System.out.println("⚠️  Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
+            return;
+        }
+
         System.out.println("\n--- Add New Animal ---");
 
         String type;
@@ -140,12 +146,14 @@ public class ShelterApp {
         }
 
         // Register and queue
-        if (animal != null) {
+        try {
             registry.addAnimal(animal);
             queue.addAnimal(animal);
-            System.out.println(animal.getType() + " added to the shelter.");
-        } else {
-            System.out.println("Failed to create animal.");
+            int count = registry.getAnimalCount();
+            System.out.println(animal.getType() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
+
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
         }
     }
 
