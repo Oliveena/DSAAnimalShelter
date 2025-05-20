@@ -250,6 +250,21 @@ public class ShelterApp {
 
     private void searchAnimal() {
         System.out.println("\n--- Search Animal ---");
-        // Search logic remains the same
+        System.out.print("Enter part of the animal name: ");
+        String name = scanner.nextLine().trim();
+
+        var results = registry.searchByName(name);
+        if (results.isEmpty()) {
+            System.out.println("No animals found matching: \"" + name + "\"");
+        } else {
+            System.out.println("Found " + results.size() + " result(s):");
+            for (Animal a : results) {
+                System.out.println(a.getDetails());
+                // Display vaccination records if they exist
+                if (vaccinationRecords.containsKey(a)) {
+                    System.out.println("Vaccination Records: " + vaccinationRecords.get(a));
+                }
+            }
+        }
     }
 }
