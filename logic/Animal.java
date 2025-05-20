@@ -2,7 +2,7 @@ package logic;
 
 import java.util.UUID;
 
-public abstract class Animal implements Adoptable {
+public abstract class Animal implements Adoptable, Comparable<Animal> {
     protected String id;
     protected String name;
     protected int age;
@@ -19,4 +19,9 @@ public abstract class Animal implements Adoptable {
 
     public abstract String getType();
     public abstract String getDetails();
+
+    @Override
+    public int compareTo(Animal other) {
+        return this.name.compareToIgnoreCase(other.name);  // default sort with name
+    }
 }

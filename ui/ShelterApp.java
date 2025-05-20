@@ -1,10 +1,7 @@
 package ui;
 
-import java.util.Scanner;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
+
 import builders.DogBuilder;
 
 import logic.Animal;
@@ -36,6 +33,7 @@ public class ShelterApp {
                 case "6": peekNextAnimal(); break;
                 case "7": clearQueue(); break;
                 case "8": findAnimalById(); break;
+                case "9": sortAnimals(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -275,4 +273,38 @@ public class ShelterApp {
             }
         }
     }
+
+    private void sortAnimals() {
+        System.out.println("\n--- Sort Animals ---");
+        System.out.println("1. By Name");
+        System.out.println("2. By Age");
+        System.out.print("Choose sorting option: ");
+        String choice = scanner.nextLine().trim();
+
+        List<Animal> animals = new ArrayList<>(registry.getAllAnimals());
+
+        switch (choice) {
+            case "1":
+                animals.sort(Comparator.comparing(Animal::getName, String.CASE_INSENSITIVE_ORDER));
+                break;
+            case "2":
+                animals.sort(Comparator.comparingInt(Animal::getAge));
+                break;
+            default:
+                System.out.println("Invalid option.");
+                return;
+        }
+
+        if (animals.isEmpty()) {
+            System.out.println("No animals to display.");
+        } else {
+            for (Animal a : animals) {
+                System.out.println(a.getDetails());
+                if (vaccinationRecords.containsKey(a)) {
+                    System.out.println("Vaccination Records: " + vaccinationRecords.get(a));
+                }
+            }
+        }
+    }
+
 }
