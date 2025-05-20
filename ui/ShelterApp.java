@@ -30,6 +30,7 @@ public class ShelterApp {
                 case "5": removeAnimal(); break;
                 case "6": peekNextAnimal(); break;
                 case "7": clearQueue(); break;
+                case "8": findAnimalById(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -151,6 +152,23 @@ public class ShelterApp {
             for (Animal a : results) {
                 System.out.println(a.getDetails());
             }
+        }
+    }
+
+    /**
+     * Find and display animal by its ID
+     */
+    private void findAnimalById() {
+        System.out.println("\n--- Find Animal by ID ---");
+        System.out.print("Enter the animal ID: ");
+        String id = scanner.nextLine().trim();
+
+        // Use the findById method in AnimalRegistry
+        Animal animal = registry.findById(id);
+        if (animal != null) {
+            System.out.println("Found the animal: " + animal.getDetails());
+        } else {
+            System.out.println("No animal found with ID: " + id);
         }
     }
 
