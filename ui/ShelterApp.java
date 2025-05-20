@@ -28,6 +28,7 @@ public class ShelterApp {
                 case "3": adoptAnimal(); break;
                 case "4": searchAnimal(); break;
                 case "5": removeAnimal(); break;
+                case "6": peekNextAnimal(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -169,6 +170,17 @@ public class ShelterApp {
             System.out.println("Animal with ID " + id + " was removed.");
         } else {
             System.out.println("No animal found with ID: " + id);
+        }
+    }
+
+    private void peekNextAnimal() {
+        System.out.println("\n--- Preview Next Animal in Adoption Queue ---");
+
+        Animal nextAnimal = queue.peekNext();
+        if (nextAnimal == null) {
+            System.out.println("No animals in the adoption queue.");
+        } else {
+            System.out.println("Next animal in the queue: " + nextAnimal.getDetails());
         }
     }
 

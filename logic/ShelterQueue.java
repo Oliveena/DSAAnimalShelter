@@ -3,6 +3,7 @@ package logic;
 import java.util.LinkedList;
 import java.util.Queue;
 
+
 public class ShelterQueue {
     private Queue<Animal> queue = new LinkedList<>();
 
