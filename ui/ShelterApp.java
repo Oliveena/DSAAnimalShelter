@@ -33,6 +33,9 @@ public class ShelterApp {
                 case "3": adoptAnimal(); break;
                 case "4": searchAnimal(); break;
                 case "5": removeAnimal(); break;
+                case "6": peekNextAnimal(); break;
+                case "7": clearQueue(); break;
+                case "8": findAnimalById(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -165,6 +168,23 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Find and display animal by its ID
+     */
+    private void findAnimalById() {
+        System.out.println("\n--- Find Animal by ID ---");
+        System.out.print("Enter the animal ID: ");
+        String id = scanner.nextLine().trim();
+
+        // Use the findById method in AnimalRegistry
+        Animal animal = registry.findById(id);
+        if (animal != null) {
+            System.out.println("Found the animal: " + animal.getDetails());
+        } else {
+            System.out.println("No animal found with ID: " + id);
+        }
+    }
+
     private void removeAnimal() {
         System.out.println("\n--- Remove Animal ---");
 
@@ -183,6 +203,33 @@ public class ShelterApp {
             System.out.println("No animal found with ID: " + id);
         }
     }
+
+    private void peekNextAnimal() {
+        System.out.println("\n--- Preview Next Animal in Adoption Queue ---");
+
+        Animal nextAnimal = queue.peekNext();
+        if (nextAnimal == null) {
+            System.out.println("No animals in the adoption queue.");
+        } else {
+            System.out.println("Next animal in the queue: " + nextAnimal.getDetails());
+        }
+    }
+
+    /**
+     * Clear the adoption queue (remove all animals from the queue).
+     */
+    private void clearQueue() {
+        System.out.println("\n--- Clear Adoption Queue ---");
+
+        if (queue.isEmpty()) {
+            System.out.println("The adoption queue is already empty.");
+        } else {
+            queue.clear(); // This will clear all animals from the queue
+            System.out.println("The adoption queue has been cleared.");
+        }
+    }
+
+
 
     private void adoptAnimal() {
         System.out.println("\n--- Adopt Next Animal (FIFO) ---");
