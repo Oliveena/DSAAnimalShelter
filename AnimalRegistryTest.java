@@ -1,5 +1,5 @@
 // test class created, but not runnable (wring repo structure, no Maven enabled, no Junit .jar files downloaded
-//
+
 //import data.AnimalRegistry;
 //import logic.Animal;
 //import logic.Cat;
@@ -7,10 +7,9 @@
 //import org.junit.jupiter.api.Test;
 //import static org.junit.jupiter.api.Assertions.*;
 //
-//
 //public class AnimalRegistryTest {
 //
-//    //@Test
+//    @Test
 //    public void testAddAnimal() {
 //        AnimalRegistry registry = new AnimalRegistry();
 //        Animal dog = new Dog("Rex", 5, "Labrador", true);

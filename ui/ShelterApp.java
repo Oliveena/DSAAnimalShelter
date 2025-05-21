@@ -10,15 +10,28 @@ import logic.ShelterQueue;
 import strategies.AdoptionStrategy;
 import strategies.FIFOAdoptionStrategy;
 
+/**
+ * The main application for managing the animal shelter, providing functionality
+ * for adding, listing, adopting, and removing animals from the shelter.
+ * <p>
+ * The app interacts with an animal registry and an adoption queue, providing
+ * various functionalities such as adding animals, searching, sorting, and adopting animals.
+ * It allows interaction via a command-line interface.
+ */
 public class ShelterApp {
     private AdoptionStrategy adoptionStrategy = new FIFOAdoptionStrategy();
     private AnimalRegistry registry = new AnimalRegistry();
     private Scanner scanner = new Scanner(System.in);
     private ShelterQueue queue = new ShelterQueue();
 
-    // Store vaccination records
+    // storing vaccination records
     private Map<Animal, List<String>> vaccinationRecords = new HashMap<>();
 
+
+    /**
+     * Starts the Shelter application and displays the main menu.
+     * This method continuously runs the application until the user opts to exit.
+     */
     public void start() {
         boolean exit = false;
         while (!exit) {
@@ -40,6 +53,10 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Adds a new animal to the shelter by prompting the user for input.
+     * Validates the input and adds the animal to both the registry and adoption queue.
+     */
     private void addAnimal() {
 
         if (registry.isAtCapacity()) {
@@ -155,6 +172,10 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Adds a new animal to the shelter by prompting the user for input.
+     * Validates the input and adds the animal to both the registry and adoption queue.
+     */
     private void listAnimals() {
         System.out.println("\n--- List of All Animals in Shelter ---");
 
@@ -175,7 +196,8 @@ public class ShelterApp {
     }
 
     /**
-     * Find and display animal by its ID
+     * Finds and displays an animal based on its ID.
+     * Displays details of the animal if found.
      */
     private void findAnimalById() {
         System.out.println("\n--- Find Animal by ID ---");
@@ -191,6 +213,10 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Removes an animal from the shelter based on the animal's ID.
+     * If no animal is found with the provided ID, an appropriate message is displayed.
+     */
     private void removeAnimal() {
         System.out.println("\n--- Remove Animal ---");
 
@@ -210,6 +236,9 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Displays the next animal in the adoption queue without removing it.
+     */
     private void peekNextAnimal() {
         System.out.println("\n--- Preview Next Animal in Adoption Queue ---");
 
@@ -222,7 +251,8 @@ public class ShelterApp {
     }
 
     /**
-     * Clear the adoption queue (remove all animals from the queue).
+     * Clears all animals from the adoption queue.
+     * If the queue is already empty, a message is displayed.
      */
     private void clearQueue() {
         System.out.println("\n--- Clear Adoption Queue ---");
@@ -236,7 +266,10 @@ public class ShelterApp {
     }
 
 
-
+    /**
+     * Adopts the next animal in the queue using the adoption strategy.
+     * The adopted animal is removed from the registry and queue.
+     */
     private void adoptAnimal() {
         System.out.println("\n--- Adopt Next Animal (FIFO) ---");
 
@@ -253,7 +286,10 @@ public class ShelterApp {
         }
     }
 
-
+    /**
+     * Searches for animals by a partial name and displays the search results.
+     * Includes vaccination records if they exist.
+     */
     private void searchAnimal() {
         System.out.println("\n--- Search Animal ---");
         System.out.print("Enter part of the animal name: ");
@@ -274,6 +310,10 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Sorts the animals based on user-selected criteria, such as name or age.
+     * Displays the sorted list of animals.
+     */
     private void sortAnimals() {
         System.out.println("\n--- Sort Animals ---");
         System.out.println("1. By Name");
@@ -306,5 +346,4 @@ public class ShelterApp {
             }
         }
     }
-
 }
