@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 import java.util.LinkedList;
 import java.util.Queue;

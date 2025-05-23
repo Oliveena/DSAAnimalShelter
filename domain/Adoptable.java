@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 /**
  * Represents an entity that can be adopted. Any class implementing this interface
@@ -48,4 +48,7 @@ public interface Adoptable {
      * @return the details of the adoptable entity
      */
     String getDetails();
+
+
+    void returnToShelter();
 }

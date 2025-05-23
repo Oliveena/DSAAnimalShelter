@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 /**
  * Represents a dog in the adoption system.
@@ -6,7 +6,7 @@ package logic;
  * This class extends {@link Animal} and provides additional properties specific to dogs,
  * such as breed and whether the dog is trained.
  */
-public class Dog extends Animal {
+public class Dog extends Animal implements Adoptable {
     private String breed;
     private boolean isTrained;
 
@@ -51,4 +51,10 @@ public class Dog extends Animal {
         return String.format("Dog [ID: %s, Name: %s, Age: %d, Breed: %s, Trained: %s]",
                 id, name, age, breed, isTrained ? "Yes" : "No");
     }
+
+    @Override
+    public void returnToShelter() {
+        System.out.println(name + " the dog has been returned to the shelter.");
+    }
+
 }

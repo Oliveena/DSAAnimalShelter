@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 /**
  * Represents a lizard in the adoption system.
@@ -6,7 +6,7 @@ package logic;
  * This class extends {@link Animal} and provides additional properties specific to lizards,
  * such as breed and whether the lizard is venomous.
  */
-public class Lizard extends Animal {
+public class Lizard extends Animal implements Adoptable{
     private String breed;
     private boolean isVenomous;
 
@@ -51,4 +51,10 @@ public class Lizard extends Animal {
         return String.format("Lizard [ID: %s, Name: %s, Age: %d, Breed: %s, Venomous: %s]",
                 id, name, age, breed, isVenomous ? "Yes" : "No");
     }
+
+    @Override
+    public void returnToShelter() {
+        System.out.println(name + " the bird has been returned to the shelter.");
+    }
+
 }

@@ -1,6 +1,6 @@
 package decorators;
 
-import logic.Animal;
+import domain.Animal;
 
 /**
  * A concrete decorator that adds vaccination details to an {@link Animal}.

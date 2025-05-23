@@ -1,6 +1,6 @@
 package builders;
 
-import logic.Bird;
+import domain.Bird;
 
 /**
  * Builder class for creating instances of {@link Bird}.

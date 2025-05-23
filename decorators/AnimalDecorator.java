@@ -1,6 +1,6 @@
 package decorators;
 
-import logic.Animal;
+import domain.Animal;
 
 /**
  * An abstract decorator class for adding additional functionality to {@link Animal}.
@@ -33,4 +33,9 @@ public abstract class AnimalDecorator extends Animal {
     public String getDetails() {
         return decoratedAnimal.getDetails();
     }
+
+    @Override
+    public void returnToShelter(){
+        decoratedAnimal.returnToShelter();
+    };
 }

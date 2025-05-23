@@ -111,7 +111,7 @@ Once the application is running, it will display a menu with various options, in
 ### Folder Structure
 ```
 ├── data/                   # Contains classes for managing the registry of animals.
-├── logic/                  # Contains core logic classes for different animals, animal types, and adoption.
+├── domain/                  # Contains core domain classes for different animals, animal types, and adoption.
 ├── strategies/             # Contains different adoption strategies (e.g., FIFO).
 ├── ui/                     # Contains the user interface and menu interactions.
 ├── builders/               # Contains builder classes for creating animals.

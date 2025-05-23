@@ -1,6 +1,6 @@
 package builders;
 
-import logic.Cat;
+import domain.Cat;
 
 /**
  * Builder class for creating instances of {@link Cat}.

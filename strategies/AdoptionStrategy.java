@@ -1,8 +1,8 @@
 package strategies;
 
-import logic.Animal;
+import domain.Animal;
 import data.AnimalRegistry;
-import logic.ShelterQueue;
+import domain.ShelterQueue;
 
 /**
  * Defines the strategy for adopting an animal from the shelter.

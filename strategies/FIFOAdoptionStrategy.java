@@ -1,8 +1,8 @@
 package strategies;
 
 import data.AnimalRegistry;
-import logic.Animal;
-import logic.ShelterQueue;
+import domain.Animal;
+import domain.ShelterQueue;
 
 /**
  * A concrete implementation of the {@link AdoptionStrategy} that adopts animals

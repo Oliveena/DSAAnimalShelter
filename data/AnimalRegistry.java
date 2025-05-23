@@ -1,6 +1,6 @@
 package data;
 
-import logic.Animal;
+import domain.Animal;
 
 import java.util.ArrayList;
 import java.util.Comparator;

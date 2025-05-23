@@ -1,6 +1,6 @@
 package builders;
 
-import logic.Lizard;
+import domain.Lizard;
 
 /**
  * Builder class for creating instances of {@link Lizard}.

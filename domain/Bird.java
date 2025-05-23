@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 /**
  * Represents a bird in the adoption system.
@@ -6,7 +6,7 @@ package logic;
  * This class extends {@link Animal} and provides additional properties specific to birds,
  * such as breed and whether the bird can fly.
  */
-public class Bird extends Animal {
+public class Bird extends Animal implements Adoptable{
     private String breed;
     private boolean canFly;
 
@@ -85,6 +85,11 @@ public class Bird extends Animal {
     @Override
     public String getDetails() {
         return "Breed: " + breed + " | Can Fly: " + (canFly ? "Yes" : "No");
+    }
+
+    @Override
+    public void returnToShelter() {
+        System.out.println(name + " the bird has been returned to the shelter.");
     }
 
     /**

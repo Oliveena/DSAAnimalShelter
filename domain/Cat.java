@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 /**
  * Represents a cat in the adoption system.
@@ -6,7 +6,7 @@ package logic;
  * This class extends {@link Animal} and provides additional properties specific to cats,
  * such as fur length and whether the cat is indoor or not.
  */
-public class Cat extends Animal {
+public class Cat extends Animal implements Adoptable {
     private String furLength;
     private boolean isIndoor;
 
@@ -51,4 +51,10 @@ public class Cat extends Animal {
         return String.format("Cat [ID: %s, Name: %s, Age: %d, Fur Length: %s, Indoor: %s]",
                 id, name, age, furLength, isIndoor ? "Yes" : "No");
     }
+
+    @Override
+    public void returnToShelter() {
+        System.out.println(name + " the cat has been returned to the shelter.");
+    }
+
 }

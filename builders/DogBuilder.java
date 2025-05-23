@@ -1,6 +1,6 @@
 package builders;
 
-import logic.Dog;
+import domain.Dog;
 
 /**
  * Builder class for creating instances of {@link Dog}.

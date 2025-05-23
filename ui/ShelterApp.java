@@ -4,9 +4,9 @@ import java.util.*;
 
 import builders.DogBuilder;
 
-import logic.Animal;
+import domain.Animal;
 import data.AnimalRegistry;
-import logic.ShelterQueue;
+import domain.ShelterQueue;
 import strategies.AdoptionStrategy;
 import strategies.FIFOAdoptionStrategy;
 

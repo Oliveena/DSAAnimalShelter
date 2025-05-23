@@ -1,4 +1,4 @@
-package logic;
+package domain;
 
 import java.util.UUID;
 
@@ -17,6 +17,7 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
     protected String id;
     protected String name;
     protected int age;
+    protected MedicalRecord medicalRecord;
 
     /**
      * Constructs a new animal with the given name and age.
@@ -90,5 +91,14 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
     @Override
     public int compareTo(Animal other) {
         return this.name.compareToIgnoreCase(other.name);  // default sort with name
+    }
+
+
+    public void setMedicalRecord(MedicalRecord record) {
+        this.medicalRecord = record;
+    }
+
+    public MedicalRecord getMedicalRecord() {
+        return medicalRecord;
     }
 }
