@@ -9,6 +9,10 @@ import data.AnimalRegistry;
 import domain.ShelterQueue;
 import strategies.AdoptionStrategy;
 import strategies.FIFOAdoptionStrategy;
+import builders.AnimalBuilder;
+import builders.DogBuilder;
+import builders.CatBuilder;
+
 
 /**
  * The main application for managing the animal shelter, providing functionality
@@ -117,6 +121,7 @@ public class ShelterApp {
                     .setBreed(breed)
                     .setTrained(trained)
                     .build();
+
         } else if (type.equalsIgnoreCase("cat")) {
             System.out.print("Enter fur length (e.g. short, long): ");
             String fur = scanner.nextLine().trim();
@@ -140,7 +145,7 @@ public class ShelterApp {
                     .build();
         }
 
-        // Add vaccination record
+        // Vaccination section stays the same...
         System.out.print("Has the animal been vaccinated? (yes/no): ");
         String vaccinatedInput = scanner.nextLine().trim();
         if (vaccinatedInput.equalsIgnoreCase("yes")) {
@@ -156,7 +161,6 @@ public class ShelterApp {
                     vaccinationDates.add(date);
                 }
             }
-            // Store the vaccination records for this animal
             vaccinationRecords.put(animal, vaccinationDates);
         }
 
@@ -166,7 +170,6 @@ public class ShelterApp {
             queue.addAnimal(animal);
             int count = registry.getAnimalCount();
             System.out.println(animal.getType() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
-
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

@@ -13,7 +13,6 @@ public class MedicalRecord {
         this.checkups = checkups;
     }
 
-
     public List<String> getVaccinations() {
         return vaccinations;
     }

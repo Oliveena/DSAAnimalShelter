@@ -1,6 +1,7 @@
 package decorators;
 
 import domain.Animal;
+import domain.MedicalRecord;
 
 /**
  * A concrete decorator that adds vaccination details to an {@link Animal}.
@@ -17,16 +18,11 @@ import domain.Animal;
 public class VaccinationDecorator extends AnimalDecorator {
     private String vaccinationDetails;
 
-    /**
-     * Constructs a {@code VaccinationDecorator} that wraps the provided {@link Animal}
-     * and adds vaccination details.
-     *
-     * @param animal the animal to decorate
-     * @param vaccinationDetails the vaccination details to append to the animal's info
-     */
-    public VaccinationDecorator(Animal animal, String vaccinationDetails) {
-        super(animal);  // Pass the decorated animal to the parent constructor
-        this.vaccinationDetails = vaccinationDetails;
+
+    public VaccinationDecorator(Animal animal) {
+        super(animal);
+        MedicalRecord record = animal.getMedicalRecord();
+        this.vaccinationDetails = record != null ? String.join(", ", record.getVaccinations()) : "None";
     }
 
     /**
@@ -53,5 +49,10 @@ public class VaccinationDecorator extends AnimalDecorator {
     @Override
     public String getDetails() {
         return super.getDetails() + " | Vaccination: " + vaccinationDetails;
+    }
+
+    @Override
+    public void adopt() {
+        decoratedAnimal.adopt();
     }
 }

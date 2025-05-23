@@ -88,6 +88,8 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
      * @return a negative integer, zero, or a positive integer as this animal's name
      *         is lexicographically less than, equal to, or greater than the specified animal's name
      */
+
+
     @Override
     public int compareTo(Animal other) {
         return this.name.compareToIgnoreCase(other.name);  // default sort with name

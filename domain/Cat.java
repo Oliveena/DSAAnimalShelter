@@ -53,6 +53,11 @@ public class Cat extends Animal implements Adoptable {
     }
 
     @Override
+    public void adopt() {
+
+    }
+
+    @Override
     public void returnToShelter() {
         System.out.println(name + " the cat has been returned to the shelter.");
     }

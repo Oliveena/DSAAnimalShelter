@@ -49,6 +49,7 @@ public interface Adoptable {
      */
     String getDetails();
 
+    void adopt();
 
     void returnToShelter();
 }

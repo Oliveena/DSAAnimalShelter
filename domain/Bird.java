@@ -26,52 +26,9 @@ public class Bird extends Animal implements Adoptable{
         this.canFly = canFly;
     }
 
-    /**
-     * Returns the unique ID of the bird.
-     * <p>
-     * This method simply calls the {@link Animal#getId()} method to retrieve the ID.
-     *
-     * @return the ID of the bird
-     */
-    @Override
-    public String getId() {
-        return super.getId();
-    }
-
-    /**
-     * Returns the name of the bird.
-     * <p>
-     * This method simply calls the {@link Animal#getName()} method to retrieve the name.
-     *
-     * @return the name of the bird
-     */
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * Returns the age of the bird.
-     * <p>
-     * This method simply calls the {@link Animal#getAge()} method to retrieve the age.
-     *
-     * @return the age of the bird
-     */
-    @Override
-    public int getAge() {
-        return super.getAge();
-    }
-
-    /**
-     * Returns the type of the animal.
-     * <p>
-     * In this case, returns "Bird", as this is the specific type of the animal.
-     *
-     * @return the type of the bird
-     */
     @Override
     public String getType() {
-        return "Bird";
+        return "";
     }
 
     /**
@@ -84,7 +41,16 @@ public class Bird extends Animal implements Adoptable{
      */
     @Override
     public String getDetails() {
-        return "Breed: " + breed + " | Can Fly: " + (canFly ? "Yes" : "No");
+        return "Name: " + getName() +
+                " | Age: " + getAge() +
+                " | Type: " + getType() +
+                " | Breed: " + breed +
+                " | Can Fly: " + (canFly ? "Yes" : "No");
+    }
+
+    @Override
+    public void adopt() {
+
     }
 
     @Override
