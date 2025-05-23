@@ -2,16 +2,13 @@ package ui;
 
 import java.util.*;
 
-import builders.DogBuilder;
+import patterns.builders.DogBuilder;
 
-import domain.Animal;
-import data.AnimalRegistry;
-import domain.ShelterQueue;
-import strategies.AdoptionStrategy;
-import strategies.FIFOAdoptionStrategy;
-import builders.AnimalBuilder;
-import builders.DogBuilder;
-import builders.CatBuilder;
+import models.Animal;
+import models.AnimalRegistry;
+import models.ShelterQueue;
+import patterns.strategies.AdoptionStrategy;
+import patterns.strategies.FIFOAdoptionStrategy;
 
 
 /**
@@ -137,7 +134,7 @@ public class ShelterApp {
                 System.out.println("Please enter true or false.");
             }
 
-            animal = new builders.CatBuilder()
+            animal = new patterns.builders.CatBuilder()
                     .setName(name)
                     .setAge(age)
                     .setFurLength(fur)
