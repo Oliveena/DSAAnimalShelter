@@ -1,8 +1,8 @@
 package services;
 
-import data.AnimalRegistry;
-import domain.Animal;
-import domain.Adoptable;
+import models.AnimalRegistry;
+import models.Animal;
+import models.Adoptable;
 import patterns.observer.VolunteerManager;
 import patterns.observer.VolunteerObserver;
 

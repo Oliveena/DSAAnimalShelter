@@ -62,9 +62,6 @@ public class Dog extends Animal implements Adoptable {
         System.out.println(name + " the dog has been returned to the shelter.");
     }
 
-    @Override
-    public void adopt() {
 
-    }
 
 }

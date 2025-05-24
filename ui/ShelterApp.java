@@ -2,16 +2,19 @@ package ui;
 
 import java.util.*;
 
-import builders.DogBuilder;
+import patterns.builders.DogBuilder;
+import patterns.builders.CatBuilder;
 
-import domain.Animal;
-import data.AnimalRegistry;
-import domain.ShelterQueue;
-import domain.Volunteer;
+import models.Animal;
+import models.AnimalRegistry;
+import models.ShelterQueue;
+import models.Volunteer;
 import patterns.observer.VolunteerObserver;
+import patterns.strategies.AdoptionStrategy;
+import patterns.strategies.FIFOAdoptionStrategy;
 import services.Shelter;
-import strategies.AdoptionStrategy;
-import strategies.FIFOAdoptionStrategy;
+
+
 
 /**
  * The main application for managing the animal shelter, providing functionality
@@ -138,7 +141,7 @@ public class ShelterApp {
                 System.out.println("Please enter true or false.");
             }
 
-            animal = new builders.CatBuilder()
+            animal = new CatBuilder()
                     .setName(name)
                     .setAge(age)
                     .setFurLength(fur)

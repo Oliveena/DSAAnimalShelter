@@ -1,6 +1,7 @@
-package decorators;
+package patterns.decorators;
 
-import domain.Animal;
+import models.Animal;
+import patterns.decorators.AnimalDecorator;
 
 /**
  * A concrete decorator that adds vaccination details to an {@link Animal}.

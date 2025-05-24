@@ -1,4 +1,4 @@
-import ui.ShelterApp;
+package ui;
 
 /**
  * The main entry point for the Shelter application.
