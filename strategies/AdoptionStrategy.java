@@ -23,7 +23,7 @@ public interface AdoptionStrategy {
      *
      * @param registry the {@link AnimalRegistry} containing all animals in the shelter
      * @param queue the {@link ShelterQueue} containing animals awaiting adoption
-     * @return the adopted animal, or null if no animal is available for adoption
+     * @return the adopted anaimal, or null if no animal is available for adoption
      */
     Animal adopt(AnimalRegistry registry, ShelterQueue queue);
 }

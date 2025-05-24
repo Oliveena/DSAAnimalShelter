@@ -51,4 +51,6 @@ public interface Adoptable {
 
 
     void returnToShelter();
+
+    void adopt();
 }

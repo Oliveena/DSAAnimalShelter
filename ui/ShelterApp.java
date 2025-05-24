@@ -7,6 +7,9 @@ import builders.DogBuilder;
 import domain.Animal;
 import data.AnimalRegistry;
 import domain.ShelterQueue;
+import domain.Volunteer;
+import patterns.observer.VolunteerObserver;
+import services.Shelter;
 import strategies.AdoptionStrategy;
 import strategies.FIFOAdoptionStrategy;
 
@@ -23,6 +26,8 @@ public class ShelterApp {
     private AnimalRegistry registry = new AnimalRegistry();
     private Scanner scanner = new Scanner(System.in);
     private ShelterQueue queue = new ShelterQueue();
+    private Shelter shelter = new Shelter();
+
 
     // storing vaccination records
     private Map<Animal, List<String>> vaccinationRecords = new HashMap<>();
@@ -47,6 +52,7 @@ public class ShelterApp {
                 case "7": clearQueue(); break;
                 case "8": findAnimalById(); break;
                 case "9": sortAnimals(); break;
+                case "10": registerVolunteer(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -164,6 +170,7 @@ public class ShelterApp {
         try {
             registry.addAnimal(animal);
             queue.addAnimal(animal);
+            shelter.addAnimal(animal);
             int count = registry.getAnimalCount();
             System.out.println(animal.getType() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
 
@@ -345,5 +352,15 @@ public class ShelterApp {
                 }
             }
         }
+    }
+
+    private void registerVolunteer() {
+        System.out.println("\n--- Register a Volunteer ---");
+        System.out.print("Enter volunteer name: ");
+        String name = scanner.nextLine().trim();
+
+        VolunteerObserver volunteer = new Volunteer(name);
+        shelter.registerVolunteer(volunteer);
+        System.out.println("Volunteer '" + name + "' registered.");
     }
 }

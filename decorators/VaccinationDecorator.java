@@ -54,4 +54,9 @@ public class VaccinationDecorator extends AnimalDecorator {
     public String getDetails() {
         return super.getDetails() + " | Vaccination: " + vaccinationDetails;
     }
+
+    @Override
+    public void adopt() {
+
+    }
 }

@@ -92,6 +92,11 @@ public class Bird extends Animal implements Adoptable{
         System.out.println(name + " the bird has been returned to the shelter.");
     }
 
+    @Override
+    public void adopt() {
+
+    }
+
     /**
      * Returns a string representation of the bird, including its breed and flying capability.
      *

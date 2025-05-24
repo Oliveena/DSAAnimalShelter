@@ -57,4 +57,9 @@ public class Lizard extends Animal implements Adoptable{
         System.out.println(name + " the bird has been returned to the shelter.");
     }
 
+    @Override
+    public void adopt() {
+
+    }
+
 }
