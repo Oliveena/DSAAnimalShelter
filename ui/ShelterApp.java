@@ -8,6 +8,7 @@ import models.*;
 import patterns.builders.DogBuilder;
 import patterns.builders.CatBuilder;
 
+import patterns.builders.MedicalRecordBuilder;
 import patterns.observer.VolunteerObserver;
 import patterns.strategies.AdoptionStrategy;
 import patterns.strategies.FIFOAdoptionStrategy;
@@ -148,59 +149,42 @@ public class ShelterApp {
                     .setIndoor(indoor)
                     .build();
         }
+        // using MedicalRecordBuilder
+        MedicalRecordBuilder medicalRecordBuilder = new MedicalRecordBuilder();
 
-        List<String> vaccinations = new ArrayList<>();
-        List<String> treatments = new ArrayList<>();
-        List<String> checkups = new ArrayList<>();
-
-        // Vaccinations
-        System.out.print("Has the animal been vaccinated? (yes/no): ");
-        String vaccinatedInput = scanner.nextLine().trim();
-        if (vaccinatedInput.equalsIgnoreCase("yes")) {
-            boolean adding = true;
-            while (adding) {
-                System.out.print("Enter vaccination (or type 'done'): ");
-                String input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("done")) break;
-                vaccinations.add(input);
-            }
+        System.out.println("Enter vaccinations (type 'done' to finish):");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if ("done".equalsIgnoreCase(input)) break;
+            medicalRecordBuilder.addVaccination(input);
         }
 
-        // Treatments
-        System.out.print("Does the animal have treatments to record? (yes/no): ");
-        if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
-            while (true) {
-                System.out.print("Enter treatment (or type 'done'): ");
-                String input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("done")) break;
-                treatments.add(input);
-            }
+        System.out.println("Enter treatments (type 'done' to finish):");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if ("done".equalsIgnoreCase(input)) break;
+            medicalRecordBuilder.addTreatment(input);
         }
 
-        // Checkups
-        System.out.print("Any past checkups to record? (yes/no): ");
-        if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
-            while (true) {
-                System.out.print("Enter checkup note (or type 'done'): ");
-                String input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("done")) break;
-                checkups.add(input);
-            }
+        System.out.println("Enter checkups (type 'done' to finish):");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if ("done".equalsIgnoreCase(input)) break;
+            medicalRecordBuilder.addCheckup(input);
         }
 
-        // Set medical record on animal
-        MedicalRecord record = new MedicalRecord(vaccinations, treatments, checkups);
-        animal.setMedicalRecord(record);
+        MedicalRecord medicalRecord = medicalRecordBuilder.build();
 
+        // Assuming your Animal class has a setter for MedicalRecord
+        animal.setMedicalRecord(medicalRecord);
 
-        // Register and queue
         try {
             registry.addAnimal(animal);
             queue.addAnimal(animal);
             shelter.addAnimal(animal);
+
             int count = registry.getAnimalCount();
             System.out.println(animal.getType() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
-
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }
