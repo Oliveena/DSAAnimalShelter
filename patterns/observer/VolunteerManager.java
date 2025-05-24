@@ -3,7 +3,7 @@ package patterns.observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VolunteerManager implements VolunteerSubject {
+public class VolunteerManager implements patterns.observer.VolunteerSubject {
     private List<VolunteerObserver> volunteers = new ArrayList<>();
 
     @Override

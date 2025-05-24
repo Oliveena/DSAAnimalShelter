@@ -3,7 +3,7 @@
 
 This is an Animal Shelter Management System built in Java, designed to manage animal adoption in a shelter. The system allows users to add animals, view animal details, search by name, adopt animals in a First-In-First-Out (FIFO) order, and manage the adoption queue.
 
-The system features multiple types of animals (like Dogs, Cats, Birds, Lizards), different adoption strategies, and keeps track of vaccination records.
+The system features multiple types of animals (like Dogs, Cats, Birds, Lizards), different adoption patterns.strategies, and keeps track of vaccination records.
 
 ---
 
@@ -112,9 +112,9 @@ Once the application is running, it will display a menu with various options, in
 ```
 ├── data/                   # Contains classes for managing the registry of animals.
 ├── domain/                  # Contains core domain classes for different animals, animal types, and adoption.
-├── strategies/             # Contains different adoption strategies (e.g., FIFO).
+├── patterns.strategies/             # Contains different adoption patterns.strategies (e.g., FIFO).
 ├── ui/                     # Contains the user interface and menu interactions.
-├── builders/               # Contains builder classes for creating animals.
+├── patterns.builders/               # Contains builder classes for creating animals.
 ├── resources/              # Contains resources like configuration files or images.
 ├── test/                   # Contains unit tests.
 ├── pom.xml                 # Maven project configuration.
