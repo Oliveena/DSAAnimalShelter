@@ -1,0 +1,93 @@
+Pseudocodes
+
+1. addAnimal()
+---------------
+FUNCTION addAnimal
+    IF shelter is at capacity
+        PRINT "Shelter Full"
+        RETURN
+
+    INPUT type (Dog or Cat)
+    INPUT name
+    INPUT age (validate as integer 0-30)
+
+    IF type is Dog
+        INPUT breed
+        INPUT isTrained (true/false)
+        CREATE Dog object
+    ELSE IF type is Cat
+        INPUT furLength
+        INPUT isIndoor (true/false)
+        CREATE Cat object
+
+    ADD animal to registry
+    ADD animal to adoption queue
+    PRINT confirmation
+END FUNCTION
+
+
+2. adoptAnimal()
+-----------------
+FUNCTION adoptAnimal
+    IF queue is empty
+        PRINT "No animals to adopt"
+        RETURN
+
+    adoptedAnimal = adoptionStrategy.adopt(registry, queue)
+    IF adoptedAnimal IS NOT null
+        PRINT "Adoption successful" with animal details
+    ELSE
+        PRINT "Adoption failed"
+END FUNCTION
+
+
+3. removeAnimal()
+------------------
+Pseudocode:
+-----------
+FUNCTION removeAnimal
+    IF registry is empty
+        PRINT "No animals to remove"
+        RETURN
+
+    INPUT ID
+    success = registry.removeAnimalById(ID)
+
+    IF success
+        PRINT "Animal removed"
+    ELSE
+        PRINT "Animal not found"
+END FUNCTION
+
+
+4. searchAnimal()
+------------------
+FUNCTION searchAnimal
+    INPUT name fragment
+
+    results = registry.searchByName(fragment)
+
+    IF results is empty
+        PRINT "No matches"
+    ELSE
+        FOR each animal in results
+            PRINT animal details
+END FUNCTION
+
+
+5. sortAnimals()
+-----------------
+FUNCTION sortAnimals
+    INPUT sort option (1 = Name, 2 = Age)
+    IF invalid option
+        PRINT "Invalid"
+        RETURN
+
+    GET all animals
+    SORT list based on option
+
+    IF list is empty
+        PRINT "No animals"
+    ELSE
+        PRINT sorted animals and vaccination info
+END FUNCTION
