@@ -1,14 +1,13 @@
 package ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import models.*;
 import patterns.builders.DogBuilder;
 import patterns.builders.CatBuilder;
 
-import models.Animal;
-import models.AnimalRegistry;
-import models.ShelterQueue;
-import models.Volunteer;
 import patterns.observer.VolunteerObserver;
 import patterns.strategies.AdoptionStrategy;
 import patterns.strategies.FIFOAdoptionStrategy;
@@ -56,6 +55,7 @@ public class ShelterApp {
                 case "8": findAnimalById(); break;
                 case "9": sortAnimals(); break;
                 case "10": registerVolunteer(); break;
+                case "11": addTask(); break;
                 case "0": exit = true; break;
                 default: System.out.println("Invalid choice.");
             }
@@ -149,25 +149,49 @@ public class ShelterApp {
                     .build();
         }
 
-        // Add vaccination record
+        List<String> vaccinations = new ArrayList<>();
+        List<String> treatments = new ArrayList<>();
+        List<String> checkups = new ArrayList<>();
+
+        // Vaccinations
         System.out.print("Has the animal been vaccinated? (yes/no): ");
         String vaccinatedInput = scanner.nextLine().trim();
         if (vaccinatedInput.equalsIgnoreCase("yes")) {
-            List<String> vaccinationDates = new ArrayList<>();
-            boolean addingVaccinationDates = true;
-
-            while (addingVaccinationDates) {
-                System.out.print("Enter vaccination date (YYYY-MM-DD) or type 'done' to finish: ");
-                String date = scanner.nextLine().trim();
-                if (date.equalsIgnoreCase("done")) {
-                    addingVaccinationDates = false;
-                } else {
-                    vaccinationDates.add(date);
-                }
+            boolean adding = true;
+            while (adding) {
+                System.out.print("Enter vaccination (or type 'done'): ");
+                String input = scanner.nextLine().trim();
+                if (input.equalsIgnoreCase("done")) break;
+                vaccinations.add(input);
             }
-            // Store the vaccination records for this animal
-            vaccinationRecords.put(animal, vaccinationDates);
         }
+
+        // Treatments
+        System.out.print("Does the animal have treatments to record? (yes/no): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
+            while (true) {
+                System.out.print("Enter treatment (or type 'done'): ");
+                String input = scanner.nextLine().trim();
+                if (input.equalsIgnoreCase("done")) break;
+                treatments.add(input);
+            }
+        }
+
+        // Checkups
+        System.out.print("Any past checkups to record? (yes/no): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
+            while (true) {
+                System.out.print("Enter checkup note (or type 'done'): ");
+                String input = scanner.nextLine().trim();
+                if (input.equalsIgnoreCase("done")) break;
+                checkups.add(input);
+            }
+        }
+
+        // Set medical record on animal
+        MedicalRecord record = new MedicalRecord(vaccinations, treatments, checkups);
+        animal.setMedicalRecord(record);
+
 
         // Register and queue
         try {
@@ -198,12 +222,36 @@ public class ShelterApp {
         for (Animal animal : animals) {
             System.out.println(animal.getDetails());
 
-            // Display vaccination records if they exist
-            if (vaccinationRecords.containsKey(animal)) {
-                System.out.println("Vaccination Records: " + vaccinationRecords.get(animal));
+            // Show MedicalRecord details if present
+            MedicalRecord record = animal.getMedicalRecord();
+            if (record != null) {
+                System.out.println("Medical Record:");
+
+                if (!record.getVaccinations().isEmpty()) {
+                    System.out.println("  Vaccinations: " + String.join(", ", record.getVaccinations()));
+                } else {
+                    System.out.println("  Vaccinations: None");
+                }
+
+                if (!record.getTreatments().isEmpty()) {
+                    System.out.println("  Treatments: " + String.join(", ", record.getTreatments()));
+                } else {
+                    System.out.println("  Treatments: None");
+                }
+
+                if (!record.getCheckups().isEmpty()) {
+                    System.out.println("  Checkups: " + String.join(", ", record.getCheckups()));
+                } else {
+                    System.out.println("  Checkups: None");
+                }
+            } else {
+                System.out.println("No medical record available.");
             }
+
+            System.out.println();
         }
     }
+
 
     /**
      * Finds and displays an animal based on its ID.
@@ -365,5 +413,27 @@ public class ShelterApp {
         VolunteerObserver volunteer = new Volunteer(name);
         shelter.registerVolunteer(volunteer);
         System.out.println("Volunteer '" + name + "' registered.");
+    }
+
+    private void addTask() {
+        System.out.println("\n--- Add New Volunteer Task ---");
+        System.out.print("Enter task description: ");
+        String description = scanner.nextLine().trim();
+
+        LocalDate dueDate;
+        while (true) {
+            try {
+                System.out.print("Enter due date (YYYY-MM-DD): ");
+                String dateInput = scanner.nextLine().trim();
+                dueDate = LocalDate.parse(dateInput);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
+            }
+        }
+
+        Task task = new Task(description, dueDate);
+        shelter.addTask(task);
+        System.out.println("Task added and volunteers notified.");
     }
 }

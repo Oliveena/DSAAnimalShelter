@@ -3,9 +3,11 @@ package services;
 import models.AnimalRegistry;
 import models.Animal;
 import models.Adoptable;
+import models.Task;
 import patterns.observer.VolunteerManager;
 import patterns.observer.VolunteerObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shelter {
@@ -20,7 +22,7 @@ public class Shelter {
     // Delegated methods
     public void addAnimal(Animal animal) {
         registry.addAnimal(animal);
-        volunteerManager.notifyVolunteers("New " + animal.getType() + " arrived: " + animal.getName());
+        volunteerManager.notifyVolunteers("\nNew " + animal.getType() + " arrived: " + animal.getName());
     }
 
     public boolean removeAnimalById(String id) {
@@ -54,6 +56,17 @@ public class Shelter {
 
     public void removeVolunteer(VolunteerObserver volunteer) {
         volunteerManager.removeVolunteer(volunteer);
+    }
+
+    private final List<Task> tasks = new ArrayList<>();
+
+    public void addTask(Task task) {
+        tasks.add(task);
+        volunteerManager.notifyVolunteers("new task added,\n" + task.getDetails());
+    }
+
+    public List<Task> getAllTasks() {
+        return new ArrayList<>(tasks);
     }
 
 }

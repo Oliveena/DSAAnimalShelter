@@ -27,6 +27,7 @@ public class ShelterMenu {
         System.out.println("8. Find Animal by ID");
         System.out.println("9. Sort Animals");
         System.out.println("10. Register Volunteer");
+        System.out.println("11. Add Task");
         System.out.println("0. Exit");
         System.out.print("Enter choice: ");
     }
