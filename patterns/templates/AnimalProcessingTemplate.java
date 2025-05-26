@@ -1,6 +1,6 @@
 package patterns.templates;
 
-import models.Animal;
+import models.animals.Animal;
 
 public abstract class AnimalProcessingTemplate {
 

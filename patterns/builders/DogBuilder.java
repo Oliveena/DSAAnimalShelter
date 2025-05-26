@@ -1,6 +1,6 @@
 package patterns.builders;
 
-import models.Dog;
+import models.animals.Dog;
 /*This is a classic case for using a generic self-referential (curiously recurring) generic pattern (CRGP) in Java patterns.builders.
 This lets the base builder return the concrete subclass builder type from all setter methods, enabling smooth chaining.
 * */

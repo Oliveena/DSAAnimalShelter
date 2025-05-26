@@ -1,6 +1,6 @@
 package patterns.builders;
 
-import models.Lizard;
+import models.animals.Lizard;
 
 public class LizardBuilder extends AnimalBuilder<Lizard, LizardBuilder> {
     private String breed;

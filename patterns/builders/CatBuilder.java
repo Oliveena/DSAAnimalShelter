@@ -1,6 +1,6 @@
 package patterns.builders;
 
-import models.Cat;
+import models.animals.Cat;
 
 public class CatBuilder extends AnimalBuilder<Cat, CatBuilder> {
     private String furLength;

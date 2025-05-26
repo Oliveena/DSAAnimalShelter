@@ -1,5 +1,7 @@
 package models;
 
+import models.animals.Animal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 public class Adopter {
     private final String name;
     private final List<Animal> adoptedAnimals = new ArrayList<>();
+    private AdopterPreferences preferences;
 
     /**
      * Constructs a new {@code Adopter} with a given name.
@@ -95,5 +98,13 @@ public class Adopter {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public AdopterPreferences getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(AdopterPreferences preferences) {
+        this.preferences = preferences;
     }
 }

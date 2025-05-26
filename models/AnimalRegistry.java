@@ -1,5 +1,7 @@
 package models;
 
+import models.animals.Animal;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -163,10 +165,6 @@ public class AnimalRegistry {
     public int getAnimalCount() {
         return animalList.size();
     }
-
-
-
-
 
     public List<Animal> getAnimalsBySpecies(String species) {
         return animalList.stream()

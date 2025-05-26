@@ -1,6 +1,6 @@
 package patterns.decorators;
 
-import models.Animal;
+import models.animals.Animal;
 
 /**
  * An abstract decorator class for adding additional functionality to {@link Animal}.

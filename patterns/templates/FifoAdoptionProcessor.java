@@ -2,13 +2,13 @@ package patterns.templates;
 
 import models.AnimalRegistry;
 import models.Adopter;
-import models.Animal;
+import models.animals.Animal;
 import models.ShelterQueue;
 import patterns.strategies.FIFOAdoptionStrategy;
 
 import java.util.logging.Logger;
 
-public class FifoAdoptionProcessor extends patterns.templates.AnimalProcessingTemplate {
+public class FifoAdoptionProcessor extends AnimalProcessingTemplate {
 
     private final AnimalRegistry registry;
     private final ShelterQueue queue;
@@ -47,6 +47,6 @@ public class FifoAdoptionProcessor extends patterns.templates.AnimalProcessingTe
 
     @Override
     protected void logOutcome(Animal animal) {
-        logger.info(adopter.getName() + " adopted animal: " + animal.getName());
+        logger.info(STR."\{adopter.getName()} adopted animal: \{animal.getName()}");
     }
 }

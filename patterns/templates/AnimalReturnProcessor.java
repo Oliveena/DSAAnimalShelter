@@ -1,7 +1,7 @@
 package patterns.templates;
 
 import models.AnimalRegistry;
-import models.Animal;
+import models.animals.Animal;
 
 import java.util.logging.Logger;
 

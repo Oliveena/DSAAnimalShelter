@@ -2,6 +2,7 @@ package models;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import models.animals.Animal;
 
 /**
  * Represents a queue for animals awaiting adoption in the shelter.

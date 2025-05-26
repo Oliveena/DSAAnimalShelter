@@ -1,6 +1,6 @@
 package patterns.strategies;
 
-import models.Animal;
+import models.animals.Animal;
 import models.AnimalRegistry;
 import models.ShelterQueue;
 
