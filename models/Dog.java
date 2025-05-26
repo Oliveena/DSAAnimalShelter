@@ -7,7 +7,6 @@ package models;
  * such as breed and whether the dog is trained.
  */
 public class Dog extends Animal implements Adoptable {
-    private String breed;
     private boolean isTrained;
 
     /**
@@ -20,9 +19,8 @@ public class Dog extends Animal implements Adoptable {
      * @param breed the breed of the dog
      * @param isTrained whether the dog is trained
      */
-    public Dog(String name, int age, String breed, boolean isTrained) {
-        super(name, age);  // Call the Animal constructor
-        this.breed = breed;
+    public Dog(String name, int age, String species, String breed, boolean isTrained) {
+        super(name, age, "Dog",  breed);  // Call the Animal constructor
         this.isTrained = isTrained;
     }
 
@@ -34,8 +32,13 @@ public class Dog extends Animal implements Adoptable {
      * @return the type of the dog
      */
     @Override
-    public String getType() {
+    public String getSpecies() {
         return "Dog";
+    }
+
+    @Override
+    public String getBreed() {
+        return this.breed;
     }
 
     /**

@@ -7,7 +7,6 @@ package models;
  * such as breed and whether the lizard is venomous.
  */
 public class Lizard extends Animal implements Adoptable{
-    private String breed;
     private boolean isVenomous;
 
     /**
@@ -20,22 +19,10 @@ public class Lizard extends Animal implements Adoptable{
      * @param breed the breed of the lizard
      * @param isVenomous whether the lizard is venomous
      */
-    public Lizard(String name, int age, String breed, boolean isVenomous) {
-        super(name, age);  // Call the Animal constructor
+    public Lizard(String name, int age, String breed, String species, boolean isVenomous) {
+        super(name, age, "Lizard", species);
         this.breed = breed;
         this.isVenomous = isVenomous;
-    }
-
-    /**
-     * Returns the type of the animal.
-     * <p>
-     * In this case, it returns "Lizard", as this is the specific type of the animal.
-     *
-     * @return the type of the lizard
-     */
-    @Override
-    public String getType() {
-        return "Lizard";
     }
 
     /**
@@ -50,6 +37,16 @@ public class Lizard extends Animal implements Adoptable{
     public String getDetails() {
         return String.format("Lizard [ID: %s, Name: %s, Age: %d, Breed: %s, Venomous: %s]",
                 id, name, age, breed, isVenomous ? "Yes" : "No");
+    }
+
+    @Override
+    public String getSpecies() {
+        return "Lizard";
+    }
+
+    @Override
+    public String getBreed() {
+        return this.breed;
     }
 
     @Override

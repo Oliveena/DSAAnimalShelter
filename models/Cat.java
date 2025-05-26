@@ -19,22 +19,10 @@ public class Cat extends Animal implements Adoptable {
      * @param furLength the length of the cat's fur (e.g., "Short", "Long")
      * @param isIndoor whether the cat is an indoor cat
      */
-    public Cat(String name, int age, String furLength, boolean isIndoor) {
-        super(name, age);  // Call the Animal constructor
+    public Cat(String name, int age, String species, String breed, String furLength, boolean isIndoor) {
+        super(name, age, "Cat", breed);  // Call the Animal constructor
         this.furLength = furLength;
         this.isIndoor = isIndoor;
-    }
-
-    /**
-     * Returns the type of the animal.
-     * <p>
-     * In this case, it returns "Cat", as this is the specific type of the animal.
-     *
-     * @return the type of the cat
-     */
-    @Override
-    public String getType() {
-        return "Cat";
     }
 
     /**
@@ -52,6 +40,16 @@ public class Cat extends Animal implements Adoptable {
     }
 
     @Override
+    public String getSpecies() {
+        return "Cat";
+    }
+
+    @Override
+    public String getBreed() {
+        return this.breed;
+    }
+
+    @Override
     public void adopt() {
 
     }
@@ -60,7 +58,5 @@ public class Cat extends Animal implements Adoptable {
     public void returnToShelter() {
         System.out.println(name + " the cat has been returned to the shelter.");
     }
-
-
 
 }

@@ -14,8 +14,6 @@ import patterns.strategies.AdoptionStrategy;
 import patterns.strategies.FIFOAdoptionStrategy;
 import services.Shelter;
 
-
-
 /**
  * The main application for managing the animal shelter, providing functionality
  * for adding, listing, adopting, and removing animals from the shelter.
@@ -46,19 +44,66 @@ public class ShelterApp {
             ShelterMenu.displayMenu();
             String choice = scanner.nextLine();
             switch (choice) {
-                case "1": addAnimal(); break;
-                case "2": listAnimals(); break;
-                case "3": adoptAnimal(); break;
-                case "4": searchAnimal(); break;
-                case "5": removeAnimal(); break;
-                case "6": peekNextAnimal(); break;
-                case "7": clearQueue(); break;
-                case "8": findAnimalById(); break;
-                case "9": sortAnimals(); break;
-                case "10": registerVolunteer(); break;
-                case "11": addTask(); break;
-                case "0": exit = true; break;
-                default: System.out.println("Invalid choice.");
+                case "1":
+                    addAnimal();
+                    break;
+                case "2":
+                    listAnimals();
+                    break;
+                case "3":
+                    adoptAnimal();
+                    break;
+                case "4":
+                    searchAnimal();
+                    break;
+                case "5":
+                    removeAnimal();
+                    break;
+                case "6":
+                    peekNextAnimal();
+                    break;
+                case "7":
+                    clearQueue();
+                    break;
+                case "8":
+                    findAnimalById();
+                    break;
+                case "9":
+                    findAnimalsBySpecies();
+                    break;
+                case "10":
+                    sortAnimals();
+                    break;
+                case "11":
+                    registerVolunteer();
+                    break;
+                case "12":
+                    addTask();
+                    break;
+                case "0":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+
+    private void findAnimalsBySpecies() {
+        System.out.println("\n--- Find Animals by Species ---");
+        System.out.print("Enter species (e.g., Dog, Cat, Bird): ");
+        String species = scanner.nextLine().trim();
+
+        List<Animal> matched = registry.getAllAnimals().stream()
+                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .toList();
+
+        if (matched.isEmpty()) {
+            System.out.println("No animals found for species: " + species);
+        } else {
+            System.out.println("Found " + matched.size() + " " + species + "(s):");
+            for (Animal animal : matched) {
+                System.out.println(animal.getDetails());
             }
         }
     }
@@ -70,7 +115,7 @@ public class ShelterApp {
     private void addAnimal() {
 
         if (registry.isAtCapacity()) {
-            System.out.println("⚠️  Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
+            System.out.println(" Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
             return;
         }
 
@@ -184,7 +229,7 @@ public class ShelterApp {
             shelter.addAnimal(animal);
 
             int count = registry.getAnimalCount();
-            System.out.println(animal.getType() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
+            System.out.println(animal.getSpecies() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }

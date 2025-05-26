@@ -26,7 +26,7 @@ public class DogBuilder extends AnimalBuilder<Dog, DogBuilder> {
 
     @Override
     public Dog build() {
-        Dog dog = new Dog(name, age, breed, isTrained);
+        Dog dog = new Dog(name, age, species, breed, isTrained);
         dog.setMedicalRecord(medicalRecord);
         return dog;
     }

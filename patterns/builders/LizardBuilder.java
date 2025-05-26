@@ -23,7 +23,7 @@ public class LizardBuilder extends AnimalBuilder<Lizard, LizardBuilder> {
 
     @Override
     public Lizard build() {
-        Lizard lizard = new Lizard(name, age, breed, isVenomous);
+        Lizard lizard = new Lizard(name, age, species, breed, isVenomous);
         lizard.setMedicalRecord(medicalRecord);
         return lizard;
     }

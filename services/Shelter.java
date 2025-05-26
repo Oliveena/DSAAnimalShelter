@@ -22,7 +22,7 @@ public class Shelter {
     // Delegated methods
     public void addAnimal(Animal animal) {
         registry.addAnimal(animal);
-        volunteerManager.notifyVolunteers("\nNew " + animal.getType() + " arrived: " + animal.getName());
+        volunteerManager.notifyVolunteers("\nNew " + animal.getSpecies() + " arrived: " + animal.getName());
     }
 
     public boolean removeAnimalById(String id) {

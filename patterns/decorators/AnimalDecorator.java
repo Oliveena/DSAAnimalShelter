@@ -17,7 +17,7 @@ public abstract class AnimalDecorator extends Animal {
      * @param animal the animal to be decorated
      */
     public AnimalDecorator(Animal animal) {
-        super(animal.getName(), animal.getAge());
+        super(animal.getName(), animal.getAge(), animal.getSpecies(), animal.getBreed());
         this.decoratedAnimal = animal;
     }
 

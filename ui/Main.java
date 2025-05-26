@@ -1,5 +1,7 @@
 package ui;
 
+// TODO: Add loggers everywhere
+
 /**
  * The main entry point for the Shelter application.
  * <p>

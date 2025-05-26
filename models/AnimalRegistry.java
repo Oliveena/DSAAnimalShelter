@@ -163,4 +163,15 @@ public class AnimalRegistry {
     public int getAnimalCount() {
         return animalList.size();
     }
+
+
+
+
+
+    public List<Animal> getAnimalsBySpecies(String species) {
+        return animalList.stream()
+                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .collect(Collectors.toList());
+    }
+
 }

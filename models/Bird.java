@@ -7,7 +7,6 @@ package models;
  * such as breed and whether the bird can fly.
  */
 public class Bird extends Animal implements Adoptable{
-    private String breed;
     private boolean canFly;
 
     /**
@@ -20,15 +19,9 @@ public class Bird extends Animal implements Adoptable{
      * @param breed the breed of the bird
      * @param canFly whether the bird can fly
      */
-    public Bird(String name, int age, String breed, boolean canFly) {
-        super(name, age);  // Call the Animal constructor
-        this.breed = breed;
+    public Bird(String name, int age, String species, String breed, boolean canFly) {
+        super(name, age, species, breed);
         this.canFly = canFly;
-    }
-
-    @Override
-    public String getType() {
-        return "";
     }
 
     /**
@@ -43,9 +36,19 @@ public class Bird extends Animal implements Adoptable{
     public String getDetails() {
         return "Name: " + getName() +
                 " | Age: " + getAge() +
-                " | Type: " + getType() +
-                " | Breed: " + breed +
+                " | Type: " + getSpecies() +
+                " | Breed: " + getBreed() +
                 " | Can Fly: " + (canFly ? "Yes" : "No");
+    }
+
+    @Override
+    public String getSpecies() {
+        return "Bird";
+    }
+
+    @Override
+    public String getBreed() {
+        return this.breed;
     }
 
     @Override
@@ -64,11 +67,8 @@ public class Bird extends Animal implements Adoptable{
      *
      * @return a string representation of the bird
      */
-    @Override
-    public String toString() {
-        return "Bird{" +
-                "breed='" + breed + '\'' +
-                ", canFly=" + canFly +
-                '}';
+    public Bird(String name, int age, String breed, boolean canFly, MedicalRecord medicalRecord) {
+        super(name, age, "Bird", breed);
+        this.canFly = canFly;
     }
 }

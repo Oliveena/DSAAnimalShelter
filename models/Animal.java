@@ -8,7 +8,7 @@ import java.util.UUID;
  * This abstract class implements the {@link Adoptable} interface and provides basic
  * properties and functionality for animals, such as ID, name, and age. Specific
  * types of animals (e.g., Cat, Dog) should extend this class and implement the
- * {@code getType()} and {@code getDetails()} methods.
+ * {@code getSpecies()} and {@code getDetails()} methods.
  * <p>
  * This class also implements {@link Comparable} to allow sorting of animals by their names.
  */
@@ -17,7 +17,11 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
     protected String id;
     protected String name;
     protected int age;
+    // TODO: turn species into an ENUM
+    protected String species;
+    protected String breed;
     protected MedicalRecord medicalRecord;
+
 
     /**
      * Constructs a new animal with the given name and age.
@@ -27,10 +31,12 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
      * @param name the name of the animal
      * @param age the age of the animal
      */
-    public Animal(String name, int age) {
+    public Animal(String name, int age, String species, String breed) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.age = age;
+        this.species = species;
+        this.breed = breed;
     }
 
     /**
@@ -61,15 +67,6 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
     }
 
     /**
-     * Abstract method to get the type of the animal (e.g., breed, species, etc.).
-     * <p>
-     * This method must be implemented by subclasses to return the specific type of animal.
-     *
-     * @return the type of the animal
-     */
-    public abstract String getType();
-
-    /**
      * Abstract method to get detailed information about the animal.
      * <p>
      * This method must be implemented by subclasses to return a string with additional
@@ -89,12 +86,10 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
      *         is lexicographically less than, equal to, or greater than the specified animal's name
      */
 
-
     @Override
     public int compareTo(Animal other) {
         return this.name.compareToIgnoreCase(other.name);  // default sort with name
     }
-
 
     public void setMedicalRecord(MedicalRecord record) {
         this.medicalRecord = record;
@@ -103,4 +98,8 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
     public MedicalRecord getMedicalRecord() {
         return medicalRecord;
     }
+
+    public abstract String getSpecies();
+
+    public abstract String getBreed();
 }

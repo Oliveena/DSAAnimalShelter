@@ -24,8 +24,6 @@ public class BirdBuilder extends AnimalBuilder<Bird, BirdBuilder> {
 
     @Override
     public Bird build() {
-        Bird bird = new Bird(name, age, breed, canFly);
-        bird.setMedicalRecord(medicalRecord);
-        return bird;
+        return new Bird(name, age, breed, canFly, medicalRecord);  // match new constructor
     }
 }

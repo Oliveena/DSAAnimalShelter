@@ -30,14 +30,9 @@ public interface Adoptable {
      */
     int getAge();
 
-    /**
-     * Returns the type of the adoptable entity.
-     * <p>
-     * This can be a species, breed, or any identifier for the entity's type.
-     *
-     * @return the type of the adoptable entity
-     */
-    String getType();
+String getSpecies();
+
+String getBreed();
 
     /**
      * Returns a detailed description of the adoptable entity.
@@ -52,6 +47,5 @@ public interface Adoptable {
     void adopt();
 
     void returnToShelter();
-
 
 }
