@@ -1,3 +1,16 @@
+/**
+ * Represents an individual who adopts animals from the shelter.
+ * <p>
+ * An adopter can:
+ * <ul>
+ *   <li>Adopt multiple animals</li>
+ *   <li>Store and retrieve their adoption preferences</li>
+ *   <li>Search through their adopted animals</li>
+ * </ul>
+ *
+ * @see AdopterPreferences
+ */
+
 package models;
 
 import models.animals.Animal;

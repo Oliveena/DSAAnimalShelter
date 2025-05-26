@@ -40,8 +40,11 @@ public class ShelterApp {
     private Map<Animal, List<String>> vaccinationRecords = new HashMap<>();
 
     /**
-     * Starts the Shelter application and displays the main menu.
-     * This method continuously runs the application until the user opts to exit.
+     * Starts the shelter management application.
+     * <p>
+     * Runs a continuous loop displaying the main menu and responding to user input.
+     * Supports adding animals, viewing and sorting lists, adoption processes,
+     * volunteer registration, and task creation.
      */
     public void start() {
         boolean exit = false;
@@ -59,7 +62,7 @@ public class ShelterApp {
                     adoptAnimal();
                     break;
                 case "4":
-                    searchAnimal();
+                    findAnimalByName();
                     break;
                 case "5":
                     removeAnimal();
@@ -94,33 +97,18 @@ public class ShelterApp {
         }
     }
 
-    private void findAnimalsBySpecies() {
-        System.out.println("\n--- Find Animals by Species ---");
-        System.out.print("Enter species (e.g., Dog, Cat, Bird): ");
-        String species = scanner.nextLine().trim();
-
-        List<Animal> matched = registry.getAllAnimals().stream()
-                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
-                .toList();
-
-        if (matched.isEmpty()) {
-            System.out.println("No animals found for species: " + species);
-        } else {
-            System.out.println("Found " + matched.size() + " " + species + "(s):");
-            for (Animal animal : matched) {
-                System.out.println(animal.getDetails());
-            }
-        }
-    }
-
     /**
-     * Adds a new animal to the shelter by prompting the user for input.
-     * Validates the input and adds the animal to both the registry and adoption queue.
+     * Adds a new animal to the shelter after prompting for all relevant details.
+     * <p>
+     * Supports adding Dogs and Cats with their specific attributes.
+     * Collects medical records such as vaccinations, treatments, and checkups.
+     * Adds the animal to the registry, adoption queue, and shelter service.
+     * Validates inputs such as animal type, age, and boolean flags.
      */
     private void addAnimal() {
 
         if (registry.isAtCapacity()) {
-            System.out.println(" Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
+            System.out.println(STR." Shelter is at full capacity (\{registry.getMaxCapacity()}). Cannot add more animals.");
             return;
         }
 
@@ -234,15 +222,16 @@ public class ShelterApp {
             shelter.addAnimal(animal);
 
             int count = registry.getAnimalCount();
-            System.out.println(animal.getSpecies() + " added. Current occupancy: " + count + "/" + registry.getMaxCapacity());
+            System.out.println(STR."\{animal.getSpecies()} added. Current occupancy: \{count}/\{registry.getMaxCapacity()}");
         } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }
     }
 
     /**
-     * Adds a new animal to the shelter by prompting the user for input.
-     * Validates the input and adds the animal to both the registry and adoption queue.
+     * Lists all animals currently in the shelter.
+     * <p>
+     * Displays detailed information, including any associated medical records.
      */
     private void listAnimals() {
         System.out.println("\n--- List of All Animals in Shelter ---");
@@ -262,19 +251,21 @@ public class ShelterApp {
                 System.out.println("Medical Record:");
 
                 if (!record.getVaccinations().isEmpty()) {
-                    System.out.println("  Vaccinations: " + String.join(", ", record.getVaccinations()));
+                    System.out.println(STR."  Vaccinations: \{String.join(", ", record.getVaccinations())}");
                 } else {
                     System.out.println("  Vaccinations: None");
                 }
 
                 if (!record.getTreatments().isEmpty()) {
-                    System.out.println("  Treatments: " + String.join(", ", record.getTreatments()));
+                    System.out.println(STR."  Treatments: \{String.join(", ", record.getTreatments())}");
+
                 } else {
                     System.out.println("  Treatments: None");
                 }
 
                 if (!record.getCheckups().isEmpty()) {
-                    System.out.println("  Checkups: " + String.join(", ", record.getCheckups()));
+                    System.out.println(
+                            STR."  Checkups: \{String.join(", ", record.getCheckups())}");
                 } else {
                     System.out.println("  Checkups: None");
                 }
@@ -283,122 +274,6 @@ public class ShelterApp {
             }
 
             System.out.println();
-        }
-    }
-
-
-    /**
-     * Finds and displays an animal based on its ID.
-     * Displays details of the animal if found.
-     */
-    private void findAnimalById() {
-        System.out.println("\n--- Find Animal by ID ---");
-        System.out.print("Enter the animal ID: ");
-        String id = scanner.nextLine().trim();
-
-        // Use the findById method in AnimalRegistry
-        Animal animal = registry.findById(id);
-        if (animal != null) {
-            System.out.println("Found the animal: " + animal.getDetails());
-        } else {
-            System.out.println("No animal found with ID: " + id);
-        }
-    }
-
-    /**
-     * Removes an animal from the shelter based on the animal's ID.
-     * If no animal is found with the provided ID, an appropriate message is displayed.
-     */
-    private void removeAnimal() {
-        System.out.println("\n--- Remove Animal ---");
-
-        if (registry.isEmpty()) {
-            System.out.println("There are no animals to remove.");
-            return;
-        }
-
-        System.out.print("Enter the animal ID to remove: ");
-        String id = scanner.nextLine().trim();
-
-        boolean success = registry.removeAnimalById(id);
-        if (success) {
-            System.out.println("Animal with ID " + id + " was removed.");
-        } else {
-            System.out.println("No animal found with ID: " + id);
-        }
-    }
-
-    /**
-     * Displays the next animal in the adoption queue without removing it.
-     */
-    private void peekNextAnimal() {
-        System.out.println("\n--- Preview Next Animal in Adoption Queue ---");
-
-        Animal nextAnimal = queue.peekNext();
-        if (nextAnimal == null) {
-            System.out.println("No animals in the adoption queue.");
-        } else {
-            System.out.println("Next animal in the queue: " + nextAnimal.getDetails());
-        }
-    }
-
-    /**
-     * Clears all animals from the adoption queue.
-     * If the queue is already empty, a message is displayed.
-     */
-    private void clearQueue() {
-        System.out.println("\n--- Clear Adoption Queue ---");
-
-        if (queue.isEmpty()) {
-            System.out.println("The adoption queue is already empty.");
-        } else {
-            queue.clear(); // This will clear all animals from the queue
-            System.out.println("The adoption queue has been cleared.");
-        }
-    }
-
-
-    /**
-     * Adopts the next animal in the queue using the adoption strategy.
-     * The adopted animal is removed from the registry and queue.
-     */
-    private void adoptAnimal() {
-        System.out.println("\n--- Adopt Next Animal (FIFO) ---");
-
-        if (queue.isEmpty()) {
-            System.out.println("No animals in the adoption queue.");
-            return;
-        }
-
-        Animal adopted = adoptionStrategy.adopt(registry, queue);  // pass both registry and queue
-        if (adopted != null) {
-            System.out.println("Adoption successful! Here's your new companion: " + adopted.getDetails());
-        } else {
-            System.out.println("Adoption failed — no animals available for adoption.");
-        }
-    }
-
-    /**
-     * Searches for animals by a partial name and displays the search results.
-     * Includes vaccination records if they exist.
-     */
-    private void searchAnimal() {
-        System.out.println("\n--- Search Animal ---");
-        System.out.print("Enter part of the animal name: ");
-        String name = scanner.nextLine().trim();
-
-        var results = registry.searchByName(name);
-        if (results.isEmpty()) {
-            System.out.println("No animals found matching: \"" + name + "\"");
-        } else {
-            System.out.println("Found " + results.size() + " result(s):");
-            for (Animal a : results) {
-                System.out.println(a.getDetails());
-                // Display vaccination records if they exist
-                if (vaccinationRecords.containsKey(a)) {
-                    System.out.println("Vaccination Records: " + vaccinationRecords.get(a));
-                }
-            }
         }
     }
 
@@ -433,12 +308,151 @@ public class ShelterApp {
             for (Animal a : animals) {
                 System.out.println(a.getDetails());
                 if (vaccinationRecords.containsKey(a)) {
-                    System.out.println("Vaccination Records: " + vaccinationRecords.get(a));
+                    System.out.println(STR."Vaccination Records: \{vaccinationRecords.get(a)}");
                 }
             }
         }
     }
 
+
+    /**
+     * Finds and displays an animal based on its ID.
+     * Displays details of the animal if found.
+     */
+    private void findAnimalById() {
+        System.out.println("\n--- Find Animal by ID ---");
+        System.out.print("Enter the animal ID: ");
+        String id = scanner.nextLine().trim();
+
+        // Use the findById method in AnimalRegistry
+        Animal animal = registry.findById(id);
+        if (animal != null) {
+            System.out.println(STR."Found the animal: \{animal.getDetails()}");
+        } else {
+            System.out.println(STR."No animal found with ID: \{id}");
+        }
+    }
+
+    /**
+     * Searches animals by a partial name match and displays results.
+     * Includes vaccination information if available.
+     */
+    private void findAnimalByName() {
+        System.out.println("\n--- Search Animal ---");
+        System.out.print("Enter part of the animal name: ");
+        String name = scanner.nextLine().trim();
+
+        var results = registry.searchByName(name);
+        if (results.isEmpty()) {
+            System.out.println(STR."No animals found matching: \"\{name}\"");
+        } else {
+            System.out.println(STR."Found \{results.size()} result(s):");
+            for (Animal a : results) {
+                System.out.println(a.getDetails());
+                // Display vaccination records if they exist
+                if (vaccinationRecords.containsKey(a)) {
+                    System.out.println(STR."Vaccination Records: \{vaccinationRecords.get(a)}");
+                }
+            }
+        }
+    }
+
+
+    private void findAnimalsBySpecies() {
+        System.out.println("\n--- Find Animals by Species ---");
+        System.out.print("Enter species (e.g., Dog, Cat, Bird): ");
+        String species = scanner.nextLine().trim();
+
+        List<Animal> matched = registry.getAllAnimals().stream()
+                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .toList();
+
+        if (matched.isEmpty()) {
+            System.out.println(STR."No animals found for species: \{species}");
+        } else {
+            System.out.println(STR."Found \{matched.size()} \{species}(s):");
+            for (Animal animal : matched) {
+                System.out.println(animal.getDetails());
+            }
+        }
+    }
+
+    /**
+     * Initiates adoption of the next animal in the queue using the adoption strategy.
+     * <p>
+     * Removes the adopted animal from registry and queue upon successful adoption.
+     */
+    private void adoptAnimal() {
+        System.out.println("\n--- Adopt Next Animal (FIFO) ---");
+
+        if (queue.isEmpty()) {
+            System.out.println("No animals in the adoption queue.");
+            return;
+        }
+
+        Animal adopted = adoptionStrategy.adopt(registry, queue);  // pass both registry and queue
+        if (adopted != null) {
+            System.out.println(STR."Adoption successful! Here's your new companion: \{adopted.getDetails()}");
+        } else {
+            System.out.println("Adoption failed — no animals available for adoption.");
+        }
+    }
+
+    /**
+     * Displays the next animal in the adoption queue without removing it.
+     */
+    private void peekNextAnimal() {
+        System.out.println("\n--- Preview Next Animal in Adoption Queue ---");
+
+        Animal nextAnimal = queue.peekNext();
+        if (nextAnimal == null) {
+            System.out.println("No animals in the adoption queue.");
+        } else {
+            System.out.println(STR."Next animal in the queue: \{nextAnimal.getDetails()}");
+        }
+    }
+
+    /**
+     * Removes an animal from the shelter based on the animal's ID.
+     * If no animal is found with the provided ID, an appropriate message is displayed.
+     */
+    private void removeAnimal() {
+        System.out.println("\n--- Remove Animal ---");
+
+        if (registry.isEmpty()) {
+            System.out.println("There are no animals to remove.");
+            return;
+        }
+
+        System.out.print("Enter the animal ID to remove: ");
+        String id = scanner.nextLine().trim();
+
+        boolean success = registry.removeAnimalById(id);
+        if (success) {
+            System.out.println(STR."Animal with ID \{id} was removed.");
+        } else {
+            System.out.println(STR."No animal found with ID: \{id}");
+        }
+    }
+
+    /**
+     * Clears all animals from the adoption queue.
+     * If the queue is already empty, a message is displayed.
+     */
+    private void clearQueue() {
+        System.out.println("\n--- Clear Adoption Queue ---");
+
+        if (queue.isEmpty()) {
+            System.out.println("The adoption queue is already empty.");
+        } else {
+            queue.clear(); // This will clear all animals from the queue
+            System.out.println("The adoption queue has been cleared.");
+        }
+    }
+
+    /**
+     * Registers a new volunteer by prompting for a name and adding to the volunteer manager.
+     */
     private void registerVolunteer() {
         System.out.println("\n--- Register a Volunteer ---");
         System.out.print("Enter volunteer name: ");
@@ -446,9 +460,12 @@ public class ShelterApp {
 
         VolunteerObserver volunteer = new Volunteer(name);
         shelter.registerVolunteer(volunteer);
-        System.out.println("Volunteer '" + name + "' registered.");
+        System.out.println(STR."Volunteer '\{name}' registered.");
     }
 
+    /**
+     * Adds a volunteer task with a description and due date, notifying volunteers.
+     */
     private void addTask() {
         System.out.println("\n--- Add New Volunteer Task ---");
         System.out.print("Enter task description: ");
