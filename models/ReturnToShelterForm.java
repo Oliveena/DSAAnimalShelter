@@ -1,8 +1,6 @@
 package models;
 
-public interface AdoptionForm {
+public interface ReturnToShelterForm {
     void submit();
     String getDetails();
 }
-
-

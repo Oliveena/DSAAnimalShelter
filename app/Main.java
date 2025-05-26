@@ -15,7 +15,7 @@ public class Main {
             ShelterApp app = new ShelterApp();
             app.start();
         } catch (Exception e) {
-            logger.severe("Error starting ShelterApp: " + e.getMessage());
+            logger.severe(STR."Error starting ShelterApp: \{e.getMessage()}");
             e.printStackTrace();
         }
     }

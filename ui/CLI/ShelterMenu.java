@@ -19,9 +19,11 @@ public class ShelterMenu {
         System.out.println("\n--- Animal Shelter Menu ---");
         System.out.println("1. Add Animal");
         System.out.println("2. List Animals");
-        System.out.println("3. Adopt Animal");
+        System.out.println("3. Adopt Our Animal Of The Month!");
+        System.out.println("------ Adopt An Animal");  // TODO: add the AdoptionForm logic
+        System.out.println("------ Return A Previously Adopted Animal");
         System.out.println("4. Search Animal by Name");
-        System.out.println("5. Remove Animal");
+        System.out.println("5. Remove Animal From Shelter");
         System.out.println("6. Preview Next Animal");
         System.out.println("7. Clear AdoptionQueue");
         System.out.println("8. Find Animal by ID");
