@@ -37,21 +37,7 @@ public class PreferenceMatcher {
         int highestScore = Integer.MIN_VALUE;
 
         for (Animal animal : availableAnimals) {
-            int score = 0;
-
-            if (preferences.getSpecies() != null && animal.getSpecies() != null &&
-                    preferences.getSpecies().equalsIgnoreCase(animal.getSpecies())) {
-                score++;
-            }
-
-            if (preferences.getBreed() != null && animal.getBreed() != null &&
-                    preferences.getBreed().equalsIgnoreCase(animal.getBreed())) {
-                score++;
-            }
-
-            if (preferences.getMaxAge() != null && animal.getAge() <= preferences.getMaxAge()) {
-                score++;
-            }
+            int score = getScore(animal, preferences);
 
             if (score > highestScore) {
                 highestScore = score;
@@ -60,5 +46,24 @@ public class PreferenceMatcher {
         }
 
         return bestMatch;
+    }
+
+    private static int getScore(Animal animal, AdopterPreferences preferences) {
+        int score = 0;
+
+        if (preferences.getSpecies() != null && animal.getSpecies() != null &&
+                preferences.getSpecies().equalsIgnoreCase(animal.getSpecies())) {
+            score++;
+        }
+
+        if (preferences.getBreed() != null && animal.getBreed() != null &&
+                preferences.getBreed().equalsIgnoreCase(animal.getBreed())) {
+            score++;
+        }
+
+        if (preferences.getMaxAge() != null && animal.getAge() <= preferences.getMaxAge()) {
+            score++;
+        }
+        return score;
     }
 }
