@@ -1,59 +1,75 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import models.Animal;
+import services.AdoptionService;
+import services.AnimalService;
+import services.VolunteerService;
 import ui.ShelterApp;
+
+import java.io.IOException;
 import java.util.List;
+
 
 public class DashboardController {
 
-    private final ShelterApp shelterApp = new ShelterApp();
+    private final ShelterApp shelterApp = new ShelterApp(); // shared controller logic
+
+    private final AnimalService animalService = shelterApp.getAnimalService();
+    private final AdoptionService adoptionService = shelterApp.getAdoptionService();
+    private final VolunteerService volunteerService = shelterApp.getVolunteerService();
 
     @FXML
     private void handleAddAnimal() {
-        showInfo("Add Animal", "Add Animal form.");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/add_animal.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Add Animal");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void handleListAnimals() {
-        List<Animal> animals = shelterApp.getRegistry().getAllAnimals();
-        if (animals.isEmpty()) {
-            showInfo("List Animals", "No animals currently in the shelter.");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (Animal animal : animals) {
-            sb.append(animal.getDetails()).append("\n");
-        }
-
-        showInfo("Animals in Shelter", sb.toString());
+        animalService.listAnimals();
     }
 
     @FXML
     private void handleAdoptAnimal() {
-        shelterApp.adoptAnimal();  // Uses your existing logic
+        adoptionService.adoptAnimal();
     }
 
     @FXML
     private void handleSearchAnimal() {
-        showInfo("Search Animal", "This would open a search dialog.");
+       animalService.searchAnimal();
     }
 
     @FXML
     private void handleRemoveAnimal() {
-        showInfo("Remove Animal", "This would open a remove-by-ID dialog.");
+       animalService.removeAnimal();
     }
 
     @FXML
     private void handleSortAnimals() {
-        showInfo("Sort Animals", "This would allow sort options (name, age).");
+        animalService.sortAnimals();
     }
 
     @FXML
-    private void handleVolunteerManagement() {
-        showInfo("Volunteers", "Volunteer Page");
+    private void handleRegisterVolunteer() {
+        volunteerService.registerVolunteer();
+    }
+
+    @FXML
+    private void handleAddTask() {
+        volunteerService.addTask();
     }
 
     @FXML

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -17,7 +17,9 @@
         <Button text="Search Animal" onAction="#handleSearchAnimal" prefWidth="200"/>
         <Button text="Remove Animal" onAction="#handleRemoveAnimal" prefWidth="200"/>
         <Button text="Sort Animals" onAction="#handleSortAnimals" prefWidth="200"/>
-        <Button text="Manage Volunteers" onAction="#handleVolunteerManagement" prefWidth="200"/>
+        <Button text="Register Volunteer" onAction="#handleRegisterVolunteer" prefWidth="200"/>
+        <Button text="Add Task" onAction="#handleAddTask" prefWidth="200"/>
+
 
         <Separator prefWidth="220"/>
 
