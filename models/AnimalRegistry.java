@@ -110,7 +110,7 @@ public class AnimalRegistry {
         return (index >= 0) ? sorted.get(index) : null;
     }
 
-    // binary search in the ordered colelction
+    // binary search in the ordered collection
     private int binarySearchById(List<Animal> sortedList, String id) {
         int low = 0;
         int high = sortedList.size() - 1;

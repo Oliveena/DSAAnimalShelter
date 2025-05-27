@@ -70,7 +70,7 @@ public class ShelterApp {
     private void addAnimal() {
 
         if (registry.isAtCapacity()) {
-            System.out.println("⚠️  Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
+            System.out.println("Shelter is at full capacity (" + registry.getMaxCapacity() + "). Cannot add more animals.");
             return;
         }
 
@@ -312,7 +312,7 @@ public class ShelterApp {
      * Adopts the next animal in the queue using the adoption strategy.
      * The adopted animal is removed from the registry and queue.
      */
-    private void adoptAnimal() {
+    public void adoptAnimal() {
         System.out.println("\n--- Adopt Next Animal (FIFO) ---");
 
         if (queue.isEmpty()) {
@@ -419,5 +419,9 @@ public class ShelterApp {
         Task task = new Task(description, dueDate);
         shelter.addTask(task);
         System.out.println("Task added and volunteers notified.");
+    }
+
+    public AnimalRegistry getRegistry() {
+        return registry;
     }
 }
