@@ -75,6 +75,6 @@ public class FifoAdoptionProcessor extends AnimalProcessingTemplate {
 
     @Override
     protected void logOutcome(Animal animal) {
-        logger.info(STR."\{adopter.getName()} adopted animal: \{animal.getName()}");
+        logger.info(adopter.getName() + " adopted animal: " + animal.getName());
     }
 }

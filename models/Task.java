@@ -21,9 +21,7 @@ public class Task {
     }
 
     public String getDetails() {
-        return STR."""
-Description: \{description}
-Due Date: \{dueDate}""";
+        return "Description: " + description + "\nDue Date: " + dueDate;
 
     }
 }

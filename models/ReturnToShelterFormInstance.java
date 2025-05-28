@@ -17,11 +17,11 @@ public class ReturnToShelterFormInstance implements ReturnToShelterForm {
 
     @Override
     public void submit() {
-        System.out.println(STR."Return form submitted for \{animal.getName()}");
+        System.out.println("Return form submitted for " + animal.getName());
     }
 
     @Override
     public String getDetails() {
-        return STR."ReturnForm: \{animal.getName()} returned on \{date} due to \{reason}";
+        return "ReturnForm: " + animal.getName() + " returned on " + date + " due to " + reason;
     }
 }

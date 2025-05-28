@@ -30,6 +30,6 @@ public class Volunteer implements VolunteerObserver {
      */
     @Override
     public void update(String event) {
-        System.out.println(STR."Volunteer \{name} notified: \{event}");
+        System.out.println("Volunteer " + name + " notified: " + event);
     }
 }

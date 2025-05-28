@@ -17,12 +17,12 @@ public class AdoptionFormInstance implements AdoptionForm {
 
     @Override
     public void submit() {
-        System.out.println(STR."Adoption form submitted for \{adopter.getName()}");
+        System.out.println("Adoption form submitted for " + adopter.getName());
     }
 
     @Override
     public String getDetails() {
-        return STR."AdoptionForm: \{adopter.getName()} adopted \{animal.getName()} on \{date}";
+        return "AdoptionForm: " + adopter.getName() + " adopted " + animal.getName() + " on " + date;
     }
 }
 

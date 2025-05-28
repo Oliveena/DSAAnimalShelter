@@ -42,7 +42,7 @@ public abstract class AnimalBuilder<T extends Animal, B extends AnimalBuilder<T,
      */
     public B setName(String name) {
         this.name = name;
-        logger.fine(STR."Set name: \{name}");
+        logger.fine("Set name: " + name);
         return self();
     }
 
@@ -54,7 +54,7 @@ public abstract class AnimalBuilder<T extends Animal, B extends AnimalBuilder<T,
      */
     public B setAge(int age) {
         this.age = age;
-        logger.fine(STR."Set age: \{age}");
+        logger.fine("Set age: " + age);
         return self();
     }
 
@@ -78,7 +78,7 @@ public abstract class AnimalBuilder<T extends Animal, B extends AnimalBuilder<T,
      */
     public B setSpecies(String species) {
         this.species = species;
-        logger.fine(STR."Set species: \{species}");
+        logger.fine("Set species: " + species);
         return self();
     }
 
@@ -90,7 +90,7 @@ public abstract class AnimalBuilder<T extends Animal, B extends AnimalBuilder<T,
      */
     public B setBreed(String breed) {
         this.breed = breed;
-        logger.fine(STR."Set breed: \{breed}");
+        logger.fine("Set breed: " + breed);
         return self();
     }
 

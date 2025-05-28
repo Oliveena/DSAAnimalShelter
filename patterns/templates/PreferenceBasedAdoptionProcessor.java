@@ -81,7 +81,7 @@ public class PreferenceBasedAdoptionProcessor extends AnimalProcessingTemplate {
 
     @Override
     protected void logOutcome(Animal animal) {
-        logger.info(STR."\{adopter.getName()} adopted animal based on preferences: \{animal.getDetails()}");
+        logger.info(adopter.getName() + " adopted animal based on preferences: " + animal.getDetails());
     }
 }
 
