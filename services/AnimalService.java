@@ -2,11 +2,10 @@ package services;
 
 import models.animals.Animal;
 import models.AnimalRegistry;
-import patterns.builders.BirdBuilder;
-import patterns.builders.CatBuilder;
-import patterns.builders.DogBuilder;
-import patterns.builders.LizardBuilder;
-import patterns.observer.VolunteerManager;
+import patterns.creational.builders.BirdBuilder;
+import patterns.creational.builders.CatBuilder;
+import patterns.creational.builders.DogBuilder;
+import patterns.creational.builders.LizardBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class AnimalService {
 
     public List<Animal> findBySpecies(String species) {
         return registry.getAllAnimals().stream()
-                .filter(a -> a.getSpecies().equalsIgnoreCase(species))
+                .filter(a -> a.getSpecies().name().equalsIgnoreCase(species))
                 .toList();
     }
 

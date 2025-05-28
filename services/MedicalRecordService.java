@@ -2,7 +2,7 @@ package services;
 
 import models.animals.Animal;
 import models.MedicalRecord;
-import patterns.builders.MedicalRecordBuilder;
+import patterns.creational.builders.MedicalRecordBuilder;
 
 import java.util.List;
 import java.util.Scanner;

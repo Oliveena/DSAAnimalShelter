@@ -1,11 +1,8 @@
 package controllers;
 
-import models.Adopter;
-import models.AdoptionForm;
 import models.animals.Animal;
 import services.AdoptionService;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class AdoptionController {

@@ -1,7 +1,7 @@
 package app;
 
 import java.util.logging.Logger;
-import patterns.factories.LogFactory;
+import patterns.creational.factories.LogFactory;
 import ui.CLI.ShelterApp;
 
 public class Main {

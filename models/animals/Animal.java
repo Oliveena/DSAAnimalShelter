@@ -2,6 +2,7 @@ package models.animals;
 
 import models.Adoptable;
 import models.MedicalRecord;
+import models.Treatable;
 
 import java.util.UUID;
 
@@ -15,16 +16,15 @@ import java.util.UUID;
  * <p>
  * This class also implements {@link Comparable} to allow sorting of animals by their names.
  */
-public abstract class Animal implements Adoptable, Comparable<Animal> {
+public abstract class Animal implements Adoptable, Treatable, Comparable<Animal> {
 
     protected String id;
     protected String name;
     protected int age;
-    // TODO: turn species into an ENUM
-    protected String species;
+    // TODO: add gender
+    protected Species species;
     protected String breed;
     protected MedicalRecord medicalRecord;
-
 
     /**
      * Constructs a new animal with the given name and age.
@@ -34,7 +34,7 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
      * @param name the name of the animal
      * @param age the age of the animal
      */
-    public Animal(String name, int age, String species, String breed) {
+    public Animal(String name, int age, Species species, String breed) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.age = age;
@@ -91,7 +91,12 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
 
     @Override
     public int compareTo(Animal other) {
-        return this.name.compareToIgnoreCase(other.name);  // default sort with name
+        return this.name.compareToIgnoreCase(other.name);
+    }
+
+    @Override
+    public void addMedicalRecord(MedicalRecord record) {
+        this.medicalRecord = record;
     }
 
     public void setMedicalRecord(MedicalRecord record) {
@@ -102,7 +107,10 @@ public abstract class Animal implements Adoptable, Comparable<Animal> {
         return medicalRecord;
     }
 
-    public abstract String getSpecies();
+    @Override
+    public Species getSpecies() {
+        return this.species;
+    }
 
     public abstract String getBreed();
 }

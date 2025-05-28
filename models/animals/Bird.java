@@ -22,8 +22,8 @@ public class Bird extends Animal implements Adoptable {
      * @param breed the breed of the bird
      * @param canFly whether the bird can fly
      */
-    public Bird(String name, int age, String species, String breed, boolean canFly) {
-        super(name, age, species, breed);
+    public Bird(String name, int age, String breed, boolean canFly) {
+        super(name, age, Species.BIRD, breed);
         this.canFly = canFly;
     }
 
@@ -45,8 +45,8 @@ public class Bird extends Animal implements Adoptable {
     }
 
     @Override
-    public String getSpecies() {
-        return "Bird";
+    public Species getSpecies() {
+        return Species.BIRD;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Bird extends Animal implements Adoptable {
      * @return a string representation of the bird
      */
     public Bird(String name, int age, String breed, boolean canFly, MedicalRecord medicalRecord) {
-        super(name, age, "Bird", breed);
+        super(name, age, Species.BIRD, breed);
         this.canFly = canFly;
     }
 }

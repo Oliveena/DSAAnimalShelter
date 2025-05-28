@@ -7,12 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-import services.AdoptionService;
-import services.AnimalService;
-import services.VolunteerService;
 import ui.CLI.ShelterApp;
 
-import java.io.IOException;
 import java.util.List;
 
 

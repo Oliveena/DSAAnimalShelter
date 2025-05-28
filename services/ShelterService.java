@@ -4,8 +4,8 @@ import models.AnimalRegistry;
 import models.animals.Animal;
 import models.Adoptable;
 import models.Task;
-import patterns.observer.VolunteerManager;
-import patterns.observer.VolunteerObserver;
+import patterns.behavioral.observer.VolunteerManager;
+import patterns.behavioral.observer.VolunteerObserver;
 
 import java.util.ArrayList;
 import java.util.List;

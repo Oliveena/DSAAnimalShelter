@@ -4,9 +4,9 @@ import models.AnimalRegistry;
 import models.ShelterQueue;
 import models.animals.Animal;
 import models.Adopter;
-import models.AdoptionForm;
-import patterns.factories.FormFactory;
-import patterns.strategies.AdoptionStrategy;
+import models.forms.AdoptionForm;
+import patterns.creational.factories.FormFactory;
+import patterns.behavioral.strategies.AdoptionStrategy;
 
 import java.time.LocalDate;
 
