@@ -26,7 +26,7 @@ public class VaccinationDecorator extends AnimalDecorator {
     public VaccinationDecorator(Animal animal, String vaccinationDetails) {
         super(animal);
         this.vaccinationDetails = vaccinationDetails;
-        logger.info(STR."Applied VaccinationDecorator to \{animal.getName()} with vaccination: \{vaccinationDetails}");
+        logger.info("Applied VaccinationDecorator to " + animal.getName() + " with vaccination: " + vaccinationDetails);
     }
 
     /**
@@ -36,8 +36,8 @@ public class VaccinationDecorator extends AnimalDecorator {
      */
     @Override
     public String getDetails() {
-        logger.fine(STR."getDetails() called on VaccinationDecorator for \{decoratedAnimal.getName()}");
-        return STR."\{decoratedAnimal.getDetails()} | Vaccination: \{vaccinationDetails}";
+        logger.fine("getDetails() called on VaccinationDecorator for " + decoratedAnimal.getName());
+        return decoratedAnimal.getDetails() + " | Vaccination: " + vaccinationDetails;
     }
 
     /**
@@ -72,7 +72,7 @@ public class VaccinationDecorator extends AnimalDecorator {
      */
     @Override
     public void adopt() {
-        logger.info(STR."\{decoratedAnimal.getName()} is being adopted (with vaccination info).");
+        logger.info(decoratedAnimal.getName() + " is being adopted (with vaccination info).");
         decoratedAnimal.adopt();
     }
 }

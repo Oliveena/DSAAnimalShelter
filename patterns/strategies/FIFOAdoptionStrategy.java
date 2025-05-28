@@ -38,7 +38,7 @@ public class FIFOAdoptionStrategy implements AdoptionStrategy {
 
         if (adopted != null) {
             registry.removeAnimalById(adopted.getId());
-            logger.info(STR."Adopted animal (FIFO): \{adopted.getName()} [ID: \{adopted.getId()}]");
+            logger.info("Adopted animal (FIFO): " + adopted.getName() + " [ID: " + adopted.getId() + "]");
         } else {
             logger.warning("No animal available for adoption (FIFO queue was empty).");
         }

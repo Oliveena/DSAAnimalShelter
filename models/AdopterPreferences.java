@@ -51,6 +51,6 @@ public class AdopterPreferences {
 
     @Override
     public String toString() {
-        return STR."AdopterPreferences{species='\{species}', breed='\{breed}', maxAge=\{maxAge}}";
+        return "AdopterPreferences{species='" + species + "', breed='" + breed + "', maxAge=" + maxAge + "}";
     }
 }
