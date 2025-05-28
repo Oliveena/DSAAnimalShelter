@@ -99,13 +99,17 @@ public class AnimalRegistry {
      * @return the animal if found; null otherwise
      */
     public Animal findById(String id) {
+        // if no animals in a shelter
         if (id == null || id.isEmpty()) return null;
 
+        // sorting the animal list with stream before binary search
         List<Animal> sorted = animalList.stream()
                 .sorted(Comparator.comparing(Animal::getId))
                 .collect(Collectors.toList());
 
+        // attribute an index to each sorted element
         int index = binarySearchById(sorted, id);
+        // if no animals, nothing to sort, no indexes
         return (index >= 0) ? sorted.get(index) : null;
     }
 
@@ -121,6 +125,7 @@ public class AnimalRegistry {
         int high = sortedList.size() - 1;
 
         while (low <= high) {
+            // start with middle
             int middle = (low + high) >>> 1;
             Animal midAnimal = sortedList.get(middle);
             int cmp = midAnimal.getId().compareTo(id);
@@ -180,4 +185,3 @@ public class AnimalRegistry {
                 .collect(Collectors.toList());
     }
 }
-
