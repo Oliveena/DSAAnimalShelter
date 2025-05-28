@@ -2,9 +2,14 @@ package services;
 
 import models.animals.Animal;
 import models.AnimalRegistry;
+import patterns.builders.BirdBuilder;
+import patterns.builders.CatBuilder;
+import patterns.builders.DogBuilder;
+import patterns.builders.LizardBuilder;
 import patterns.observer.VolunteerManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class AnimalService {
@@ -57,4 +62,38 @@ public class AnimalService {
     public boolean isEmpty() {
         return registry.isEmpty();
     }
+
+    public void addAnimalFromUI(String name, int age, String type, Map<String, String> extras) {
+        Animal animal = switch (type.toLowerCase()) {
+            case "dog" -> new DogBuilder()
+                    .setName(name)
+                    .setAge(age)
+                    .setBreed(extras.getOrDefault("breed", "Unknown"))
+                    .setTrained(Boolean.parseBoolean(extras.getOrDefault("trained", "false")))
+                    .build();
+            case "cat" -> new CatBuilder()
+                    .setName(name)
+                    .setAge(age)
+                    .setBreed(extras.getOrDefault("breed", "Unknown"))
+                    .setFurLength(extras.getOrDefault("furLength", "Short"))
+                    .setIndoor(Boolean.parseBoolean(extras.getOrDefault("indoor", "false")))
+                    .build();
+            case "bird" -> new BirdBuilder()
+                    .setName(name)
+                    .setAge(age)
+                    .setBreed(extras.getOrDefault("breed", "Unknown"))
+                    .setCanFly(Boolean.parseBoolean(extras.getOrDefault("canFly", "true")))
+                    .build();
+            case "lizard" -> new LizardBuilder()
+                    .setName(name)
+                    .setAge(age)
+                    .setBreed(extras.getOrDefault("breed", "Unknown"))
+                    .setVenomous(Boolean.parseBoolean(extras.getOrDefault("venomous", "false")))
+                    .build();
+            default -> throw new IllegalArgumentException("Unsupported animal type: " + type);
+        };
+
+        addAnimal(animal);
+    }
+
 }
