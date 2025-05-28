@@ -2,83 +2,67 @@ package models;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import models.animals.Animal;
 
 /**
- * Represents a queue for animals awaiting adoption in the shelter.
+ * Represents a queue of animals waiting for adoption at the shelter.
  * <p>
- * The queue follows the First In First Out (FIFO) principle where animals are added
- * to the end of the queue and adopted (removed) from the front.
+ * This queue follows the FIFO (First-In, First-Out) model, meaning the animal
+ * that has been waiting the longest will be adopted first.
  * <p>
- * This class provides methods for adding animals, removing them, checking the size,
- * and clearing the queue.
+ * Useful in promotional strategies like "Animal of the Month" where priority is
+ * given to animals who’ve spent more time in the shelter.
  */
 public class ShelterQueue {
     private Queue<Animal> queue = new LinkedList<>();
 
     /**
-     * Adds an animal to the adoption queue.
-     * <p>
-     * This method uses the {@link Queue#offer(Object)} method to add the animal
-     * to the queue. It does not throw an exception if the queue is full.
+     * Adds an animal to the end of the queue.
      *
-     * @param animal the animal to add to the queue
+     * @param animal the animal to enqueue
      */
     public void enqueue(Animal animal) {
-        queue.offer(animal); // Adds the animal to the queue, returns false if full, doesn't throw an exception
+        queue.offer(animal);
     }
 
     /**
-     * Removes and returns the next animal in the queue for adoption (FIFO).
-     * <p>
-     * This method uses the {@link Queue#poll()} method to remove and return the
-     * animal at the front of the queue. If the queue is empty, it returns null.
+     * Removes and returns the animal at the front of the queue.
      *
-     * @return the next animal in the queue, or null if the queue is empty
+     * @return the next animal in line, or {@code null} if queue is empty
      */
     public Animal dequeue() {
-        return queue.poll(); // Returns null if the queue is empty
+        return queue.poll();
     }
 
     /**
-     * Peeks at the next animal in the queue without removing it.
-     * <p>
-     * This method uses the {@link Queue#peek()} method to check the animal at the
-     * front of the queue without removing it. If the queue is empty, it returns null.
+     * Peeks at the next animal without removing it from the queue.
      *
-     * @return the next animal in the queue, or null if the queue is empty
+     * @return the next animal, or {@code null} if the queue is empty
      */
     public Animal peekNext() {
-        return queue.peek(); // Returns null if the queue is empty
+        return queue.peek();
     }
 
     /**
-     * Checks if the queue is empty.
-     * <p>
-     * This method uses the {@link Queue#isEmpty()} method to determine if there are
-     * any animals in the queue.
+     * Returns {@code true} if the queue is empty.
      *
-     * @return true if the queue is empty, false otherwise
+     * @return whether the queue is empty
      */
     public boolean isEmpty() {
         return queue.isEmpty();
     }
 
     /**
-     * Returns the size of the queue.
-     * <p>
-     * This method uses the {@link Queue#size()} method to get the number of animals
-     * currently in the queue.
+     * Returns the number of animals currently in the queue.
      *
-     * @return the number of animals in the queue
+     * @return queue size
      */
     public int size() {
         return queue.size();
     }
 
     /**
-     * Clears the queue.
-     * <p>
-     * This method uses the {@link Queue#clear()} method to remove all animals from the queue.
+     * Clears all animals from the queue.
      */
     public void clear() {
         queue.clear();
@@ -86,12 +70,11 @@ public class ShelterQueue {
 
     /**
      * Adds an animal to the queue.
-     * <p>
-     * This method is an alias for {@link #enqueue(Animal)} and is provided for clarity.
+     * Alias for {@link #enqueue(Animal)} provided for semantic clarity.
      *
-     * @param animal the animal to add to the queue
+     * @param animal the animal to add
      */
     public void addAnimal(Animal animal) {
-        enqueue(animal); // Corrected to add animal to the queue
+        enqueue(animal);
     }
 }

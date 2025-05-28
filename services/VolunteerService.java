@@ -1,52 +1,28 @@
 package services;
 
-
 import models.Task;
 import models.Volunteer;
-import patterns.observer.VolunteerObserver;
+import patterns.observer.VolunteerManager;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Scanner;
 
 public class VolunteerService {
-    private final Shelter shelter;
-    private Scanner scanner;
+    private final VolunteerManager volunteerManager;
+    private ShelterService shelterService;
 
-    public VolunteerService(Shelter shelter, Scanner scanner) {
-        this.shelter = shelter;
-        this.scanner = scanner;
-    }
-
-    public void registerVolunteer() {
-        System.out.println("\n--- Register a Volunteer ---");
-        System.out.print("Enter volunteer name: ");
-        String name = scanner.nextLine().trim();
-
-        VolunteerObserver volunteer = new Volunteer(name);
-        shelter.registerVolunteer(volunteer);
-        System.out.println("Volunteer '" + name + "' registered.");
-    }
-
-    public void addTask() {
-        System.out.println("\n--- Add New Volunteer Task ---");
-        System.out.print("Enter task description: ");
-        String description = scanner.nextLine().trim();
-
-        LocalDate dueDate;
-        while (true) {
-            try {
-                System.out.print("Enter due date (YYYY-MM-DD): ");
-                String dateInput = scanner.nextLine().trim();
-                dueDate = LocalDate.parse(dateInput);
-                break;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-            }
+    public VolunteerService(VolunteerManager volunteerManager, ShelterService shelterService) {
+        if (shelterService == null) {
+            throw new IllegalArgumentException("ShelterService cannot be null");
         }
+        this.volunteerManager = volunteerManager;
+        this.shelterService = shelterService;
+    }
 
-        Task task = new Task(description, dueDate);
-        shelter.addTask(task);
-        System.out.println("Task added and volunteers notified.");
+    public void registerVolunteer(String name) {
+        volunteerManager.registerVolunteer(new Volunteer(name));
+    }
+
+    public void addTask(String description, LocalDate dueDate) {
+        shelterService.addTask(new Task(description, dueDate));
     }
 }
