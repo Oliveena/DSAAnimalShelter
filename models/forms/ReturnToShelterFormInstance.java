@@ -1,4 +1,4 @@
-package models;
+package models.forms;
 
 import models.animals.Animal;
 

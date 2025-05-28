@@ -21,4 +21,10 @@ public class MedicalRecordController {
     public void displayMedicalRecord(Animal animal) {
         medicalService.displayMedicalRecord(animal);
     }
+
+    public void addMedicalRecord() {
+        System.out.println("Please enter the medical record: ");
+        String name = scanner.next();
+
+    }
 }

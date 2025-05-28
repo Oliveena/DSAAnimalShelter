@@ -4,6 +4,7 @@ import models.*;
 import models.animals.Animal;
 import models.animals.Cat;
 import models.animals.Dog;
+import models.forms.AdoptionForm;
 import org.junit.jupiter.api.Test;
 import patterns.creational.builders.MedicalRecordBuilder;
 import patterns.creational.factories.FormFactory;

@@ -1,4 +1,4 @@
-package models;
+package models.employees;
 
 import patterns.behavioral.observer.VolunteerObserver;
 

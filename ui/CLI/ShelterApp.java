@@ -2,10 +2,7 @@ package ui.CLI;
 
 import java.util.*;
 
-import controllers.AdoptionController;
-import controllers.AnimalController;
-import controllers.MedicalRecordController;
-import controllers.VolunteerController;
+import controllers.*;
 import models.*;
 import models.animals.Animal;
 import patterns.creational.factories.LogFactory;
@@ -14,6 +11,9 @@ import patterns.behavioral.observer.VolunteerManager;
 import patterns.behavioral.strategies.AdoptionStrategy;
 import patterns.behavioral.strategies.FIFOAdoptionStrategy;
 import services.*;
+import ui.CLI.menus.AdminMenu;
+import ui.CLI.menus.VetMenu;
+import ui.CLI.menus.VolunteerMenu;
 
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -51,10 +51,14 @@ public class ShelterApp {
     private final AdoptionService adoptionService = new AdoptionService(queue, registry, adoptionStrategy, formFactory);
 
     // === Controllers ===
+
     private final MedicalRecordController medicalController = new MedicalRecordController(medicalService, scanner);
     private final AnimalController animalController = new AnimalController(animalService, medicalController, scanner, registry, queue, shelterService);
-    private final VolunteerController volunteerController = new VolunteerController(volunteerService, scanner);
     private final AdoptionController adoptionController = new AdoptionController(adoptionService, scanner);
+
+    private final AdminController adminController = new AdminController(animalController, adoptionController, shelterService);
+    private final VetController vetController = new VetController(registry, medicalService, scanner);
+    private final VolunteerController volunteerController = new VolunteerController(volunteerService, scanner);
 
     // === Logging / State ===
     private static final Logger logger = LogFactory.getLogger(ShelterApp.class);
@@ -65,27 +69,49 @@ public class ShelterApp {
 
     // === CLI Start Method ===
     public void start() {
-        boolean exit = false;
-        while (!exit) {
-            ui.CLI.ShelterMenu.displayMenu();
+        Map<String, MenuOption> mainMenu = new LinkedHashMap<>();
+
+        mainMenu.put("1", new MenuOption("Admin Menu", this::showAdminMenu));
+        mainMenu.put("2", new MenuOption("Volunteer Menu", this::showVolunteerMenu));
+        mainMenu.put("3", new MenuOption("Veterinarian Menu", this::showVetMenu));
+        mainMenu.put("0", new MenuOption("Exit", () -> System.exit(0)));
+
+        runMenu("=== Animal Shelter System ===", mainMenu);
+    }
+
+    // === CLI Menu Methods ===
+
+    private void runMenu(String title, Map<String, MenuOption> menu) {
+        while (true) {
+            System.out.println("\n" + title);
+            for (Map.Entry<String, MenuOption> entry : menu.entrySet()) {
+                System.out.printf("%s. %s%n", entry.getKey(), entry.getValue().getDescription());
+            }
+            System.out.print("Select an option: ");
             String choice = scanner.nextLine().trim();
-            switch (choice) {
-                case "1" -> animalController.addAnimal();
-                case "2" -> animalController.listAnimals();
-                case "3" -> adoptionController.adoptAnimal();
-                case "4" -> animalController.findAnimalByName();
-                case "5" -> animalController.removeAnimal();
-                case "6" -> adoptionController.peekNextAnimal();
-                case "7" -> adoptionController.clearQueue();
-                case "8" -> animalController.findAnimalById();
-                case "9" -> animalController.findAnimalsBySpecies();
-                case "10" -> animalController.sortAnimals();
-                case "11" -> volunteerController.registerVolunteer();
-                case "12" -> volunteerController.addTask();
-                case "0" -> exit = true;
-                default -> System.out.println("Invalid choice.");
+            MenuOption option = menu.get(choice);
+            if (option != null) {
+                option.execute();
+                if (option.getDescription().equalsIgnoreCase("Return to Main Menu")) break;
+            } else {
+                System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
+
+    private void showAdminMenu() {
+        AdminMenu adminMenu = new AdminMenu(adminController);
+        runMenu("🐾 Admin Menu", adminMenu.getMenu());
+    }
+
+    private void showVolunteerMenu() {
+        VolunteerMenu volunteerMenu = new VolunteerMenu(volunteerController);
+        runMenu("Volunteer Menu", volunteerMenu.getMenu());
+    }
+
+    private void showVetMenu() {
+        VetMenu vetMenu = new VetMenu(vetController);
+        runMenu("Vet Menu", vetMenu.getMenu());
     }
 
     // === CLI Prompt Helpers ===

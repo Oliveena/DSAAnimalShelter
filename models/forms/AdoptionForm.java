@@ -1,4 +1,4 @@
-package models;
+package models.forms;
 
 public interface AdoptionForm {
     void submit();

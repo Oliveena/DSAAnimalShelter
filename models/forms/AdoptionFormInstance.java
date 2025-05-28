@@ -1,5 +1,6 @@
-package models;
+package models.forms;
 
+import models.Adopter;
 import models.animals.Animal;
 
 import java.time.LocalDate;

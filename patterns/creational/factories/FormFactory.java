@@ -2,6 +2,10 @@ package patterns.creational.factories;
 
 import models.*;
 import models.animals.Animal;
+import models.forms.AdoptionForm;
+import models.forms.AdoptionFormInstance;
+import models.forms.ReturnToShelterForm;
+import models.forms.ReturnToShelterFormInstance;
 
 import java.time.LocalDate;
 
