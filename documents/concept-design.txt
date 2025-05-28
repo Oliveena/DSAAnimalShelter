@@ -1,0 +1,31 @@
+
+Key concepts:
+1. SOLID principles (OO Design Best Practices)
+	S - Single Responsibility Principle: Each class should have one responsibility.
+	O - Open/Closed Principle: Classes should be open for extension, but closed for modification
+	L - Liskov Substitution Principle: types must be substitutable for their base types.
+	I - Interface Segregation Principle: Don't force clients to depend on interfaces they don't use
+	D - Dependency Inversion Principle: Depend on abstraction, not concretions.
+
+2. Java Design patterns:
+	1. Singleton for services, configs
+	2. Factory for object creations
+	3. Strategy for interchangeable behaviors
+	4. Observer for UI and logging
+	5. DAO (Data Access Object) pattern for DB interaction
+	// TODO: name all the design patterns used
+
+3. 3-tier Architecture
+	1. Presentation Layer (UI) - JavaFX or REST API
+	2. Business Logic Layer (Service) = Implements business rules
+	3. DAO - Handles persistence, uses JDBC or JPA (Jakarta)
+
+4. MVC (Model-View-Controller)
+	1. Model: business/data objects (e.g. Adopter, Animal...)
+	2. View: JavaFX FXML or web pages
+	3. Controller: Interacts with Model and updates View
+Integrate core data structure:
+* HashMap for Lookups
+* ArrayList for collections
+* Queue for order handling (e.g. in ASMS)
+* Stack for history/undo functionality

@@ -1,4 +1,8 @@
 package models;
 
-public class AdoptionForm {
+public interface AdoptionForm {
+    void submit();
+    String getDetails();
 }
+
+

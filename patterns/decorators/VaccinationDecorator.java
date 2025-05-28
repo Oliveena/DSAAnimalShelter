@@ -1,63 +1,78 @@
 package patterns.decorators;
 
-import models.Animal;
-import patterns.decorators.AnimalDecorator;
+import models.animals.Animal;
+import java.util.logging.Logger;
+import patterns.factories.LogFactory;
 
 /**
- * A concrete decorator that adds vaccination details to an {@link Animal}.
+ * A concrete decorator that adds vaccination information to an {@link Animal}.
  * <p>
- * This class extends {@link AnimalDecorator} and adds vaccination-related information
- * to the original animal's details.
- * <p>
- * Example usage:
- * <pre>{@code
- * Animal vaccinatedCat = new VaccinationDecorator(new Cat("Whiskers", 3), "Rabies, Distemper");
- * System.out.println(vaccinatedCat.getDetails());
- * }</pre>
+ * This decorator augments the wrapped animal's details with vaccination data,
+ * and logs adoption events including vaccination info.
  */
 public class VaccinationDecorator extends AnimalDecorator {
-    private String vaccinationDetails;
+    private static final Logger logger = LogFactory.getLogger(VaccinationDecorator.class);
+
+    /** The vaccination details associated with this animal. */
+    private final String vaccinationDetails;
 
     /**
-     * Constructs a {@code VaccinationDecorator} that wraps the provided {@link Animal}
-     * and adds vaccination details.
+     * Constructs a new {@code VaccinationDecorator} wrapping the specified {@link Animal}
+     * and associating it with vaccination details.
      *
      * @param animal the animal to decorate
-     * @param vaccinationDetails the vaccination details to append to the animal's info
+     * @param vaccinationDetails details about the vaccination administered
      */
     public VaccinationDecorator(Animal animal, String vaccinationDetails) {
-        super(animal);  // Pass the decorated animal to the parent constructor
+        super(animal);
         this.vaccinationDetails = vaccinationDetails;
+        logger.info("Applied VaccinationDecorator to " + animal.getName() + " with vaccination: " + vaccinationDetails);
     }
 
     /**
-     * Returns the type of the decorated animal.
-     * <p>
-     * This method delegates the call to the decorated animal's {@link Animal#getType()},
-     * since the decorator is adding additional details, but the base type should still be preserved.
+     * Returns the decorated animal's details with appended vaccination information.
      *
-     * @return a string indicating the animal's type
-     */
-    @Override
-    public String getType() {
-        return decoratedAnimal.getType();  // Delegating the call to the decorated animal
-    }
-
-    /**
-     * Returns the details of the decorated animal, including the vaccination details.
-     * <p>
-     * This method overrides the base class's {@code getDetails} to append vaccination details
-     * to the original animal's information.
-     *
-     * @return a string representing the animal's details, including vaccination information
+     * @return a string describing the animal's details including vaccination info
      */
     @Override
     public String getDetails() {
-        return super.getDetails() + " | Vaccination: " + vaccinationDetails;
+        logger.fine("getDetails() called on VaccinationDecorator for " + decoratedAnimal.getName());
+        return decoratedAnimal.getDetails() + " | Vaccination: " + vaccinationDetails;
     }
 
+    /**
+     * Returns the species of the animal.
+     * <p>
+     * Delegates to the base class property.
+     *
+     * @return the species string
+     */
+    @Override
+    public String getSpecies() {
+        return this.species;
+    }
+
+    /**
+     * Returns the breed of the animal.
+     * <p>
+     * Delegates to the base class property.
+     *
+     * @return the breed string
+     */
+    @Override
+    public String getBreed() {
+        return this.breed;
+    }
+
+    /**
+     * Marks the animal as adopted.
+     * <p>
+     * Logs the adoption event including vaccination information, then delegates
+     * the adoption action to the wrapped animal.
+     */
     @Override
     public void adopt() {
-
+        logger.info(decoratedAnimal.getName() + " is being adopted (with vaccination info).");
+        decoratedAnimal.adopt();
     }
 }

@@ -1,5 +1,7 @@
 package models;
 
+import models.animals.Animal;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,9 +9,9 @@ import java.util.stream.Collectors;
 
 /**
  * The {@code AnimalRegistry} class maintains a registry of all animals in the shelter.
- * It supports adding, removing, searching, and retrieving animals.
  * <p>
- * Capacity is enforced, and various search methods are provided.
+ * It supports basic operations such as adding, removing, retrieving, and searching animals.
+ * Capacity limits are enforced to ensure the shelter does not exceed its predefined maximum.
  */
 public class AnimalRegistry {
 
@@ -17,7 +19,7 @@ public class AnimalRegistry {
     private final int maxCapacity;
 
     /**
-     * Constructs a new {@code AnimalRegistry} with the default maximum capacity of 20.
+     * Constructs a new {@code AnimalRegistry} with a default maximum capacity of 20.
      */
     public AnimalRegistry() {
         this.maxCapacity = 20;
@@ -40,7 +42,7 @@ public class AnimalRegistry {
      * Adds a new animal to the registry.
      *
      * @param animal the animal to add
-     * @throws IllegalStateException if the shelter is at full capacity
+     * @throws IllegalStateException if the registry is at full capacity
      */
     public void addAnimal(Animal animal) {
         if (animal == null) {
@@ -81,7 +83,7 @@ public class AnimalRegistry {
     }
 
     /**
-     * Returns a copy of all animals in the registry.
+     * Returns all animals currently registered in the shelter.
      *
      * @return a list of all registered animals
      */
@@ -90,7 +92,8 @@ public class AnimalRegistry {
     }
 
     /**
-     * Finds an animal by its exact ID using binary search (requires sorted list).
+     * Finds an animal by its exact ID using binary search.
+     * The animal list is first sorted by ID before performing the search.
      *
      * @param id the ID to search for
      * @return the animal if found; null otherwise
@@ -110,7 +113,13 @@ public class AnimalRegistry {
         return (index >= 0) ? sorted.get(index) : null;
     }
 
-    // binary search in the ordered collection
+    /**
+     * Performs a binary search to find an animal by ID in a sorted list.
+     *
+     * @param sortedList the sorted list of animals
+     * @param id         the ID to search for
+     * @return the index of the animal if found, or -1 if not found
+     */
     private int binarySearchById(List<Animal> sortedList, String id) {
         int low = 0;
         int high = sortedList.size() - 1;
@@ -131,7 +140,7 @@ public class AnimalRegistry {
     /**
      * Checks whether the registry is empty.
      *
-     * @return true if no animals are registered; false otherwise
+     * @return true if the registry has no animals; false otherwise
      */
     public boolean isEmpty() {
         return animalList.isEmpty();
@@ -140,16 +149,16 @@ public class AnimalRegistry {
     /**
      * Returns the maximum capacity of the shelter.
      *
-     * @return the maximum number of animals allowed
+     * @return the maximum number of animals that can be registered
      */
     public int getMaxCapacity() {
         return maxCapacity;
     }
 
     /**
-     * Checks if the shelter is at full capacity.
+     * Checks if the registry has reached its capacity limit.
      *
-     * @return true if shelter is full; false otherwise
+     * @return true if the number of animals equals or exceeds capacity; false otherwise
      */
     public boolean isAtCapacity() {
         return animalList.size() >= maxCapacity;
@@ -158,9 +167,21 @@ public class AnimalRegistry {
     /**
      * Returns the current number of animals in the registry.
      *
-     * @return the number of registered animals
+     * @return the number of animals currently registered
      */
     public int getAnimalCount() {
         return animalList.size();
+    }
+
+    /**
+     * Returns a list of animals filtered by species.
+     *
+     * @param species the species to filter by
+     * @return a list of animals matching the specified species
+     */
+    public List<Animal> getAnimalsBySpecies(String species) {
+        return animalList.stream()
+                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .collect(Collectors.toList());
     }
 }

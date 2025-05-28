@@ -1,7 +1,25 @@
+/**
+ * AnimalReturnProcessor - Handles Returning Adopted Animals
+ *
+ * Allows adopters to return animals to the shelter, typically due to incompatibility,
+ * unforeseen circumstances, or medical issues.
+ *
+ * ➤ Steps:
+ *     1. Validate animal ID and return reason
+ *     2. Locate animal via ID
+ *     3. (TODO) Verify that animal was adopted previously
+ *     4. Re-register animal in the shelter registry
+ *     5. Log return details
+ *
+ * 💡 Can be extended to:
+ *     - Track return statistics
+ *     - Analyze reasons for failed adoptions
+ */
+
 package patterns.templates;
 
 import models.AnimalRegistry;
-import models.Animal;
+import models.animals.Animal;
 
 import java.util.logging.Logger;
 
@@ -51,3 +69,5 @@ public class AnimalReturnProcessor extends patterns.templates.AnimalProcessingTe
         logger.info("Animal " + animal.getName() + " was returned. Reason: " + reason);
     }
 }
+
+

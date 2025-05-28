@@ -1,57 +1,63 @@
 package models;
 
 /**
- * Represents an entity that can be adopted. Any class implementing this interface
- * is expected to provide details about the adoptable entity.
+ * Interface representing any entity that can be adopted from the shelter system.
  * <p>
- * Typically, this would be implemented by animal classes, where they represent
- * adoptable animals in a shelter or system.
+ * Most commonly implemented by animal classes (e.g., Dog, Cat), this interface provides
+ * the necessary metadata for adoption processing and matching.
  */
 public interface Adoptable {
 
     /**
-     * Returns the unique identifier for the adoptable entity.
+     * Returns the unique identifier of the adoptable entity.
      *
-     * @return the ID of the adoptable entity
+     * @return unique ID
      */
     String getId();
 
     /**
      * Returns the name of the adoptable entity.
      *
-     * @return the name of the adoptable entity
+     * @return entity name
      */
     String getName();
 
     /**
-     * Returns the age of the adoptable entity.
+     * Returns the current age of the adoptable entity.
      *
-     * @return the age of the adoptable entity
+     * @return age in years
      */
     int getAge();
 
     /**
-     * Returns the type of the adoptable entity.
-     * <p>
-     * This can be a species, breed, or any identifier for the entity's type.
+     * Returns the species of the adoptable entity (e.g., Dog, Cat).
      *
-     * @return the type of the adoptable entity
+     * @return species name
      */
-    String getType();
+    String getSpecies();
+
+    /**
+     * Returns the breed of the adoptable entity.
+     *
+     * @return breed name
+     */
+    String getBreed();
 
     /**
      * Returns a detailed description of the adoptable entity.
-     * <p>
-     * This could include additional information such as breed, health status, or any
-     * other relevant data for the adopter to consider.
+     * Could include personality traits, medical conditions, etc.
      *
-     * @return the details of the adoptable entity
+     * @return full detail string
      */
     String getDetails();
 
+    /**
+     * Marks the adoptable entity as adopted (e.g., update internal state or flags).
+     */
     void adopt();
 
+    /**
+     * Returns the adoptable entity back to the shelter system.
+     */
     void returnToShelter();
-
-
 }
