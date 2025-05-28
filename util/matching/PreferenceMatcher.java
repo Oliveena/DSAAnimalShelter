@@ -52,9 +52,10 @@ public class PreferenceMatcher {
         int score = 0;
 
         if (preferences.getSpecies() != null && animal.getSpecies() != null &&
-                preferences.getSpecies().equalsIgnoreCase(animal.getSpecies())) {
+                preferences.getSpecies().equalsIgnoreCase(animal.getSpecies().name())) {
             score++;
         }
+
 
         if (preferences.getBreed() != null && animal.getBreed() != null &&
                 preferences.getBreed().equalsIgnoreCase(animal.getBreed())) {
@@ -66,4 +67,5 @@ public class PreferenceMatcher {
         }
         return score;
     }
+
 }

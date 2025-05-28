@@ -45,7 +45,7 @@ public class CatBuilder extends AnimalBuilder<Cat, CatBuilder> {
      */
     @Override
     public Cat build() {
-        Cat cat = new Cat(name, age, species, breed, furLength, indoor);
+        Cat cat = new Cat(name, age, breed, furLength, indoor);
         cat.setMedicalRecord(medicalRecord);
         return cat;
     }

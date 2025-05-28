@@ -4,10 +4,13 @@ import models.*;
 import models.animals.Animal;
 import models.animals.Cat;
 import models.animals.Dog;
+import models.animals.Species;
 import models.forms.AdoptionForm;
 import org.junit.jupiter.api.Test;
+import patterns.creational.builders.DogBuilder;
 import patterns.creational.builders.MedicalRecordBuilder;
 import patterns.creational.factories.FormFactory;
+import patterns.structural.decorators.VaccinationDecorator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,7 +23,7 @@ public class AnimalRegistryTest {
     @Test
     public void testAddAnimal() {
         AnimalRegistry registry = new AnimalRegistry();
-        Animal dog = new Dog("Rex", 5, "Dog", "Pug", false);
+        Animal dog = new Dog("Rex", 5,"Pug", false);
 
         registry.addAnimal(dog);
 
@@ -31,8 +34,8 @@ public class AnimalRegistryTest {
     @Test
     public void testSearchByName() {
         AnimalRegistry registry = new AnimalRegistry();
-        registry.addAnimal(new Cat("Mittens", 2, "short", "Siamese", "short", true));
-        registry.addAnimal(new Cat("Whiskers", 3, "long", "Persian", "long", true));
+        registry.addAnimal(new Cat("Mittens", 2, "short", "Siamese",  true));
+        registry.addAnimal(new Cat("Whiskers", 3, "long", "Persian",  true));
 
 
         var results = registry.searchByName("mitt");
@@ -43,7 +46,7 @@ public class AnimalRegistryTest {
     @Test
     public void testRemoveAnimalById() {
         AnimalRegistry registry = new AnimalRegistry();
-        Animal cat = new Cat("Mimi", 2, "short", "Siamese", "short", true);
+        Animal cat = new Cat("Mimi", 2,  "Siamese", "short", true);
         registry.addAnimal(cat);
 
         boolean removed = registry.removeAnimalById(cat.getId());
@@ -61,8 +64,8 @@ public class AnimalRegistryTest {
     @Test
     public void testFIFOOrder() {
         ShelterQueue queue = new ShelterQueue();
-        Animal cat = new Cat("Luna", 3, "short", "Tabby", "short", true);
-        Animal dog = new Dog("Max", 5, "Dog", "Labrador", false);
+        Animal cat = new Cat("Luna", 3, "Tabby", "short", true);
+        Animal dog = new Dog("Max", 5,  "Labrador", false);
 
         queue.addAnimal(cat);
         queue.addAnimal(dog);
@@ -86,10 +89,53 @@ public class AnimalRegistryTest {
     @Test
     public void testFormSubmissionLogs() {
         Adopter adopter = new Adopter("Alice");
-        Animal cat = new Cat("Whiskers", 2, "long", "Persian", "long", true);
+        Animal cat = new Cat("Whiskers", 2, "Persian", "long", true);
         AdoptionForm form = new FormFactory().createAdoptionForm(adopter, cat, LocalDate.now());
 
         assertNotNull(form);
         form.submit();
+    }
+
+    @Test
+    public void testDogBuilderCreatesCorrectDog() {
+        Dog dog = new DogBuilder()
+                .setName("Bolt")
+                .setAge(4)
+                .setSpecies(String.valueOf(Species.DOG))
+                .setBreed("Husky")
+                .setTrained(true)
+                .build();
+
+        assertEquals("Bolt", dog.getName());
+        assertEquals(Species.DOG, dog.getSpecies());
+        assertEquals("Husky", dog.getBreed());
+    }
+
+    @Test
+    public void testVaccinationDecoratorAddsDetails() {
+        Animal cat = new Cat("Mittens", 2, "Siamese", "short", true);
+        Animal vaccinatedCat = new VaccinationDecorator(cat, "Feline Distemper");
+
+        String details = vaccinatedCat.getDetails();
+        assertTrue(details.contains("Feline Distemper"));
+    }
+
+    @Test
+    public void testAnimalImplementsTreatableProperly() {
+        Animal cat = new Cat("Lulu", 3, "British Shorthair", "short", false);
+        MedicalRecord record = new MedicalRecordBuilder()
+                .addVaccination("Rabies")
+                .build();
+
+        cat.addMedicalRecord(record);
+
+        assertEquals("Rabies", cat.getMedicalRecord().getVaccinations().get(0));
+    }
+
+    @Test
+    public void testAdoptAndReturnMethods() {
+        Animal dog = new Dog("Spot", 6, "Beagle", true);
+        dog.adopt(); // You can test flags or console output via a logging wrapper
+        dog.returnToShelter();
     }
 }

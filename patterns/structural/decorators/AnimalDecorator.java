@@ -1,6 +1,7 @@
 package patterns.structural.decorators;
 
 import models.animals.Animal;
+import models.animals.Species;
 
 /**
  * Abstract base decorator for {@link Animal} instances.
@@ -21,7 +22,7 @@ public abstract class AnimalDecorator extends Animal {
      * @param animal the animal instance to decorate; must not be {@code null}
      */
     public AnimalDecorator(Animal animal) {
-        super(animal.getName(), animal.getAge(), animal.getSpecies(), animal.getBreed());
+        super(animal.getName(), animal.getAge(), Species.valueOf(String.valueOf(animal.getSpecies())), animal.getBreed());
         this.decoratedAnimal = animal;
     }
 
@@ -47,5 +48,30 @@ public abstract class AnimalDecorator extends Animal {
     @Override
     public void returnToShelter() {
         decoratedAnimal.returnToShelter();
+    }
+
+    @Override
+    public void adopt() {
+        decoratedAnimal.adopt();
+    }
+
+    @Override
+    public Species getSpecies() {
+        return decoratedAnimal.getSpecies();
+    }
+
+    @Override
+    public String getBreed() {
+        return decoratedAnimal.getBreed();
+    }
+
+    @Override
+    public void addMedicalRecord(models.MedicalRecord record) {
+        decoratedAnimal.addMedicalRecord(record);
+    }
+
+    @Override
+    public models.MedicalRecord getMedicalRecord() {
+        return decoratedAnimal.getMedicalRecord();
     }
 }

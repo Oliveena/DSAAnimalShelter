@@ -1,5 +1,7 @@
 package models;
 
+import models.animals.Species;
+
 /**
  * Interface representing any entity that can be adopted from the shelter system.
  * <p>
@@ -34,7 +36,7 @@ public interface Adoptable {
      *
      * @return species name
      */
-    String getSpecies();
+    Species getSpecies();
 
     /**
      * Returns the breed of the adoptable entity.

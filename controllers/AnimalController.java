@@ -135,7 +135,7 @@ public class AnimalController {
         String species = prompt("Enter species (e.g., Dog, Cat, Bird): ");
 
         List<Animal> matched = registry.getAllAnimals().stream()
-                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .filter(animal -> animal.getSpecies().name().equalsIgnoreCase(species))
                 .toList();
 
         if (matched.isEmpty()) {

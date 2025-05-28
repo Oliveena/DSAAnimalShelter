@@ -2,6 +2,8 @@ package patterns.structural.decorators;
 
 import models.animals.Animal;
 import java.util.logging.Logger;
+
+import models.animals.Species;
 import patterns.creational.factories.LogFactory;
 
 /**
@@ -48,8 +50,8 @@ public class VaccinationDecorator extends AnimalDecorator {
      * @return the species string
      */
     @Override
-    public String getSpecies() {
-        return this.species;
+    public Species getSpecies() {
+        return decoratedAnimal.getSpecies();
     }
 
     /**

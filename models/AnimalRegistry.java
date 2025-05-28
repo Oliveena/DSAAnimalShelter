@@ -181,7 +181,7 @@ public class AnimalRegistry {
      */
     public List<Animal> getAnimalsBySpecies(String species) {
         return animalList.stream()
-                .filter(animal -> animal.getSpecies().equalsIgnoreCase(species))
+                .filter(animal -> animal.getSpecies().name().equalsIgnoreCase(species))
                 .collect(Collectors.toList());
     }
 }

@@ -46,7 +46,7 @@ public class AnimalService {
 
     public List<Animal> findBySpecies(String species) {
         return registry.getAllAnimals().stream()
-                .filter(a -> a.getSpecies().equalsIgnoreCase(species))
+                .filter(a -> a.getSpecies().name().equalsIgnoreCase(species))
                 .toList();
     }
 

@@ -22,8 +22,8 @@ public class Cat extends Animal implements Adoptable {
      * @param furLength the length of the cat's fur (e.g., "Short", "Long")
      * @param isIndoor whether the cat is an indoor cat
      */
-    public Cat(String name, int age, String species, String breed, String furLength, boolean isIndoor) {
-        super(name, age, "Cat", breed);  // Call the Animal constructor
+    public Cat(String name, int age, String breed, String furLength, boolean isIndoor) {
+        super(name, age, Species.CAT, breed);
         this.furLength = furLength;
         this.isIndoor = isIndoor;
     }
@@ -43,10 +43,9 @@ public class Cat extends Animal implements Adoptable {
     }
 
     @Override
-    public String getSpecies() {
-        return "Cat";
+    public Species getSpecies() {
+        return Species.CAT;
     }
-
     @Override
     public String getBreed() {
         return this.breed;
