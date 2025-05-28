@@ -4,12 +4,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-import models.Animal;
 import services.AdoptionService;
 import services.AnimalService;
 import services.VolunteerService;
-import ui.ShelterApp;
+import ui.CLI.ShelterApp;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,11 +18,12 @@ import java.util.List;
 
 public class DashboardController {
 
-    private final ShelterApp shelterApp = new ShelterApp(); // shared controller logic
 
-    private final AnimalService animalService = shelterApp.getAnimalService();
-    private final AdoptionService adoptionService = shelterApp.getAdoptionService();
-    private final VolunteerService volunteerService = shelterApp.getVolunteerService();
+    private final ShelterApp shelterApp = ShelterApp.getInstance();
+    private final AnimalController animalController = shelterApp.getAnimalController();
+    private final AdoptionController adoptionController = shelterApp.getAdoptionController();
+    private final VolunteerController volunteerController = shelterApp.getVolunteerController();
+
 
     @FXML
     private void handleAddAnimal() {
@@ -39,37 +41,57 @@ public class DashboardController {
 
     @FXML
     private void handleListAnimals() {
-        animalService.listAnimals();
+        animalController.listAnimals();
     }
 
     @FXML
     private void handleAdoptAnimal() {
-        adoptionService.adoptAnimal();
+        adoptionController.adoptAnimal();
     }
 
     @FXML
     private void handleSearchAnimal() {
-       animalService.searchAnimal();
+        ChoiceDialog<String> typeDialog = new ChoiceDialog<>("Name", List.of("Name", "ID", "Species"));
+        typeDialog.setTitle("Search Animal");
+        typeDialog.setHeaderText("Choose search type:");
+        typeDialog.setContentText("Search by:");
+
+        typeDialog.showAndWait().ifPresent(searchType -> {
+            TextInputDialog inputDialog = new TextInputDialog();
+            inputDialog.setTitle("Search Animal");
+            inputDialog.setHeaderText("Enter " + searchType + ":");
+            inputDialog.setContentText(searchType + ":");
+
+            inputDialog.showAndWait().ifPresent(input -> {
+                switch (searchType) {
+                    case "Name" -> animalController.findAnimalByName();
+                    case "ID" -> animalController.findAnimalById();
+                    case "Species" -> animalController.findAnimalsBySpecies();
+                    default -> showInfo("Invalid", "Unsupported search type.");
+                }
+            });
+        });
     }
+
 
     @FXML
     private void handleRemoveAnimal() {
-       animalService.removeAnimal();
+       animalController.removeAnimal();
     }
 
     @FXML
     private void handleSortAnimals() {
-        animalService.sortAnimals();
+        animalController.sortAnimals();
     }
 
     @FXML
     private void handleRegisterVolunteer() {
-        volunteerService.registerVolunteer();
+        volunteerController.registerVolunteer();
     }
 
     @FXML
     private void handleAddTask() {
-        volunteerService.addTask();
+        volunteerController.addTask();
     }
 
     @FXML

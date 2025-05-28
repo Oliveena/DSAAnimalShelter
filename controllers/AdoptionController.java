@@ -43,8 +43,6 @@ public class AdoptionController {
                 : "No animals in the adoption queue.");
     }
 
-
-
     public void clearQueue() {
         System.out.println("\n--- Clear Adoption Queue ---");
         if (adoptionService.isQueueEmpty()) {

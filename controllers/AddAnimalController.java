@@ -3,9 +3,8 @@ package controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import models.Animal;
 import services.AnimalService;
-import ui.ShelterApp;
+import ui.CLI.ShelterApp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,24 +23,31 @@ public class AddAnimalController {
     @FXML private TextField furLengthField;
     @FXML private CheckBox indoorCheckBox;
 
-    private final AnimalService animalService = new ShelterApp().getAnimalService();
+    @FXML private VBox birdFields;
+    @FXML private CheckBox canFlyCheckBox;
+
+    @FXML private VBox lizardFields;
+    @FXML private CheckBox venomousCheckBox;
+
+    private final AnimalService animalService = ShelterApp.getInstance().getAnimalService();
 
     @FXML
     public void initialize() {
         dogFields.setVisible(false);
         catFields.setVisible(false);
+        birdFields.setVisible(false);
+        lizardFields.setVisible(false);
 
         typeChoiceBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if ("Dog".equalsIgnoreCase(newVal)) {
-                dogFields.setVisible(true);
-                catFields.setVisible(false);
-            } else if ("Cat".equalsIgnoreCase(newVal)) {
-                dogFields.setVisible(false);
-                catFields.setVisible(true);
-            } else {
-                dogFields.setVisible(false);
-                catFields.setVisible(false);
-            }
+            dogFields.setVisible(false);
+            catFields.setVisible(false);
+            birdFields.setVisible(false);
+            lizardFields.setVisible(false);
+
+            if ("Dog".equalsIgnoreCase(newVal)) dogFields.setVisible(true);
+            else if ("Cat".equalsIgnoreCase(newVal)) catFields.setVisible(true);
+            else if ("Bird".equalsIgnoreCase(newVal)) birdFields.setVisible(true);
+            else if ("Lizard".equalsIgnoreCase(newVal)) lizardFields.setVisible(true);
         });
     }
 
@@ -70,12 +76,21 @@ public class AddAnimalController {
 
         Map<String, String> extras = new HashMap<>();
 
-        if ("Dog".equalsIgnoreCase(type)) {
-            extras.put("breed", breedField.getText().trim());
-            extras.put("trained", String.valueOf(trainedCheckBox.isSelected()));
-        } else if ("Cat".equalsIgnoreCase(type)) {
-            extras.put("furLength", furLengthField.getText().trim());
-            extras.put("indoor", String.valueOf(indoorCheckBox.isSelected()));
+        switch (type.toLowerCase()) {
+            case "dog" -> {
+                extras.put("breed", breedField.getText().trim());
+                extras.put("trained", String.valueOf(trainedCheckBox.isSelected()));
+            }
+            case "cat" -> {
+                extras.put("furLength", furLengthField.getText().trim());
+                extras.put("indoor", String.valueOf(indoorCheckBox.isSelected()));
+            }
+            case "bird" -> {
+                extras.put("canFly", String.valueOf(canFlyCheckBox.isSelected()));
+            }
+            case "lizard" -> {
+                extras.put("venomous", String.valueOf(venomousCheckBox.isSelected()));
+            }
         }
 
         try {
@@ -94,9 +109,14 @@ public class AddAnimalController {
         trainedCheckBox.setSelected(false);
         furLengthField.clear();
         indoorCheckBox.setSelected(false);
+        canFlyCheckBox.setSelected(false);
+        venomousCheckBox.setSelected(false);
         typeChoiceBox.getSelectionModel().clearSelection();
+
         dogFields.setVisible(false);
         catFields.setVisible(false);
+        birdFields.setVisible(false);
+        lizardFields.setVisible(false);
     }
 
     private void showAlert(String title, String msg) {
