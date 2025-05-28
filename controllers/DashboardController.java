@@ -24,7 +24,7 @@ public class DashboardController {
     @FXML
     private void handleAddAnimal() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/add_animal.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/javaFX/views/add_animal.fxml"));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle("Add Animal");

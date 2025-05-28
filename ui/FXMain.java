@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/dashboard.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("javaFX/views/dashboard.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle("Animal Shelter Management");
         primaryStage.setScene(scene);
