@@ -1,25 +1,29 @@
 package services;
 
+import models.Adopter;
 import models.AnimalRegistry;
 import models.ShelterQueue;
 import models.animals.Animal;
-import models.Adopter;
-import models.forms.AdoptionForm;
+import patterns.behavioral.strategies.AnimalMatchingStrategy;
+import patterns.behavioral.strategies.PreferenceMatchingStrategy;
 import patterns.creational.factories.FormFactory;
-import patterns.behavioral.strategies.AdoptionStrategy;
+import patterns.structural.templates.FifoAdoptionProcessor;
+import patterns.structural.templates.PreferenceBasedAdoptionProcessor;
 
 import java.time.LocalDate;
 
 public class AdoptionService {
     private final ShelterQueue queue;
     private final AnimalRegistry registry;
-    private final AdoptionStrategy strategy;
     private final FormFactory formFactory;
 
-    public AdoptionService(ShelterQueue queue, AnimalRegistry registry, AdoptionStrategy strategy, FormFactory formFactory) {
+    // Create reusable strategies (or inject via constructor/DI)
+    private final AnimalMatchingStrategy fifoStrategy = new FifoMatchingStrategy();
+    private final AnimalMatchingStrategy preferenceStrategy = new PreferenceMatchingStrategy();
+
+    public AdoptionService(ShelterQueue queue, AnimalRegistry registry, FormFactory formFactory) {
         this.queue = queue;
         this.registry = registry;
-        this.strategy = strategy;
         this.formFactory = formFactory;
     }
 
@@ -35,13 +39,51 @@ public class AdoptionService {
         queue.clear();
     }
 
-    public Animal adoptNext(String adopterName) {
-        Animal adopted = strategy.adopt(registry, queue);
-        if (adopted != null) {
-            Adopter adopter = new Adopter(adopterName);
-            AdoptionForm form = formFactory.createAdoptionForm(adopter, adopted, LocalDate.now());
-            form.submit();
+    // FIFO Adoption
+    public Animal adoptNextFIFO(String adopterName) {
+        Adopter adopter = new Adopter(adopterName);
+        FifoAdoptionProcessor processor = new FifoAdoptionProcessor(adopter, registry, queue, fifoStrategy);
+
+        try {
+            processor.execute();
+            Animal adopted = processor.getAdoptedAnimal();
+            if (adopted != null) {
+                formFactory.createAdoptionForm(adopter, adopted, LocalDate.now()).submit();
+            }
+            return adopted;
+        } catch (Exception e) {
+            System.out.println("FIFO adoption failed: " + e.getMessage());
+            return null;
         }
-        return adopted;
     }
+
+    // Preference-Based Adoption
+    public Animal adoptByPreference(Adopter adopter) {
+        PreferenceBasedAdoptionProcessor processor = new PreferenceBasedAdoptionProcessor(adopter, registry, preferenceStrategy);
+
+        try {
+            processor.execute();
+            Animal adopted = processor.getAdoptedAnimal();
+            if (adopted != null) {
+                formFactory.createAdoptionForm(adopter, adopted, LocalDate.now()).submit();
+            }
+            return adopted;
+        } catch (Exception e) {
+            System.out.println("Preference-based adoption failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Strategy implementations (could be static classes or moved outside)
+    private static class FifoMatchingStrategy implements AnimalMatchingStrategy {
+        @Override
+        public Animal selectAnimal(Adopter adopter, AnimalRegistry registry, ShelterQueue queue) {
+            return queue.peekNext();
+        }
+    }
+
+    public AnimalRegistry getRegistry() {
+        return registry;
+    }
+
 }

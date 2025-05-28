@@ -43,6 +43,13 @@ public class Adopter {
         this.name = name;
     }
 
+    public void setPreference(String key, String value) {
+        if (preferences == null) {
+            preferences = new AdopterPreferences();
+        }
+        preferences.setPreference(key, value);
+    }
+
     /**
      * Adds an animal to this adopter's list of adopted animals.
      *

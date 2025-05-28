@@ -8,8 +8,6 @@ import models.animals.Animal;
 import patterns.creational.factories.LogFactory;
 import patterns.creational.factories.FormFactory;
 import patterns.behavioral.observer.VolunteerManager;
-import patterns.behavioral.strategies.AdoptionStrategy;
-import patterns.behavioral.strategies.FIFOAdoptionStrategy;
 import services.*;
 import ui.CLI.menus.AdminMenu;
 import ui.CLI.menus.VetMenu;
@@ -42,13 +40,12 @@ public class ShelterApp {
 
     private final FormFactory formFactory = new FormFactory();
     private final VolunteerManager volunteerManager = new VolunteerManager();
-    private final AdoptionStrategy adoptionStrategy = new FIFOAdoptionStrategy();
 
     private final ShelterService shelterService = new ShelterService(registry, volunteerManager);
     private final AnimalService animalService = new AnimalService(registry);
     private final MedicalRecordService medicalService = new MedicalRecordService();
     private final VolunteerService volunteerService = new VolunteerService(volunteerManager, shelterService);
-    private final AdoptionService adoptionService = new AdoptionService(queue, registry, adoptionStrategy, formFactory);
+    private final AdoptionService adoptionService = new AdoptionService(queue, registry, formFactory);
 
     // === Controllers ===
 
@@ -100,7 +97,7 @@ public class ShelterApp {
     }
 
     private void showAdminMenu() {
-        AdminMenu adminMenu = new AdminMenu(adminController);
+        AdminMenu adminMenu = new AdminMenu(adminController, adoptionController);
         runMenu("🐾 Admin Menu", adminMenu.getMenu());
     }
 

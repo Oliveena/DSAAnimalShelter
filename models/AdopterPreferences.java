@@ -1,5 +1,8 @@
 package models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents an adopter's preferences used for matching with adoptable animals.
  * <p>
@@ -48,6 +51,17 @@ public class AdopterPreferences {
     public void setMaxAge(Integer maxAge) {
         this.maxAge = maxAge;
     }
+
+        private final Map<String, String> preferences = new HashMap<>();
+
+        public void setPreference(String key, String value) {
+            preferences.put(key.toLowerCase(), value.toLowerCase());
+        }
+
+        public String getPreference(String key) {
+            return preferences.get(key.toLowerCase());
+        }
+
 
     @Override
     public String toString() {

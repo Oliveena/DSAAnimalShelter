@@ -1,6 +1,7 @@
 package ui.CLI.menus;
 
 import controllers.AdminController;
+import controllers.AdoptionController;
 import ui.CLI.MenuOption;
 
 import java.util.LinkedHashMap;
@@ -8,9 +9,11 @@ import java.util.Map;
 
 public class AdminMenu {
     private final AdminController adminController;
+    private final AdoptionSubMenu adoptionSubMenu;
 
-    public AdminMenu(AdminController adminController) {
+    public AdminMenu(AdminController adminController, AdoptionController adoptionController) {
         this.adminController = adminController;
+        this.adoptionSubMenu = new AdoptionSubMenu(adoptionController);
     }
 
     public Map<String, MenuOption> getMenu() {
@@ -22,7 +25,7 @@ public class AdminMenu {
         menu.put("5", new MenuOption("Find Animals by Species", adminController::findBySpecies));
         menu.put("6", new MenuOption("Sort Animals", adminController::sortAnimals));
         menu.put("7", new MenuOption("Remove Animal", adminController::removeAnimal));
-        menu.put("8", new MenuOption("Adopt Animal", adminController::adoptAnimal));
+        menu.put("8", new MenuOption("Adopt Animal", () -> adoptionSubMenu.show()));
         menu.put("9", new MenuOption("Clear Adoption Queue", adminController::clearQueue));
         menu.put("10", new MenuOption("Peek Next in Queue", adminController::peekNextAnimal));
         menu.put("0", new MenuOption("Return to Main Menu", () -> {}));
