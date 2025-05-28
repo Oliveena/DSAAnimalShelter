@@ -7,6 +7,7 @@ import java.util.*;
 import controllers.AdoptionController;
 import controllers.AnimalController;
 import controllers.MedicalRecordController;
+import controllers.VolunteerController;
 import models.*;
 import models.animals.Animal;
 import patterns.builders.*;
@@ -16,10 +17,7 @@ import patterns.observer.VolunteerManager;
 import patterns.observer.VolunteerObserver;
 import patterns.strategies.AdoptionStrategy;
 import patterns.strategies.FIFOAdoptionStrategy;
-import services.AdoptionService;
-import services.AnimalService;
-import services.MedicalRecordService;
-import services.ShelterService;
+import services.*;
 
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -39,12 +37,14 @@ public class ShelterApp {
         private AdoptionStrategy adoptionStrategy = new FIFOAdoptionStrategy();
         private AnimalRegistry registry = new AnimalRegistry();
         private VolunteerManager volunteerManager = new VolunteerManager();
+        private ShelterService shelter = new ShelterService(registry, volunteerManager);
         private AnimalService animalService = new AnimalService(registry);
         private MedicalRecordService medicalService = new MedicalRecordService();
         private MedicalRecordController medicalController = new MedicalRecordController(medicalService, scanner);
-        private AnimalController animalController = new AnimalController(animalService, medicalController, scanner, registry, queue);
-        private ShelterService shelter = new ShelterService(registry, volunteerManager);
+        private AnimalController animalController = new AnimalController(animalService, medicalController, scanner, registry, queue, shelter);
 
+        private VolunteerService volunteerService = new VolunteerService(volunteerManager,shelter);
+        private VolunteerController volunteerController = new VolunteerController(volunteerService, scanner);
         private AdoptionService adoptionService = new AdoptionService(queue, registry, adoptionStrategy, formFactory);
         private AdoptionController adoptionController = new AdoptionController(adoptionService, scanner);
 
@@ -70,37 +70,13 @@ public class ShelterApp {
                     case "8" -> animalController.findAnimalById();
                     case "9" -> animalController.findAnimalsBySpecies();
                     case "10" -> animalController.sortAnimals();
-                    case "11" -> registerVolunteer();
-                    case "12" -> addTask();
+                    case "11" -> volunteerController.registerVolunteer();
+                    case "12" -> volunteerController.addTask();
                     case "0" -> exit = true;
                     default -> System.out.println("Invalid choice.");
                 }
             }
         }
-
-        private void registerVolunteer() {
-            System.out.println("\n--- Register a Volunteer ---");
-            String name = prompt("Enter volunteer name: ");
-            shelter.registerVolunteer(new Volunteer(name));
-            System.out.println("Volunteer '" + name + "' registered.");
-        }
-
-        private void addTask() {
-            System.out.println("\n--- Add New Volunteer Task ---");
-            String description = prompt("Enter task description: ");
-            LocalDate dueDate;
-            while (true) {
-                try {
-                    dueDate = LocalDate.parse(prompt("Enter due date (YYYY-MM-DD): "));
-                    break;
-                } catch (DateTimeParseException e) {
-                    System.out.println("Invalid date format. Please use YYYY-MM-DD.");
-                }
-            }
-            shelter.addTask(new Task(description, dueDate));
-            System.out.println("Task added and volunteers notified.");
-        }
-
 
 
         // === HELPER METHODS ===

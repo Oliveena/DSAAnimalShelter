@@ -15,8 +15,8 @@ public class ShelterService  {
     private final VolunteerManager volunteerManager;
 
     public ShelterService(AnimalRegistry registry, VolunteerManager volunteerManager) {
-        this.registry = new AnimalRegistry(50); // customizable capacity
-        this.volunteerManager = new VolunteerManager();
+        this.registry = registry; // customizable capacity
+        this.volunteerManager = volunteerManager;
     }
 
     // Delegated methods

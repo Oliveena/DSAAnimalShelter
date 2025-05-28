@@ -5,6 +5,7 @@ import models.*;
 import patterns.builders.*;
 import services.AnimalService;
 import services.MedicalRecordService;
+import services.ShelterService;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -15,14 +16,20 @@ public class AnimalController {
     private Scanner scanner;
     private AnimalRegistry registry ;
     private ShelterQueue queue;
+    private ShelterService shelterService;
 
-
-    public AnimalController(AnimalService animalService, MedicalRecordController medicalController, Scanner scanner, AnimalRegistry registry, ShelterQueue queue) {
+    public AnimalController(AnimalService animalService,
+                            MedicalRecordController medicalController,
+                            Scanner scanner,
+                            AnimalRegistry registry,
+                            ShelterQueue queue,
+                            ShelterService shelterService) {
         this.animalService = animalService;
         this.medicalController = medicalController;
         this.scanner = scanner;
         this.registry = registry;
         this.queue = queue;
+        this.shelterService = shelterService;
     }
 
     public void addAnimal() {
@@ -51,7 +58,7 @@ public class AnimalController {
         };
 
         medicalController.collectMedicalRecord(animal);
-        animalService.addAnimal(animal);
+        shelterService.addAnimal(animal);
         queue.enqueue(animal);
 
         System.out.println(animal.getSpecies() + " added. Total: " +
