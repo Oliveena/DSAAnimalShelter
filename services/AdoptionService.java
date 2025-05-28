@@ -5,8 +5,8 @@ import models.ShelterQueue;
 import models.animals.Animal;
 import models.Adopter;
 import models.AdoptionForm;
-import patterns.factories.FormFactory;
-import patterns.strategies.AdoptionStrategy;
+import patterns.creational.factories.FormFactory;
+import patterns.behavioral.strategies.AdoptionStrategy;
 
 import java.time.LocalDate;
 

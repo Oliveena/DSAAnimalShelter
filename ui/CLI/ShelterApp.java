@@ -1,7 +1,5 @@
 package ui.CLI;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import controllers.AdoptionController;
@@ -10,13 +8,11 @@ import controllers.MedicalRecordController;
 import controllers.VolunteerController;
 import models.*;
 import models.animals.Animal;
-import patterns.builders.*;
-import patterns.factories.LogFactory;
-import patterns.factories.FormFactory;
-import patterns.observer.VolunteerManager;
-import patterns.observer.VolunteerObserver;
-import patterns.strategies.AdoptionStrategy;
-import patterns.strategies.FIFOAdoptionStrategy;
+import patterns.creational.factories.LogFactory;
+import patterns.creational.factories.FormFactory;
+import patterns.behavioral.observer.VolunteerManager;
+import patterns.behavioral.strategies.AdoptionStrategy;
+import patterns.behavioral.strategies.FIFOAdoptionStrategy;
 import services.*;
 
 import java.util.function.Consumer;

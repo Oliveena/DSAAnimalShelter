@@ -2,13 +2,11 @@ package controllers;
 
 import models.animals.Animal;
 import models.*;
-import patterns.builders.*;
+import patterns.creational.builders.*;
 import services.AnimalService;
-import services.MedicalRecordService;
 import services.ShelterService;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class AnimalController {
     private AnimalService animalService;

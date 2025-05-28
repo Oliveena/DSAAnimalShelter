@@ -5,8 +5,8 @@ import models.animals.Animal;
 import models.animals.Cat;
 import models.animals.Dog;
 import org.junit.jupiter.api.Test;
-import patterns.builders.MedicalRecordBuilder;
-import patterns.factories.FormFactory;
+import patterns.creational.builders.MedicalRecordBuilder;
+import patterns.creational.factories.FormFactory;
 
 import java.time.LocalDate;
 import java.util.List;

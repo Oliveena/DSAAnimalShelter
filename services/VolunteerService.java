@@ -2,7 +2,7 @@ package services;
 
 import models.Task;
 import models.Volunteer;
-import patterns.observer.VolunteerManager;
+import patterns.behavioral.observer.VolunteerManager;
 
 import java.time.LocalDate;
 

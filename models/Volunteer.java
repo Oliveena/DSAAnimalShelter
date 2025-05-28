@@ -1,6 +1,6 @@
 package models;
 
-import patterns.observer.VolunteerObserver;
+import patterns.behavioral.observer.VolunteerObserver;
 
 /**
  * Represents a volunteer registered with the animal shelter.
