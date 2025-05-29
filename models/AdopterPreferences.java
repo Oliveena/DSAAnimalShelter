@@ -12,8 +12,6 @@ import java.util.Map;
  *     <li>Preferred breed</li>
  *     <li>Maximum age of the animal</li>
  * </ul>
- * These preferences are used in systems like {@link util.matching.PreferenceMatcher}
- * to determine the best available match.
  */
 public class AdopterPreferences {
     private String species;
@@ -34,6 +32,7 @@ public class AdopterPreferences {
 
     public void setSpecies(String species) {
         this.species = species;
+        preferences.put("species", species != null ? species.toLowerCase() : null);
     }
 
     public String getBreed() {
@@ -42,6 +41,7 @@ public class AdopterPreferences {
 
     public void setBreed(String breed) {
         this.breed = breed;
+        preferences.put("breed", breed != null ? breed.toLowerCase() : null);
     }
 
     public Integer getMaxAge() {
@@ -50,18 +50,57 @@ public class AdopterPreferences {
 
     public void setMaxAge(Integer maxAge) {
         this.maxAge = maxAge;
+        if (maxAge != null) {
+            preferences.put("maxage", maxAge.toString());
+        } else {
+            preferences.remove("maxage");
+        }
     }
 
-        private final Map<String, String> preferences = new HashMap<>();
+    private final Map<String, String> preferences = new HashMap<>();
 
-        public void setPreference(String key, String value) {
-            preferences.put(key.toLowerCase(), value.toLowerCase());
+    /**
+     * Sets a preference by key and value.
+     * Also updates the corresponding typed field if the key matches.
+     */
+    public void setPreference(String key, String value) {
+        if (key == null) return;
+        String lowerKey = key.toLowerCase();
+
+        if (value != null) {
+            preferences.put(lowerKey, value.toLowerCase());
+        } else {
+            preferences.remove(lowerKey);
         }
 
-        public String getPreference(String key) {
-            return preferences.get(key.toLowerCase());
+        switch (lowerKey) {
+            case "species":
+                setSpecies(value);
+                break;
+            case "breed":
+                setBreed(value);
+                break;
+            case "maxage":
+                try {
+                    if (value != null) {
+                        setMaxAge(Integer.parseInt(value));
+                    } else {
+                        setMaxAge(null);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Warning: Invalid maxAge value: " + value);
+                }
+                break;
+            default:
+                // For other keys, just store in map
+                break;
         }
+    }
 
+    public String getPreference(String key) {
+        if (key == null) return null;
+        return preferences.get(key.toLowerCase());
+    }
 
     @Override
     public String toString() {

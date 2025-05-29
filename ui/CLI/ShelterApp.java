@@ -86,15 +86,23 @@ public class ShelterApp {
             }
             System.out.print("Select an option: ");
             String choice = scanner.nextLine().trim();
-            MenuOption option = menu.get(choice);
+
+            // Allow keys case-insensitive (optional)
+            MenuOption option = menu.entrySet().stream()
+                    .filter(e -> e.getKey().equalsIgnoreCase(choice))
+                    .map(Map.Entry::getValue)
+                    .findFirst()
+                    .orElse(null);
+
             if (option != null) {
                 option.execute();
                 if (option.getDescription().equalsIgnoreCase("Return to Main Menu")) break;
             } else {
-                System.out.println("Invalid choice. Please try again.");
+                System.out.println("Invalid choice '" + choice + "'. Please try again.");
             }
         }
     }
+
 
     private void showAdminMenu() {
         AdminMenu adminMenu = new AdminMenu(adminController, adoptionController);

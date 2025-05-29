@@ -21,35 +21,36 @@ public class AdminController {
         this.shelterService = shelterService;
     }
 
+    // Interactive methods — run directly, no executor.submit
     public void addAnimal() {
-        executor.submit(animalController::addAnimal);
+        animalController.addAnimal();
     }
 
     public void listAnimals() {
-        executor.submit(animalController::listAnimals);
+        animalController.listAnimals();
     }
 
     public void findByName() {
-        executor.submit(animalController::findAnimalByName);
+        animalController.findAnimalByName();
     }
 
     public void findById() {
-        executor.submit(animalController::findAnimalById);
+        animalController.findAnimalById();
     }
 
     public void findBySpecies() {
-        executor.submit(animalController::findAnimalsBySpecies);
+        animalController.findAnimalsBySpecies();
     }
 
     public void sortAnimals() {
-        executor.submit(animalController::sortAnimals);
+        animalController.sortAnimals();
     }
 
     public void removeAnimal() {
-        executor.submit(animalController::removeAnimal);
+        animalController.removeAnimal();
     }
 
-    // === Adoption Variants ===
+    // Adoption operations — can be async if they don't involve user input
     public void adoptAnimalFIFO() {
         executor.submit(adoptionController::adoptAnimalOfTheMonth);
     }
@@ -58,10 +59,9 @@ public class AdminController {
         executor.submit(adoptionController::preferenceBasedAdoption);
     }
 
-    // thrid option: adopting directly from displayed animal list
-//    public void adoptAnimalManually() {
-//        executor.submit(adoptionController::adoptAnimal);
-//    }
+    // public void adoptAnimalManually() {
+    //     executor.submit(adoptionController::adoptAnimal);
+    // }
 
     public void clearQueue() {
         executor.submit(adoptionController::clearQueue);

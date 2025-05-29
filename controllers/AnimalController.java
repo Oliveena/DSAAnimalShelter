@@ -207,11 +207,15 @@ public class AnimalController {
         }
     }
 
-    private String promptEnum(String message, List<String> allowed) {
+    public String promptEnum(String message, List<String> allowed) {
         while (true) {
-            String input = prompt(message).toLowerCase();
-            if (allowed.contains(input)) return input;
-            System.out.println("Allowed: " + allowed);
+            String input = prompt(message);
+            for (String option : allowed) {
+                if (option.equalsIgnoreCase(input)) {
+                    return option;  // return the allowed option with original casing
+                }
+            }
+            System.out.println("Invalid input. Allowed: " + allowed);
         }
     }
 
