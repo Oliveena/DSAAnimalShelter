@@ -162,6 +162,10 @@ public class ShelterApp {
             consumer.accept(input);
         }
     }
+    public void startSilently() {
+        // Simulate starting the app without running menus
+        System.out.println("Initializing components...");
+    }
 
     // === Accessors for Controllers and Services ===
 
