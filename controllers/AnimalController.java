@@ -2,6 +2,7 @@ package controllers;
 
 import models.animals.Animal;
 import models.*;
+import models.animals.Dog;
 import patterns.creational.builders.*;
 import services.AnimalService;
 import services.ShelterService;
@@ -194,4 +195,12 @@ public class AnimalController {
             System.out.println("Allowed: " + allowed);
         }
     }
+
+    public void addAnimalDirectly(Animal animal) {
+        animalService.addAnimal(animal);
+    }
+
+
+
+
 }

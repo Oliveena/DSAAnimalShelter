@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class AnimalRegistry {
 
     private final List<Animal> animalList = new ArrayList<>();
-    private final int maxCapacity;
+    private  int maxCapacity;
 
     /**
      * Constructs a new {@code AnimalRegistry} with a default maximum capacity of 20.
@@ -37,6 +37,15 @@ public class AnimalRegistry {
         }
         this.maxCapacity = maxCapacity;
     }
+
+    public void setMaxCapacity(int capacity) {
+        if (maxCapacity <= 0) {
+            throw new IllegalArgumentException("Capacity must be greater than zero.");
+        }
+        this.maxCapacity = capacity;
+
+    }
+
 
     /**
      * Adds a new animal to the registry.

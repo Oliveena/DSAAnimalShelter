@@ -61,5 +61,6 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="javafx-sdk-21" level="project" />
+    <orderEntry type="library" name="lib1" level="project" />
   </component>
 </module>

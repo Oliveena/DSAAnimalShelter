@@ -47,11 +47,6 @@ public class AdoptionController {
         System.out.println("Please enter your animal preferences.");
 
         String species = prompt("Species (dog, cat, lizard, etc.): ");
-        // You can add more specific questions here, e.g.:
-        // if cat, ask about fur length; if dog, trained, etc.
-
-        // Build Adopter with preferences (assuming you have setter methods)
-        // This depends on your Adopter model — adjust accordingly
 
         Adopter adopter = new Adopter(adopterName);
         adopter.setPreference("species", species);
@@ -139,7 +134,7 @@ public class AdoptionController {
         }
 
         Animal selectedAnimal = animals.get(choice - 1);
-        adoptAnimal(selectedAnimal); // Reuse the original method
+        adoptAnimal(selectedAnimal);
 
         System.out.println("Adoption successful! You adopted: " + selectedAnimal.getDetails());
     }
