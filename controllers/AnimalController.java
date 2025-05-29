@@ -2,12 +2,14 @@ package controllers;
 
 import models.animals.Animal;
 import models.*;
-import models.animals.Dog;
 import patterns.creational.builders.*;
 import services.AnimalService;
 import services.ShelterService;
 
 import java.util.*;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AnimalController {
     private AnimalService animalService;
@@ -16,6 +18,10 @@ public class AnimalController {
     private AnimalRegistry registry ;
     private ShelterQueue queue;
     private ShelterService shelterService;
+
+    // could also be injected as a Singleton pattern design, but we're short on time
+    private final ExecutorService executor = Executors.newFixedThreadPool(2); // arbitrary 2 threads
+
 
     public AnimalController(AnimalService animalService,
                             MedicalRecordController medicalController,
@@ -62,6 +68,16 @@ public class AnimalController {
 
         System.out.println(animal.getSpecies() + " added. Total: " +
                 animalService.getAnimalCount() + "/" + animalService.getMaxCapacity());
+
+        // Threading to simulate async logging/saving
+        executor.submit(() -> {
+            System.out.println("[Background Thread] Logging new animal: " + animal.getName());
+            try {
+                Thread.sleep(500); // simulate delay
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
     }
 
     public void listAnimals() {
@@ -73,12 +89,15 @@ public class AnimalController {
             return;
         }
 
-        for (Animal animal : animals) {
-            System.out.println(animal.getDetails());
-            medicalController.displayMedicalRecord(animal);
-            System.out.println();
-        }
+        animals.stream()
+                .sorted(Comparator.comparing(Animal::getName, String.CASE_INSENSITIVE_ORDER))
+                .map(animal -> {
+                    medicalController.displayMedicalRecord(animal);
+                    return animal.getDetails();
+                })
+                .forEach(System.out::println);
     }
+
 
     public void sortAnimals() {
         System.out.println("\n--- Sort Animals ---");
@@ -196,11 +215,9 @@ public class AnimalController {
         }
     }
 
-    public void addAnimalDirectly(Animal animal) {
-        animalService.addAnimal(animal);
+    // shutting down the thread
+    public void shutdown() {
+        executor.shutdown();
     }
-
-
-
 
 }

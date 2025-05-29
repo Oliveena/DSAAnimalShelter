@@ -9,6 +9,9 @@ import ui.CLI.ShelterApp;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class AddAnimalController {
 
     @FXML private TextField nameField;
@@ -30,6 +33,9 @@ public class AddAnimalController {
     @FXML private CheckBox venomousCheckBox;
 
     private final AnimalService animalService = ShelterApp.getInstance().getAnimalService();
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
     @FXML
     public void initialize() {
@@ -74,32 +80,35 @@ public class AddAnimalController {
             return;
         }
 
-        Map<String, String> extras = new HashMap<>();
+        Map<String, String> extras = switch (type.toLowerCase()) {
+            case "dog" -> Map.of(
+                    "breed", breedField.getText().trim(),
+                    "trained", String.valueOf(trainedCheckBox.isSelected())
+            );
+            case "cat" -> Map.of(
+                    "furLength", furLengthField.getText().trim(),
+                    "indoor", String.valueOf(indoorCheckBox.isSelected())
+            );
+            case "bird" -> Map.of("canFly", String.valueOf(canFlyCheckBox.isSelected()));
+            case "lizard" -> Map.of("venomous", String.valueOf(venomousCheckBox.isSelected()));
+            default -> Map.of();
+        };
 
-        switch (type.toLowerCase()) {
-            case "dog" -> {
-                extras.put("breed", breedField.getText().trim());
-                extras.put("trained", String.valueOf(trainedCheckBox.isSelected()));
-            }
-            case "cat" -> {
-                extras.put("furLength", furLengthField.getText().trim());
-                extras.put("indoor", String.valueOf(indoorCheckBox.isSelected()));
-            }
-            case "bird" -> {
-                extras.put("canFly", String.valueOf(canFlyCheckBox.isSelected()));
-            }
-            case "lizard" -> {
-                extras.put("venomous", String.valueOf(venomousCheckBox.isSelected()));
-            }
-        }
+        executor.submit(() -> {
+            try {
+                animalService.addAnimalFromUI(name, age, type, extras);
 
-        try {
-            animalService.addAnimalFromUI(name, age, type, extras);
-            showAlert("Success", "Animal added successfully!");
-            clearForm();
-        } catch (Exception e) {
-            showAlert("Error", "Failed to add animal: " + e.getMessage());
-        }
+                // UI updates must run on JavaFX thread:
+                javafx.application.Platform.runLater(() -> {
+                    showAlert("Success", "Animal added successfully!");
+                    clearForm();
+                });
+            } catch (Exception e) {
+                javafx.application.Platform.runLater(() ->
+                        showAlert("Error", "Failed to add animal: " + e.getMessage()));
+            }
+        });
+
     }
 
     private void clearForm() {
@@ -125,5 +134,9 @@ public class AddAnimalController {
         alert.setContentText(msg);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    public void shutdown() {
+        executor.shutdown();
     }
 }

@@ -7,9 +7,9 @@ import models.ShelterQueue;
 import models.animals.Animal;
 
 import java.util.List;
+import java.util.Comparator;
 
 public class PreferenceMatchingStrategy implements AnimalMatchingStrategy {
-
     @Override
     public Animal selectAnimal(Adopter adopter, AnimalRegistry registry, ShelterQueue queue) {
         List<Animal> animals = registry.getAllAnimals();
@@ -22,19 +22,10 @@ public class PreferenceMatchingStrategy implements AnimalMatchingStrategy {
             return null;
         }
 
-        Animal bestMatch = null;
-        int highestScore = Integer.MIN_VALUE;
-
-        for (Animal animal : availableAnimals) {
-            int score = getScore(animal, preferences);
-
-            if (score > highestScore) {
-                highestScore = score;
-                bestMatch = animal;
-            }
-        }
-
-        return bestMatch;
+        // Stream to find animal with max score, parallel stream used because animal list could be very large
+                return availableAnimals.parallelStream()
+                .max(Comparator.comparingInt(animal -> getScore(animal, preferences)))
+                .orElse(null);
     }
 
     private int getScore(Animal animal, AdopterPreferences preferences) {

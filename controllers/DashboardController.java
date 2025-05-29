@@ -7,13 +7,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
+import models.animals.Animal;
 import ui.CLI.ShelterApp;
 
 import java.util.List;
 
 
 public class DashboardController {
-
 
     private final ShelterApp shelterApp = ShelterApp.getInstance();
     private final AnimalController animalController = shelterApp.getAnimalController();
@@ -39,11 +39,26 @@ public class DashboardController {
     private void handleListAnimals() {
         animalController.listAnimals();
     }
-
     @FXML
     private void handleAdoptAnimal() {
-        adoptionController.adoptAnimal();
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Adopt Animal of the Month (FIFO)",
+                List.of("Adopt Animal of the Month (FIFO)", "Preference-Based Adoption", "Manual Adoption"));
+
+        dialog.setTitle("Adopt Animal");
+        dialog.setHeaderText("Choose adoption method:");
+        dialog.setContentText("Select option:");
+
+        dialog.showAndWait().ifPresent(choice -> {
+            switch (choice) {
+                case "Adopt Animal of the Month (FIFO)" -> adoptionController.adoptAnimalOfTheMonth();
+                case "Preference-Based Adoption" -> adoptionController.preferenceBasedAdoption();
+                // TODO: implement adoption from displayAnimals() list
+                // case "Manual Adoption" -> adoptionController.adoptAnimal();
+                default -> showInfo("Invalid Selection", "Please select a valid adoption option.");
+            }
+        });
     }
+
 
     @FXML
     private void handleSearchAnimal() {

@@ -25,17 +25,20 @@ public class VolunteerController {
     public void addTask() {
         System.out.println("\n--- Add New Volunteer Task ---");
         String description = prompt("Enter task description: ");
-        LocalDate dueDate;
+        LocalDate dueDate = promptForDate("Enter due date (YYYY-MM-DD): ");
+        volunteerService.addTask(description, dueDate);
+        System.out.println("Task added and volunteers notified.");
+    }
+
+    private LocalDate promptForDate(String message) {
         while (true) {
+            String input = prompt(message);
             try {
-                dueDate = LocalDate.parse(prompt("Enter due date (YYYY-MM-DD): "));
-                break;
+                return LocalDate.parse(input);
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please use YYYY-MM-DD.");
             }
         }
-        volunteerService.addTask(description, dueDate);
-        System.out.println("Task added and volunteers notified.");
     }
 
     private String prompt(String message) {

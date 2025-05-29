@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import models.animals.Animal;
 
+
+
 /**
  * Represents a queue of animals waiting for adoption at the shelter.
  * <p>

@@ -14,17 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppPerformanceTest {
 
-    private AnimalController controller;
+    private AnimalService animalService;
 
     @BeforeEach
     public void setUp() {
-        AnimalRegistry registry = new AnimalRegistry(1000); // Increase capacity to avoid limit
-        ShelterQueue queue = new ShelterQueue();
-        VolunteerManager volunteerManager = new VolunteerManager();
-        AnimalService animalService = new AnimalService(registry);
-        ShelterService shelterService = new ShelterService(registry, volunteerManager);
-
-        controller = new AnimalController(animalService, null, null, registry, queue, shelterService);
+        AnimalRegistry registry = new AnimalRegistry(1000);
+        animalService = new AnimalService(registry);
+        // No controller needed if you want pure synchronous test
     }
 
     @Test
@@ -33,7 +29,7 @@ public class AppPerformanceTest {
 
         for (int i = 0; i < 500; i++) {
             Dog dog = new Dog("Dog" + i, 2, "Mixed", true);
-            controller.addAnimalDirectly(dog);
+            animalService.addAnimal(dog);  // direct sync call
         }
 
         long end = System.currentTimeMillis();

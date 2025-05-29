@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import patterns.creational.factories.LogFactory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 /**
  * Manages a list of volunteers implementing the {@link VolunteerObserver} interface.
  * <p>
@@ -48,9 +50,7 @@ public class VolunteerManager implements VolunteerSubject {
     @Override
     public void notifyVolunteers(String event) {
         logger.info("Notifying " + volunteers.size() + " volunteer(s) of event: " + event);
-        for (VolunteerObserver v : volunteers) {
-            v.update(event);
-        }
+        volunteers.parallelStream().forEach(v -> v.update(event));
     }
 }
 

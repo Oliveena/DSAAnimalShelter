@@ -4,10 +4,14 @@ import services.ShelterService;
 import controllers.AnimalController;
 import controllers.AdoptionController;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class AdminController {
     private final AnimalController animalController;
     private final AdoptionController adoptionController;
     private final ShelterService shelterService;
+    private final ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public AdminController(AnimalController animalController,
                            AdoptionController adoptionController,
@@ -18,42 +22,56 @@ public class AdminController {
     }
 
     public void addAnimal() {
-        animalController.addAnimal();
+        executor.submit(animalController::addAnimal);
     }
 
     public void listAnimals() {
-        animalController.listAnimals();
+        executor.submit(animalController::listAnimals);
     }
 
     public void findByName() {
-        animalController.findAnimalByName();
+        executor.submit(animalController::findAnimalByName);
     }
 
     public void findById() {
-        animalController.findAnimalById();
+        executor.submit(animalController::findAnimalById);
     }
 
     public void findBySpecies() {
-        animalController.findAnimalsBySpecies();
+        executor.submit(animalController::findAnimalsBySpecies);
     }
 
     public void sortAnimals() {
-        animalController.sortAnimals();
+        executor.submit(animalController::sortAnimals);
     }
 
     public void removeAnimal() {
-        animalController.removeAnimal();
+        executor.submit(animalController::removeAnimal);
     }
 
-    public void adoptAnimal() {
-        adoptionController.adoptAnimal();
+    // === Adoption Variants ===
+    public void adoptAnimalFIFO() {
+        executor.submit(adoptionController::adoptAnimalOfTheMonth);
     }
+
+    public void adoptAnimalByPreference() {
+        executor.submit(adoptionController::preferenceBasedAdoption);
+    }
+
+    // thrid option: adopting directly from displayed animal list
+//    public void adoptAnimalManually() {
+//        executor.submit(adoptionController::adoptAnimal);
+//    }
 
     public void clearQueue() {
-        adoptionController.clearQueue();
+        executor.submit(adoptionController::clearQueue);
     }
 
     public void peekNextAnimal() {
-        adoptionController.peekNextAnimal();
+        executor.submit(adoptionController::peekNextAnimal);
+    }
+
+    public void shutdown() {
+        executor.shutdown();
     }
 }
