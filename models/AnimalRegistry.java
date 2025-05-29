@@ -3,6 +3,7 @@ package models;
 import models.animals.Animal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
  * Capacity limits are enforced to ensure the shelter does not exceed its predefined maximum.
  */
 public class AnimalRegistry {
-
-    private final List<Animal> animalList = new ArrayList<>();
+// use of Collections to make thread-safe
+    private final List<Animal> animalList = Collections.synchronizedList(new ArrayList<>());
     private  int maxCapacity;
 
     /**
@@ -39,12 +40,12 @@ public class AnimalRegistry {
     }
 
     public void setMaxCapacity(int capacity) {
-        if (maxCapacity <= 0) {
+        if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than zero.");
         }
         this.maxCapacity = capacity;
-
     }
+
 
 
     /**
@@ -53,7 +54,7 @@ public class AnimalRegistry {
      * @param animal the animal to add
      * @throws IllegalStateException if the registry is at full capacity
      */
-    public void addAnimal(Animal animal) {
+    public synchronized void addAnimal(Animal animal) {
         if (animal == null) {
             System.out.println("Attempted to add a null animal.");
             return;

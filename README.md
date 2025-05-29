@@ -1,10 +1,11 @@
 
-```
 DSAAnimalShelter
 ├─ .idea
 │  ├─ git_toolbox_prj.xml
 │  ├─ libraries
-│  │  └─ lib.xml
+│  │  ├─ javafx_sdk_21.xml
+│  │  ├─ lib.xml
+│  │  └─ lib1.xml
 │  ├─ misc.xml
 │  ├─ modules.xml
 │  ├─ shelf
@@ -22,7 +23,16 @@ DSAAnimalShelter
 │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_1.xml
 │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m__[Changes]
 │  │  │  └─ shelved.patch
-│  │  └─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│  │  ├─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m__[Changes]
+│  │  │  ├─ AddAnimalController.class
+│  │  │  ├─ AdminController.class
+│  │  │  ├─ AdoptionController.class
+│  │  │  ├─ AnimalController.class
+│  │  │  ├─ DashboardController.class
+│  │  │  ├─ ShelterQueue.class
+│  │  │  └─ shelved.patch
+│  │  └─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m___Changes_.xml
 │  ├─ uiDesigner.xml
 │  ├─ vcs.xml
 │  └─ workspace.xml
@@ -58,7 +68,8 @@ DSAAnimalShelter
 │  │  ├─ Bird.java
 │  │  ├─ Cat.java
 │  │  ├─ Dog.java
-│  │  └─ Lizard.java
+│  │  ├─ Lizard.java
+│  │  └─ Species.java
 │  ├─ employees
 │  │  ├─ Vet.java
 │  │  └─ Volunteer.java
@@ -69,14 +80,17 @@ DSAAnimalShelter
 │  │  └─ ReturnToShelterFormInstance.java
 │  ├─ MedicalRecord.java
 │  ├─ ShelterQueue.java
-│  └─ Task.java
+│  ├─ Task.java
+│  └─ Treatable.java
 ├─ out
 │  └─ production
 │     └─ Assignment1 - Copy
 │        ├─ .idea
 │        │  ├─ git_toolbox_prj.xml
 │        │  ├─ libraries
-│        │  │  └─ lib.xml
+│        │  │  ├─ javafx_sdk_21.xml
+│        │  │  ├─ lib.xml
+│        │  │  └─ lib1.xml
 │        │  ├─ misc.xml
 │        │  ├─ modules.xml
 │        │  ├─ shelf
@@ -88,7 +102,10 @@ DSAAnimalShelter
 │        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_1.xml
 │        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m__[Changes]
 │        │  │  │  └─ shelved.patch
-│        │  │  └─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│        │  │  ├─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m__[Changes]
+│        │  │  │  └─ shelved.patch
+│        │  │  └─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m___Changes_.xml
 │        │  ├─ uiDesigner.xml
 │        │  ├─ vcs.xml
 │        │  └─ workspace.xml
@@ -124,7 +141,8 @@ DSAAnimalShelter
 │        │  │  ├─ Bird.class
 │        │  │  ├─ Cat.class
 │        │  │  ├─ Dog.class
-│        │  │  └─ Lizard.class
+│        │  │  ├─ Lizard.class
+│        │  │  └─ Species.class
 │        │  ├─ employees
 │        │  │  ├─ Vet.class
 │        │  │  └─ Volunteer.class
@@ -135,7 +153,8 @@ DSAAnimalShelter
 │        │  │  └─ ReturnToShelterFormInstance.class
 │        │  ├─ MedicalRecord.class
 │        │  ├─ ShelterQueue.class
-│        │  └─ Task.class
+│        │  ├─ Task.class
+│        │  └─ Treatable.class
 │        ├─ patterns
 │        │  ├─ behavioral
 │        │  │  ├─ observer
@@ -143,8 +162,8 @@ DSAAnimalShelter
 │        │  │  │  ├─ VolunteerObserver.class
 │        │  │  │  └─ VolunteerSubject.class
 │        │  │  └─ strategies
-│        │  │     ├─ AdoptionStrategy.class
-│        │  │     └─ FIFOAdoptionStrategy.class
+│        │  │     ├─ AnimalMatchingStrategy.class
+│        │  │     └─ PreferenceMatchingStrategy.class
 │        │  ├─ creational
 │        │  │  ├─ builders
 │        │  │  │  ├─ AnimalBuilder.class
@@ -166,9 +185,11 @@ DSAAnimalShelter
 │        │        ├─ AnimalReturnProcessor.class
 │        │        ├─ FifoAdoptionProcessor.class
 │        │        └─ PreferenceBasedAdoptionProcessor.class
+│        ├─ README.md
 │        ├─ repository
 │        │  └─ AnimalRepository.class
 │        ├─ services
+│        │  ├─ AdoptionService$FifoMatchingStrategy.class
 │        │  ├─ AdoptionService.class
 │        │  ├─ AnimalService.class
 │        │  ├─ MedicalRecordService.class
@@ -179,6 +200,7 @@ DSAAnimalShelter
 │        │  │  ├─ MenuOption.class
 │        │  │  ├─ menus
 │        │  │  │  ├─ AdminMenu.class
+│        │  │  │  ├─ AdoptionSubMenu.class
 │        │  │  │  ├─ VetMenu.class
 │        │  │  │  └─ VolunteerMenu.class
 │        │  │  └─ ShelterApp.class
@@ -188,10 +210,11 @@ DSAAnimalShelter
 │        │        ├─ add_animal.fxml
 │        │        └─ dashboard.fxml
 │        └─ util
-│           ├─ matching
-│           │  └─ PreferenceMatcher.class
 │           └─ tests
-│              └─ AnimalRegistryTest.class
+│              ├─ AnimalControllerTest.class
+│              ├─ AnimalRegistryTest.class
+│              ├─ AppPerformanceTest.class
+│              └─ AppStartupPerformanceTest.class
 ├─ patterns
 │  ├─ behavioral
 │  │  ├─ observer
@@ -199,8 +222,8 @@ DSAAnimalShelter
 │  │  │  ├─ VolunteerObserver.java
 │  │  │  └─ VolunteerSubject.java
 │  │  └─ strategies
-│  │     ├─ AdoptionStrategy.java
-│  │     └─ FIFOAdoptionStrategy.java
+│  │     ├─ AnimalMatchingStrategy.java
+│  │     └─ PreferenceMatchingStrategy.java
 │  ├─ creational
 │  │  ├─ builders
 │  │  │  ├─ AnimalBuilder.java
@@ -222,6 +245,7 @@ DSAAnimalShelter
 │        ├─ AnimalReturnProcessor.java
 │        ├─ FifoAdoptionProcessor.java
 │        └─ PreferenceBasedAdoptionProcessor.java
+├─ README.md
 ├─ repository
 │  └─ AnimalRepository.java
 ├─ services
@@ -235,6 +259,7 @@ DSAAnimalShelter
 │  │  ├─ MenuOption.java
 │  │  ├─ menus
 │  │  │  ├─ AdminMenu.java
+│  │  │  ├─ AdoptionSubMenu.java
 │  │  │  ├─ VetMenu.java
 │  │  │  └─ VolunteerMenu.java
 │  │  └─ ShelterApp.java
@@ -245,9 +270,10 @@ DSAAnimalShelter
 │        ├─ add_animal.fxml
 │        └─ dashboard.fxml
 └─ util
-   ├─ matching
-   │  └─ PreferenceMatcher.java
    └─ tests
-      └─ AnimalRegistryTest.java
+      ├─ AnimalControllerTest.java
+      ├─ AnimalRegistryTest.java
+      ├─ AppPerformanceTest.java
+      └─ AppStartupPerformanceTest.java
 
 ```
