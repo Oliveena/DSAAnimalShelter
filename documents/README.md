@@ -1,29 +1,49 @@
-# Animal Shelter Management System
+# 🐾 Animal Shelter Management System
 
+A Java-based application for managing an animal shelter — tracking animals, facilitating adoptions, maintaining medical records, and organizing the adoption queue.
 
-This is an Animal Shelter Management System built in Java, designed to manage animal adoption in a shelter. The system allows users to add animals, view animal details, search by name, adopt animals in a First-In-First-Out (FIFO) order, and manage the adoption queue.
-
-The system features multiple types of animals (like Dogs, Cats, Birds, Lizards), different adoption patterns.behavioral.strategies, and keeps track of vaccination records.
+This system allows shelter staff to register animals (e.g., dogs, cats, birds, lizards), manage adoptions using various behavioral strategies, and maintain vaccination and return records — all with an extendable, object-oriented design.
 
 ---
 
-### Features
+## Authors
 
-***Add Animal*** : Add a new animal to the shelter with details like type, name, age, and specific attributes (breed, fur length, etc.).
+Anastassia Tarassova
+Dang Huynh Minh 
 
-***List Animals*** : List all animals in the shelter.
+for 
 
-***Adopt Animal*** : Adopt the next animal in the adoption queue.
+Data Structures and Algorithms course
 
-***Search Animal*** : Search for an animal by name.
+---
 
-***Remove Animal*** : Remove an animal from the shelter by its ID.
+## ✨ Features
 
-***Sort Animals*** : Sort animals by name or age.
+- **Add Animal** — Register a new animal with details like name, species, age, and breed-specific attributes.
+- **List Animals** — Display all animals currently in the shelter.
+- **Search by Name** — Find animals by partial or full name (case-insensitive).
+- **Adopt Animal** — Adopt the next animal in the FIFO queue or using a matching strategy.
+- **Remove by ID** — Remove an animal from the registry using its unique ID.
+- **Sort Animals** — Sort animals alphabetically or by age.
+- **Manage Adoption Queue** — Preview, clear, and manage the FIFO-based adoption queue.
+- **Track Medical Records** — Attach and view vaccination and medical records.
+- **Return to Shelter** — Record animals returned with reasoning.
 
-***Manage Adoption Queue*** : Preview the next animal in the adoption queue, clear the queue, and adopt animals in FIFO order.
+---
 
-***Vaccination Records*** : Track vaccination details for animals.
+## 🛠️ Technologies Used
+
+- **Java 17+**
+- **IntelliJ IDEA** (recommended)
+- **Maven** for build automation
+- **JUnit** (planned for future test coverage)
+- **JavaFX**
+
+---
+
+## 📦 Project Structure
+
+
 
 --- 
 
@@ -36,7 +56,7 @@ IntelliJ IDEA: IDE used for development.
 We attempted to use: 
 JUnit: Used for unit testing (for testing methods such as adding animals, searching, etc.).
 Maven: Used for dependency management.
-Considering this is not the purpose of the assignment, we chose to keep them for a later iteration .
+
 
 ---
 
@@ -53,7 +73,7 @@ IntelliJ IDEA (or any other Java IDE)
 ### Clone the Repository
 Clone this repository to your local machine:
 
-```git clone https://github.com/your-username/animal-shelter-management.git```
+```git clone https://github.com/Oliveena/DSAAnimalShelter.git```
 ```cd animal-shelter-management```
 Import into IntelliJ
 Open IntelliJ IDEA.
@@ -110,17 +130,292 @@ Once the application is running, it will display a menu with various options, in
 
 ### Folder Structure
 ```
-├── data/                   # Contains classes for managing the registry of animals.
-├── domain/                  # Contains core domain classes for different animals, animal types, and adoption.
-├── patterns.behavioral.strategies/             # Contains different adoption patterns.behavioral.strategies (e.g., FIFO).
-├── ui/                     # Contains the user interface and menu interactions.
-├── patterns.creational.builders/               # Contains builder classes for creating animals.
-├── resources/              # Contains resources like configuration files or images.
-├── test/                   # Contains unit tests.
-├── pom.xml                 # Maven project configuration.
-└── README.md               # Project documentation (this file).
-```
+DSAAnimalShelter
+├─ .idea
+│  ├─ git_toolbox_prj.xml
+│  ├─ libraries
+│  │  ├─ javafx_sdk_21.xml
+│  │  ├─ lib.xml
+│  │  └─ lib1.xml
+│  ├─ misc.xml
+│  ├─ modules.xml
+│  ├─ shelf
+│  │  ├─ Changes
+│  │  │  ├─ AnimalRegistry.class
+│  │  │  └─ shelved.patch
+│  │  ├─ Changes.xml
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m__[Changes]
+│  │  │  ├─ AnimalRegistryTest.class
+│  │  │  ├─ ShelterApp.class
+│  │  │  ├─ ShelterMenu.class
+│  │  │  └─ shelved.patch
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m__[Changes]1
+│  │  │  ├─ AnimalRegistryTest.class
+│  │  │  ├─ ShelterApp.class
+│  │  │  ├─ ShelterMenu.class
+│  │  │  └─ shelved.patch
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_.xml
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_1.xml
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m__[Changes]
+│  │  │  └─ shelved.patch
+│  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│  │  ├─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m__[Changes]
+│  │  │  ├─ AddAnimalController.class
+│  │  │  ├─ AdminController.class
+│  │  │  ├─ AdoptionController.class
+│  │  │  ├─ AnimalController.class
+│  │  │  ├─ DashboardController.class
+│  │  │  ├─ ShelterQueue.class
+│  │  │  └─ shelved.patch
+│  │  └─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m___Changes_.xml
+│  ├─ uiDesigner.xml
+│  ├─ vcs.xml
+│  └─ workspace.xml
+├─ app
+│  └─ Main.java
+├─ Assignment1 - Copy.iml
+├─ controllers
+│  ├─ AddAnimalController.java
+│  ├─ AdminController.java
+│  ├─ AdoptionController.java
+│  ├─ AnimalController.java
+│  ├─ DashboardController.java
+│  ├─ MedicalRecordController.java
+│  ├─ VetController.java
+│  └─ VolunteerController.java
+├─ documents
+│  ├─ concept-design.txt
+│  ├─ diagrams
+│  │  ├─ addAnimal.drawio.png
+│  │  ├─ adoptAnimal.drawio.png
+│  │  ├─ removeAnimal.drawio.png
+│  │  ├─ searchAnimal.drawio.png
+│  │  └─ sortAnimals.drawio.png
+│  ├─ Pseudocodes.txt
+│  └─ README.md
+├─ models
+│  ├─ Adoptable.java
+│  ├─ Adopter.java
+│  ├─ AdopterPreferences.java
+│  ├─ AnimalRegistry.java
+│  ├─ animals
+│  │  ├─ Animal.java
+│  │  ├─ Bird.java
+│  │  ├─ Cat.java
+│  │  ├─ Dog.java
+│  │  ├─ Lizard.java
+│  │  └─ Species.java
+│  ├─ employees
+│  │  ├─ Employee.java
+│  │  ├─ Vet.java
+│  │  └─ Volunteer.java
+│  ├─ forms
+│  │  ├─ AdoptionForm.java
+│  │  ├─ AdoptionFormInstance.java
+│  │  ├─ ReturnToShelterForm.java
+│  │  └─ ReturnToShelterFormInstance.java
+│  ├─ MedicalRecord.java
+│  ├─ ShelterQueue.java
+│  ├─ Task.java
+│  └─ Treatable.java
+├─ out
+│  └─ production
+│     └─ Assignment1 - Copy
+│        ├─ .idea
+│        │  ├─ git_toolbox_prj.xml
+│        │  ├─ libraries
+│        │  │  ├─ javafx_sdk_21.xml
+│        │  │  ├─ lib.xml
+│        │  │  └─ lib1.xml
+│        │  ├─ misc.xml
+│        │  ├─ modules.xml
+│        │  ├─ shelf
+│        │  │  ├─ Changes
+│        │  │  │  └─ shelved.patch
+│        │  │  ├─ Changes.xml
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m__[Changes]
+│        │  │  │  └─ shelved.patch
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m__[Changes]1
+│        │  │  │  └─ shelved.patch
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_.xml
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_38_a_m___Changes_1.xml
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m__[Changes]
+│        │  │  │  └─ shelved.patch
+│        │  │  ├─ Uncommitted_changes_before_Checkout_at_2025-05-28_9_39_a_m___Changes_.xml
+│        │  │  ├─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m__[Changes]
+│        │  │  │  └─ shelved.patch
+│        │  │  └─ Uncommitted_changes_before_Update_at_2025-05-29_9_18_a_m___Changes_.xml
+│        │  ├─ uiDesigner.xml
+│        │  ├─ vcs.xml
+│        │  └─ workspace.xml
+│        ├─ app
+│        │  └─ Main.class
+│        ├─ Assignment1 - Copy.iml
+│        ├─ controllers
+│        │  ├─ AddAnimalController.class
+│        │  ├─ AdminController.class
+│        │  ├─ AdoptionController.class
+│        │  ├─ AnimalController.class
+│        │  ├─ DashboardController.class
+│        │  ├─ MedicalRecordController.class
+│        │  ├─ VetController.class
+│        │  └─ VolunteerController.class
+│        ├─ documents
+│        │  ├─ concept-design.txt
+│        │  ├─ diagrams
+│        │  │  ├─ addAnimal.drawio.png
+│        │  │  ├─ adoptAnimal.drawio.png
+│        │  │  ├─ removeAnimal.drawio.png
+│        │  │  ├─ searchAnimal.drawio.png
+│        │  │  └─ sortAnimals.drawio.png
+│        │  ├─ Pseudocodes.txt
+│        │  └─ README.md
+│        ├─ models
+│        │  ├─ Adoptable.class
+│        │  ├─ Adopter.class
+│        │  ├─ AdopterPreferences.class
+│        │  ├─ AnimalRegistry.class
+│        │  ├─ animals
+│        │  │  ├─ Animal.class
+│        │  │  ├─ Bird.class
+│        │  │  ├─ Cat.class
+│        │  │  ├─ Dog.class
+│        │  │  ├─ Lizard.class
+│        │  │  └─ Species.class
+│        │  ├─ employees
+│        │  │  ├─ Employee.class
+│        │  │  ├─ Vet.class
+│        │  │  └─ Volunteer.class
+│        │  ├─ forms
+│        │  │  ├─ AdoptionForm.class
+│        │  │  ├─ AdoptionFormInstance.class
+│        │  │  ├─ ReturnToShelterForm.class
+│        │  │  └─ ReturnToShelterFormInstance.class
+│        │  ├─ MedicalRecord.class
+│        │  ├─ ShelterQueue.class
+│        │  ├─ Task.class
+│        │  └─ Treatable.class
+│        ├─ patterns
+│        │  ├─ behavioral
+│        │  │  ├─ observer
+│        │  │  │  ├─ VolunteerManager.class
+│        │  │  │  ├─ VolunteerObserver.class
+│        │  │  │  └─ VolunteerSubject.class
+│        │  │  └─ strategies
+│        │  │     ├─ AnimalMatchingStrategy.class
+│        │  │     └─ PreferenceMatchingStrategy.class
+│        │  ├─ creational
+│        │  │  ├─ builders
+│        │  │  │  ├─ AnimalBuilder.class
+│        │  │  │  ├─ BirdBuilder.class
+│        │  │  │  ├─ CatBuilder.class
+│        │  │  │  ├─ DogBuilder.class
+│        │  │  │  ├─ LizardBuilder.class
+│        │  │  │  └─ MedicalRecordBuilder.class
+│        │  │  └─ factories
+│        │  │     ├─ AdopterFactory.class
+│        │  │     ├─ FormFactory.class
+│        │  │     └─ LogFactory.class
+│        │  └─ structural
+│        │     ├─ decorators
+│        │     │  ├─ AnimalDecorator.class
+│        │     │  └─ VaccinationDecorator.class
+│        │     └─ templates
+│        │        ├─ AnimalProcessingTemplate.class
+│        │        ├─ AnimalReturnProcessor.class
+│        │        ├─ FifoAdoptionProcessor.class
+│        │        └─ PreferenceBasedAdoptionProcessor.class
+│        ├─ README.md
+│        ├─ repository
+│        │  └─ AnimalRepository.class
+│        ├─ services
+│        │  ├─ AdoptionService$FifoMatchingStrategy.class
+│        │  ├─ AdoptionService.class
+│        │  ├─ AnimalService.class
+│        │  ├─ MedicalRecordService.class
+│        │  ├─ ShelterService.class
+│        │  └─ VolunteerService.class
+│        ├─ ui
+│        │  ├─ CLI
+│        │  │  ├─ MenuOption.class
+│        │  │  ├─ menus
+│        │  │  │  ├─ AdminMenu.class
+│        │  │  │  ├─ AdoptionSubMenu.class
+│        │  │  │  ├─ VetMenu.class
+│        │  │  │  └─ VolunteerMenu.class
+│        │  │  └─ ShelterApp.class
+│        │  ├─ FXMain.class
+│        │  └─ javaFX
+│        │     └─ views
+│        │        ├─ add_animal.fxml
+│        │        └─ dashboard.fxml
+│        └─ util
+│           └─ tests
+│              ├─ AnimalControllerTest.class
+│              ├─ AnimalRegistryTest.class
+│              ├─ AppPerformanceTest.class
+│              └─ AppStartupPerformanceTest.class
+├─ patterns
+│  ├─ behavioral
+│  │  ├─ observer
+│  │  │  ├─ VolunteerManager.java
+│  │  │  ├─ VolunteerObserver.java
+│  │  │  └─ VolunteerSubject.java
+│  │  └─ strategies
+│  │     ├─ AnimalMatchingStrategy.java
+│  │     └─ PreferenceMatchingStrategy.java
+│  ├─ creational
+│  │  ├─ builders
+│  │  │  ├─ AnimalBuilder.java
+│  │  │  ├─ BirdBuilder.java
+│  │  │  ├─ CatBuilder.java
+│  │  │  ├─ DogBuilder.java
+│  │  │  ├─ LizardBuilder.java
+│  │  │  └─ MedicalRecordBuilder.java
+│  │  └─ factories
+│  │     ├─ AdopterFactory.java
+│  │     ├─ FormFactory.java
+│  │     └─ LogFactory.java
+│  └─ structural
+│     ├─ decorators
+│     │  ├─ AnimalDecorator.java
+│     │  └─ VaccinationDecorator.java
+│     └─ templates
+│        ├─ AnimalProcessingTemplate.java
+│        ├─ AnimalReturnProcessor.java
+│        ├─ FifoAdoptionProcessor.java
+│        └─ PreferenceBasedAdoptionProcessor.java
+├─ repository
+│  └─ AnimalRepository.java
+├─ services
+│  ├─ AdoptionService.java
+│  ├─ AnimalService.java
+│  ├─ MedicalRecordService.java
+│  ├─ ShelterService.java
+│  └─ VolunteerService.java
+├─ ui
+│  ├─ CLI
+│  │  ├─ MenuOption.java
+│  │  ├─ menus
+│  │  │  ├─ AdminMenu.java
+│  │  │  ├─ AdoptionSubMenu.java
+│  │  │  ├─ VetMenu.java
+│  │  │  └─ VolunteerMenu.java
+│  │  └─ ShelterApp.java
+│  ├─ FXMain.java
+│  └─ javaFX
+│     ├─ controllers
+│     └─ views
+│        ├─ add_animal.fxml
+│        └─ dashboard.fxml
+└─ util
+   └─ tests
+      ├─ AnimalControllerTest.java
+      ├─ AnimalRegistryTest.java
+      ├─ AppPerformanceTest.java
+      └─ AppStartupPerformanceTest.java
 
+```
 ---
 
 ### Contributing
@@ -132,147 +427,9 @@ Follow Java naming conventions: Use clear, descriptive names for variables and m
 
 Document your code: Add comments and documentation where appropriate.
 
-
 ---
 
 ### License
 This project is a student project.
 
 
-```
-DSAAnimalShelter
-├─ .idea
-│  ├─ git_toolbox_prj.xml
-│  ├─ libraries
-│  │  └─ lib.xml
-│  ├─ misc.xml
-│  ├─ modules.xml
-│  ├─ uiDesigner.xml
-│  ├─ vcs.xml
-│  └─ workspace.xml
-├─ Assignment1 - Copy.iml
-├─ Main.java
-├─ models
-│  ├─ Adoptable.java
-│  ├─ Adopter.java
-│  ├─ AdoptionForm.java
-│  ├─ Animal.java
-│  ├─ AnimalRegistry.java
-│  ├─ Bird.java
-│  ├─ Cat.java
-│  ├─ Dog.java
-│  ├─ Lizard.java
-│  ├─ MedicalRecord.java
-│  ├─ ShelterQueue.java
-│  ├─ Task.java
-│  └─ Volunteer.java
-├─ out
-│  └─ production
-│     └─ Assignment1 - Copy
-│        ├─ .idea
-│        │  ├─ git_toolbox_prj.xml
-│        │  ├─ libraries
-│        │  │  └─ lib.xml
-│        │  ├─ misc.xml
-│        │  ├─ modules.xml
-│        │  ├─ uiDesigner.xml
-│        │  ├─ vcs.xml
-│        │  └─ workspace.xml
-│        ├─ Assignment1 - Copy.iml
-│        ├─ diagrams
-│        │  ├─ addAnimal.drawio.png
-│        │  ├─ adoptAnimal.drawio.png
-│        │  ├─ removeAnimal.drawio.png
-│        │  ├─ searchAnimal.drawio.png
-│        │  └─ sortAnimals.drawio.png
-│        ├─ models
-│        │  ├─ Adoptable.class
-│        │  ├─ Adopter.class
-│        │  ├─ AdoptionForm.class
-│        │  ├─ Animal.class
-│        │  ├─ AnimalRegistry.class
-│        │  ├─ Bird.class
-│        │  ├─ Cat.class
-│        │  ├─ Dog.class
-│        │  ├─ Lizard.class
-│        │  ├─ MedicalRecord.class
-│        │  ├─ ShelterQueue.class
-│        │  ├─ Task.class
-│        │  └─ Volunteer.class
-│        ├─ patterns
-│        │  ├─ builders
-│        │  │  ├─ AnimalBuilder.class
-│        │  │  ├─ BirdBuilder.class
-│        │  │  ├─ CatBuilder.class
-│        │  │  ├─ DogBuilder.class
-│        │  │  ├─ LizardBuilder.class
-│        │  │  └─ MedicalRecordBuilder.class
-│        │  ├─ decorators
-│        │  │  ├─ AnimalDecorator.class
-│        │  │  └─ VaccinationDecorator.class
-│        │  ├─ factories
-│        │  │  └─ AdopterFactory.class
-│        │  ├─ observer
-│        │  │  ├─ VolunteerManager.class
-│        │  │  ├─ VolunteerObserver.class
-│        │  │  └─ VolunteerSubject.class
-│        │  ├─ strategies
-│        │  │  ├─ AdoptionStrategy.class
-│        │  │  └─ FIFOAdoptionStrategy.class
-│        │  └─ templates
-│        │     ├─ AnimalProcessingTemplate.class
-│        │     ├─ AnimalReturnProcessor.class
-│        │     └─ FifoAdoptionProcessor.class
-│        ├─ Pseudocodes.txt
-│        ├─ README.md
-│        ├─ services
-│        │  └─ Shelter.class
-│        └─ ui
-│           ├─ Main.class
-│           ├─ ShelterApp.class
-│           └─ ShelterMenu.class
-├─ patterns
-│  ├─ builders
-│  │  ├─ AnimalBuilder.java
-│  │  ├─ BirdBuilder.java
-│  │  ├─ CatBuilder.java
-│  │  ├─ DogBuilder.java
-│  │  ├─ LizardBuilder.java
-│  │  └─ MedicalRecordBuilder.java
-│  ├─ decorators
-│  │  ├─ AnimalDecorator.java
-│  │  └─ VaccinationDecorator.java
-│  ├─ factories
-│  │  └─ AdopterFactory.java
-│  ├─ observer
-│  │  ├─ VolunteerManager.java
-│  │  ├─ VolunteerObserver.java
-│  │  └─ VolunteerSubject.java
-│  ├─ strategies
-│  │  ├─ AdoptionStrategy.java
-│  │  └─ FIFOAdoptionStrategy.java
-│  └─ templates
-│     ├─ AnimalProcessingTemplate.java
-│     ├─ AnimalReturnProcessor.java
-│     └─ FifoAdoptionProcessor.java
-├─ Pseudocodes.txt
-├─ README.md
-├─ repository
-│  └─ DB_ACCESSES_WOULD_BE_HERE
-├─ services
-│  └─ Shelter.java
-└─ util
-   ├─ diagrams
-   │  ├─ addAnimal.drawio.png
-   │  ├─ adoptAnimal.drawio.png
-   │  ├─ removeAnimal.drawio.png
-   │  ├─ searchAnimal.drawio.png
-   │  └─ sortAnimals.drawio.png
-   ├─ tests
-   │  └─ AnimalRegistryTest.java
-   └─ ui
-      ├─ JAVAFX_SHOULD_PROBABLY_GO_HERE
-      ├─ ShelterApp.java
-      └─ ShelterMenu.java
-
-```
