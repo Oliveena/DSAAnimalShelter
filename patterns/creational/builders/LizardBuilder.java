@@ -3,32 +3,18 @@ package patterns.creational.builders;
 import models.animals.Lizard;
 
 /**
- * A builder class for creating {@link Lizard} instances using the fluent builder pattern.
+ * Builder for creating instances of {@link Lizard} with fluent configuration.
  * <p>
- * This class extends {@link AnimalBuilder} to support attributes specific to lizards,
- * such as whether the lizard is venomous.
- *
- * <pre>{@code
- * Lizard lizard = new LizardBuilder()
- *     .setName("Iggy")
- *     .setAge(2)
- *     .setBreed("Green Iguana")
- *     .setVenomous(false)
- *     .setMedicalRecord(record)
- *     .build();
- * }</pre>
- *
- * @see Lizard
- * @see AnimalBuilder
+ * Supports setting common animal attributes inherited from {@link AnimalBuilder}
+ * as well as specific properties like venomous status.
  */
 public class LizardBuilder extends AnimalBuilder<Lizard, LizardBuilder> {
-
     private boolean isVenomous;
 
     /**
-     * Returns the current instance of the builder for fluent method chaining.
+     * Returns the current builder instance for method chaining.
      *
-     * @return the current {@code LizardBuilder} instance
+     * @return this {@link LizardBuilder} instance
      */
     @Override
     protected LizardBuilder self() {
@@ -38,8 +24,8 @@ public class LizardBuilder extends AnimalBuilder<Lizard, LizardBuilder> {
     /**
      * Sets whether the lizard is venomous.
      *
-     * @param isVenomous {@code true} if the lizard is venomous, {@code false} otherwise
-     * @return the current builder instance
+     * @param isVenomous true if the lizard is venomous; false otherwise
+     * @return this {@link LizardBuilder} instance for chaining
      */
     public LizardBuilder setVenomous(boolean isVenomous) {
         this.isVenomous = isVenomous;
@@ -47,11 +33,10 @@ public class LizardBuilder extends AnimalBuilder<Lizard, LizardBuilder> {
     }
 
     /**
-     * Constructs and returns a new {@link Lizard} using the configured builder values.
-     * <p>
-     * The medical record (if set) is assigned after the lizard is created.
+     * Builds and returns a {@link Lizard} instance with the configured properties.
+     * Medical records, if set, will be attached to the lizard.
      *
-     * @return a fully configured {@code Lizard} object
+     * @return a new {@link Lizard} instance
      */
     @Override
     public Lizard build() {

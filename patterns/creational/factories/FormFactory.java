@@ -10,40 +10,32 @@ import models.forms.ReturnToShelterFormInstance;
 import java.time.LocalDate;
 
 /**
- * A factory class for creating form instances used in the animal shelter system.
+ * Factory class for creating form instances related to animal adoption and returns.
  * <p>
- * This class centralizes the creation logic for various types of forms,
- * including adoption and return-to-shelter forms.
- *
- * <p>Usage Example:
- * <pre>{@code
- * AdoptionForm form = FormFactory.createAdoptionForm(adopter, animal, LocalDate.now());
- * }</pre>
- *
- * @see AdoptionForm
- * @see ReturnToShelterForm
+ * Uses static factory methods to encapsulate the creation logic of various forms,
+ * allowing clients to obtain form instances without coupling to concrete implementations.
  */
 public class FormFactory {
 
     /**
-     * Creates a new {@link AdoptionForm} instance with the given adopter, animal, and adoption date.
+     * Creates a new adoption form instance for the given adopter and animal on the specified date.
      *
-     * @param adopter the person adopting the animal
+     * @param adopter the adopter submitting the adoption form
      * @param animal  the animal being adopted
-     * @param date    the date of the adoption
-     * @return a new {@code AdoptionFormInstance}
+     * @param date    the adoption date
+     * @return a new {@link AdoptionForm} instance
      */
     public static AdoptionForm createAdoptionForm(Adopter adopter, Animal animal, LocalDate date) {
         return new AdoptionFormInstance(adopter, animal, date);
     }
 
     /**
-     * Creates a new {@link ReturnToShelterForm} instance with the given animal, return date, and reason.
+     * Creates a new return-to-shelter form instance for the given animal, return date, and reason.
      *
-     * @param animal the animal being returned to the shelter
-     * @param date   the date of the return
+     * @param animal the animal being returned
+     * @param date   the return date
      * @param reason the reason for the return
-     * @return a new {@code ReturnToShelterFormInstance}
+     * @return a new {@link ReturnToShelterForm} instance
      */
     public static ReturnToShelterForm createReturnForm(Animal animal, LocalDate date, String reason) {
         return new ReturnToShelterFormInstance(animal, date, reason);

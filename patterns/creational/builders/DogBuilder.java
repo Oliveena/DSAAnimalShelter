@@ -1,35 +1,20 @@
 package patterns.creational.builders;
 
 import models.animals.Dog;
-import models.animals.Species;
 
 /**
- * A builder class for constructing {@link Dog} instances using the fluent builder pattern.
+ * Builder for creating instances of {@link Dog} with fluent configuration.
  * <p>
- * This builder extends {@link AnimalBuilder} and adds support for dog-specific attributes,
- * such as training status.
- *
- * <pre>{@code
- * Dog dog = new DogBuilder()
- *     .setName("Buddy")
- *     .setAge(3)
- *     .setBreed("Labrador")
- *     .setTrained(true)
- *     .setMedicalRecord(record)
- *     .build();
- * }</pre>
- *
- * @see Dog
- * @see AnimalBuilder
+ * Supports setting common animal attributes inherited from {@link AnimalBuilder}
+ * as well as specific properties like training status.
  */
 public class DogBuilder extends AnimalBuilder<Dog, DogBuilder> {
-
     private boolean isTrained;
 
     /**
-     * Returns the current instance of the builder for fluent method chaining.
+     * Returns the current builder instance for method chaining.
      *
-     * @return the current builder instance
+     * @return this {@link DogBuilder} instance
      */
     @Override
     protected DogBuilder self() {
@@ -39,8 +24,8 @@ public class DogBuilder extends AnimalBuilder<Dog, DogBuilder> {
     /**
      * Sets whether the dog is trained.
      *
-     * @param trained {@code true} if the dog is trained, {@code false} otherwise
-     * @return the current builder instance
+     * @param trained true if the dog is trained; false otherwise
+     * @return this {@link DogBuilder} instance for chaining
      */
     public DogBuilder setTrained(boolean trained) {
         this.isTrained = trained;
@@ -48,11 +33,10 @@ public class DogBuilder extends AnimalBuilder<Dog, DogBuilder> {
     }
 
     /**
-     * Builds a new {@link Dog} instance using the configured attributes.
-     * <p>
-     * The medical record (if set) is also assigned after object construction.
+     * Builds and returns a {@link Dog} instance with the configured properties.
+     * Medical records, if set, will be attached to the dog.
      *
-     * @return a fully constructed {@code Dog} object
+     * @return a new {@link Dog} instance
      */
     @Override
     public Dog build() {
