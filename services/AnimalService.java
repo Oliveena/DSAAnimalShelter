@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Service class for managing animals in the shelter.
+ */
 public class AnimalService {
     private final AnimalRegistry registry;
 
@@ -35,6 +38,7 @@ public class AnimalService {
     }
 
     public List<Animal> findById(String id) {
+        // Returns a list with one animal or empty list if not found
         return Optional.ofNullable(registry.findById(id))
                 .map(List::of)
                 .orElse(List.of());
@@ -45,6 +49,7 @@ public class AnimalService {
     }
 
     public List<Animal> findBySpecies(String species) {
+        // Case-insensitive species matching
         return registry.getAllAnimals().stream()
                 .filter(a -> a.getSpecies().name().equalsIgnoreCase(species))
                 .toList();
@@ -62,6 +67,16 @@ public class AnimalService {
         return registry.isEmpty();
     }
 
+    /**
+     * Constructs and adds an animal based on UI input parameters.
+     * Uses builders for each supported animal type.
+     *
+     * @param name   Animal name
+     * @param age    Animal age
+     * @param type   Animal type (dog, cat, bird, lizard)
+     * @param extras Map of extra properties (breed, trained, etc.)
+     * @throws IllegalArgumentException if animal type is unsupported
+     */
     public void addAnimalFromUI(String name, int age, String type, Map<String, String> extras) {
         Animal animal = switch (type.toLowerCase()) {
             case "dog" -> new DogBuilder()
@@ -94,5 +109,4 @@ public class AnimalService {
 
         addAnimal(animal);
     }
-
 }

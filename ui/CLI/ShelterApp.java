@@ -17,17 +17,21 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
- * The main application for managing the animal shelter, providing functionality
- * for adding, listing, adopting, and removing animals from the shelter.
+ * The main CLI application for managing the animal shelter system.
  * <p>
- * The app interacts with an animal registry and an adoption queue, providing
- * various functionalities such as adding animals, searching, sorting, and adopting animals.
- * It allows interaction via a command-line interface.
+ * Provides functionality for adding, listing, sorting, and adopting animals via
+ * an interactive console interface. This class serves as the central controller
+ * for coordinating all services and controllers in the system.
  */
-
 public class ShelterApp {
+
     private static ShelterApp instance;
 
+    /**
+     * Returns the singleton instance of the ShelterApp.
+     *
+     * @return ShelterApp instance
+     */
     public static ShelterApp getInstance() {
         if (instance == null) instance = new ShelterApp();
         return instance;
@@ -37,7 +41,6 @@ public class ShelterApp {
     private final ShelterQueue queue = new ShelterQueue();
     private final AnimalRegistry registry = new AnimalRegistry();
     private final Scanner scanner = new Scanner(System.in);
-
     private final FormFactory formFactory = new FormFactory();
     private final VolunteerManager volunteerManager = new VolunteerManager();
 
@@ -48,11 +51,9 @@ public class ShelterApp {
     private final AdoptionService adoptionService = new AdoptionService(queue, registry, formFactory);
 
     // === Controllers ===
-
     private final MedicalRecordController medicalController = new MedicalRecordController(medicalService, scanner);
     private final AnimalController animalController = new AnimalController(animalService, medicalController, scanner, registry, queue, shelterService);
     private final AdoptionController adoptionController = new AdoptionController(adoptionService, scanner);
-
     private final AdminController adminController = new AdminController(animalController, adoptionController, shelterService);
     private final VetController vetController = new VetController(registry, medicalService, scanner);
     private final VolunteerController volunteerController = new VolunteerController(volunteerService, scanner);
@@ -61,10 +62,14 @@ public class ShelterApp {
     private static final Logger logger = LogFactory.getLogger(ShelterApp.class);
     private final Map<Animal, List<String>> vaccinationRecords = new HashMap<>();
 
-    // === Private Constructor ===
+    /**
+     * Private constructor to enforce singleton pattern.
+     */
     public ShelterApp() {}
 
-    // === CLI Start Method ===
+    /**
+     * Starts the command-line interface and displays the main menu.
+     */
     public void start() {
         Map<String, MenuOption> mainMenu = new LinkedHashMap<>();
 
@@ -76,8 +81,12 @@ public class ShelterApp {
         runMenu("=== Animal Shelter System ===", mainMenu);
     }
 
-    // === CLI Menu Methods ===
-
+    /**
+     * Displays and handles interaction for a given menu.
+     *
+     * @param title the title to display above the menu
+     * @param menu  the menu options
+     */
     private void runMenu(String title, Map<String, MenuOption> menu) {
         while (true) {
             System.out.println("\n" + title);
@@ -87,7 +96,6 @@ public class ShelterApp {
             System.out.print("Select an option: ");
             String choice = scanner.nextLine().trim();
 
-            // Allow keys case-insensitive (optional)
             MenuOption option = menu.entrySet().stream()
                     .filter(e -> e.getKey().equalsIgnoreCase(choice))
                     .map(Map.Entry::getValue)
@@ -103,28 +111,43 @@ public class ShelterApp {
         }
     }
 
-
+    /** Displays the Admin menu. */
     private void showAdminMenu() {
         AdminMenu adminMenu = new AdminMenu(adminController, adoptionController);
         runMenu("🐾 Admin Menu", adminMenu.getMenu());
     }
 
+    /** Displays the Volunteer menu. */
     private void showVolunteerMenu() {
         VolunteerMenu volunteerMenu = new VolunteerMenu(volunteerController);
         runMenu("Volunteer Menu", volunteerMenu.getMenu());
     }
 
+    /** Displays the Veterinarian menu. */
     private void showVetMenu() {
         VetMenu vetMenu = new VetMenu(vetController);
         runMenu("Vet Menu", vetMenu.getMenu());
     }
 
     // === CLI Prompt Helpers ===
+
+    /**
+     * Prompts the user for input with a custom message.
+     *
+     * @param message the message to display
+     * @return user input as a trimmed string
+     */
     public String prompt(String message) {
         System.out.print(message);
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Prompts the user for a boolean value.
+     *
+     * @param message the message to display
+     * @return the boolean result
+     */
     public boolean promptBoolean(String message) {
         while (true) {
             String input = prompt(message);
@@ -135,6 +158,9 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Prompts the user for an integer between min and max.
+     */
     public int promptInt(String message, int min, int max) {
         while (true) {
             try {
@@ -145,6 +171,9 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Prompts the user for a double greater than a minimum value.
+     */
     public double promptDouble(String message, double min) {
         while (true) {
             try {
@@ -155,6 +184,9 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Prompts the user to enter a value that matches one of the allowed strings.
+     */
     public String promptEnum(String message, List<String> allowed) {
         while (true) {
             String input = prompt(message).toLowerCase();
@@ -163,6 +195,11 @@ public class ShelterApp {
         }
     }
 
+    /**
+     * Continuously collects input lines until "done" is entered.
+     *
+     * @param consumer consumer to handle each input line
+     */
     public void collectListEntries(Consumer<String> consumer) {
         while (true) {
             String input = scanner.nextLine().trim();
@@ -170,42 +207,30 @@ public class ShelterApp {
             consumer.accept(input);
         }
     }
+
+    /**
+     * Starts the application silently (without showing any menus).
+     * Useful for performance testing or background initialization.
+     */
     public void startSilently() {
-        // Simulate starting the app without running menus
         System.out.println("Initializing components...");
     }
 
     // === Accessors for Controllers and Services ===
 
-    public AnimalController getAnimalController() {
-        return animalController;
-    }
+    public AnimalController getAnimalController() { return animalController; }
 
-    public AdoptionController getAdoptionController() {
-        return adoptionController;
-    }
+    public AdoptionController getAdoptionController() { return adoptionController; }
 
-    public VolunteerController getVolunteerController() {
-        return volunteerController;
-    }
+    public VolunteerController getVolunteerController() { return volunteerController; }
 
-    public AnimalService getAnimalService() {
-        return animalService;
-    }
+    public AnimalService getAnimalService() { return animalService; }
 
-    public VolunteerService getVolunteerService() {
-        return volunteerService;
-    }
+    public VolunteerService getVolunteerService() { return volunteerService; }
 
-    public AdoptionService getAdoptionService() {
-        return adoptionService;
-    }
+    public AdoptionService getAdoptionService() { return adoptionService; }
 
-    public ShelterService getShelterService() {
-        return shelterService;
-    }
+    public ShelterService getShelterService() { return shelterService; }
 
-    public MedicalRecordService getMedicalRecordService() {
-        return medicalService;
-    }
+    public MedicalRecordService getMedicalRecordService() { return medicalService; }
 }

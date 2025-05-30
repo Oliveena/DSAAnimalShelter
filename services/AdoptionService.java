@@ -12,34 +12,64 @@ import patterns.structural.templates.PreferenceBasedAdoptionProcessor;
 
 import java.time.LocalDate;
 
+/**
+ * Service class managing animal adoption processes including FIFO and preference-based adoptions.
+ * Uses strategy and template method patterns to handle different adoption workflows.
+ */
 public class AdoptionService {
     private final ShelterQueue queue;
     private final AnimalRegistry registry;
     private final FormFactory formFactory;
 
-    // Create reusable strategies (or inject via constructor/DI)
+    // Reusable adoption strategies
     private final AnimalMatchingStrategy fifoStrategy = new FifoMatchingStrategy();
     private final AnimalMatchingStrategy preferenceStrategy = new PreferenceMatchingStrategy();
 
+    /**
+     * Constructs an AdoptionService with the given shelter queue, animal registry, and form factory.
+     *
+     * @param queue       Shelter queue managing waiting adopters.
+     * @param registry    Registry containing all animals in the shelter.
+     * @param formFactory Factory to create adoption forms.
+     */
     public AdoptionService(ShelterQueue queue, AnimalRegistry registry, FormFactory formFactory) {
         this.queue = queue;
         this.registry = registry;
         this.formFactory = formFactory;
     }
 
+    /**
+     * Checks whether the adoption queue is empty.
+     *
+     * @return true if the queue is empty; false otherwise.
+     */
     public boolean isQueueEmpty() {
         return queue.isEmpty();
     }
 
+    /**
+     * Peeks at the next animal available for adoption in the queue without removing it.
+     *
+     * @return The next animal in the queue, or null if none available.
+     */
     public Animal peekNext() {
         return queue.peekNext();
     }
 
+    /**
+     * Clears all entries from the adoption queue.
+     */
     public void clearQueue() {
         queue.clear();
     }
 
-    // FIFO Adoption
+    /**
+     * Attempts to adopt the next animal in the queue using a FIFO approach.
+     * Creates and submits an adoption form upon successful adoption.
+     *
+     * @param adopterName Name of the adopter.
+     * @return The adopted animal, or null if adoption failed.
+     */
     public Animal adoptNextFIFO(String adopterName) {
         Adopter adopter = new Adopter(adopterName);
         FifoAdoptionProcessor processor = new FifoAdoptionProcessor(adopter, registry, queue, fifoStrategy);
@@ -57,7 +87,13 @@ public class AdoptionService {
         }
     }
 
-    // Preference-Based Adoption
+    /**
+     * Attempts to adopt an animal based on the preferences of the provided adopter.
+     * Creates and submits an adoption form upon successful adoption.
+     *
+     * @param adopter The adopter with preferences.
+     * @return The adopted animal, or null if none found.
+     */
     public Animal adoptByPreference(Adopter adopter) {
         PreferenceBasedAdoptionProcessor processor = new PreferenceBasedAdoptionProcessor(adopter, registry, preferenceStrategy);
 
@@ -74,7 +110,9 @@ public class AdoptionService {
         }
     }
 
-    // Strategy implementations (could be static classes or moved outside)
+    /**
+     * Simple FIFO strategy implementation for selecting the next animal in the queue.
+     */
     private static class FifoMatchingStrategy implements AnimalMatchingStrategy {
         @Override
         public Animal selectAnimal(Adopter adopter, AnimalRegistry registry, ShelterQueue queue) {
@@ -82,8 +120,12 @@ public class AdoptionService {
         }
     }
 
+    /**
+     * Gets the animal registry.
+     *
+     * @return The animal registry instance.
+     */
     public AnimalRegistry getRegistry() {
         return registry;
     }
-
 }
