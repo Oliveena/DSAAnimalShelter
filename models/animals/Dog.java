@@ -20,12 +20,7 @@ public class Dog extends Animal {
     @Override
     public String getDetails() {
         return String.format("Dog [ID: %s, Name: %s, Age: %d, Breed: %s, Trained: %s]",
-                getId(), getName(), age, breed, isTrained ? "Yes" : "No");
-    }
-
-    @Override
-    public Species getSpecies() {
-        return Species.DOG;
+                getId(), getName(), getAge(), getBreed(), isTrained ? "Yes" : "No");
     }
 
     @Override

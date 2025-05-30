@@ -16,4 +16,13 @@ public enum Species {
     public String toString() {
         return displayName;
     }
+
+    public static Species fromString(String text) {
+        for (Species s : Species.values()) {
+            if (s.displayName.equalsIgnoreCase(text)) {
+                return s;
+            }
+        }
+        throw new IllegalArgumentException("No species with name " + text);
+    }
 }

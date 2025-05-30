@@ -7,22 +7,40 @@ import services.AnimalService;
 import services.ShelterService;
 
 import java.util.*;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The {@code AnimalController} manages all animal-related interactions
+ * within the shelter system, including adding, listing, searching, sorting,
+ * and removing animals.
+ *
+ * <p>It leverages {@link AnimalService}, {@link MedicalRecordController},
+ * and {@link ShelterService} to perform these tasks, and uses a background
+ * thread pool to handle asynchronous tasks like logging.</p>
+ *
+ * <p>This controller is designed for a CLI-based interface and relies
+ * heavily on user input.</p>
+ */
 public class AnimalController {
-    private AnimalService animalService;
-    private MedicalRecordController medicalController;
-    private Scanner scanner;
-    private AnimalRegistry registry ;
-    private ShelterQueue queue;
-    private ShelterService shelterService;
+    private final AnimalService animalService;
+    private final MedicalRecordController medicalController;
+    private final Scanner scanner;
+    private final AnimalRegistry registry;
+    private final ShelterQueue queue;
+    private final ShelterService shelterService;
+    private final ExecutorService executor = Executors.newFixedThreadPool(2); // basic threading for background tasks
 
-    // could also be injected as a Singleton pattern design, but we're short on time
-    private final ExecutorService executor = Executors.newFixedThreadPool(2); // arbitrary 2 threads
-
-
+    /**
+     * Constructs a new {@code AnimalController} with the provided dependencies.
+     *
+     * @param animalService     Service to manage animal storage and limits.
+     * @param medicalController Controller for managing medical records.
+     * @param scanner           Scanner for user input.
+     * @param registry          Animal registry for searching and removal.
+     * @param queue             Shelter queue for FIFO adoption.
+     * @param shelterService    Core service to manage shelter state.
+     */
     public AnimalController(AnimalService animalService,
                             MedicalRecordController medicalController,
                             Scanner scanner,
@@ -37,6 +55,10 @@ public class AnimalController {
         this.shelterService = shelterService;
     }
 
+    /**
+     * Prompts the user for animal information and adds a new animal to the shelter.
+     * Includes medical record creation and queue placement.
+     */
     public void addAnimal() {
         if (animalService.isAtCapacity()) {
             System.out.println("Shelter is at full capacity.");
@@ -69,7 +91,6 @@ public class AnimalController {
         System.out.println(animal.getSpecies() + " added. Total: " +
                 animalService.getAnimalCount() + "/" + animalService.getMaxCapacity());
 
-        // Threading to simulate async logging/saving
         executor.submit(() -> {
             System.out.println("[Background Thread] Logging new animal: " + animal.getName());
             try {
@@ -80,6 +101,9 @@ public class AnimalController {
         });
     }
 
+    /**
+     * Lists all animals currently in the shelter, along with their medical records.
+     */
     public void listAnimals() {
         System.out.println("\n--- All Animals in Shelter ---");
         List<Animal> animals = animalService.getAllAnimals();
@@ -98,7 +122,9 @@ public class AnimalController {
                 .forEach(System.out::println);
     }
 
-
+    /**
+     * Prompts the user to choose a sort method and displays sorted animals.
+     */
     public void sortAnimals() {
         System.out.println("\n--- Sort Animals ---");
         System.out.println("1. By Name");
@@ -126,6 +152,9 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Finds and displays animal details by unique ID.
+     */
     public void findAnimalById() {
         System.out.println("\n--- Find Animal by ID ---");
         String id = prompt("Enter the animal ID: ");
@@ -135,6 +164,9 @@ public class AnimalController {
                 : "No animal found with ID: " + id);
     }
 
+    /**
+     * Searches animals by name (partial match).
+     */
     public void findAnimalByName() {
         System.out.println("\n--- Search Animal ---");
         String name = prompt("Enter part of the animal name: ");
@@ -150,6 +182,9 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Filters and displays animals based on species.
+     */
     public void findAnimalsBySpecies() {
         System.out.println("\n--- Find Animals by Species ---");
         String species = prompt("Enter species (e.g., Dog, Cat, Bird): ");
@@ -165,6 +200,9 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Removes an animal from the registry by its ID.
+     */
     public void removeAnimal() {
         System.out.println("\n--- Remove Animal ---");
 
@@ -180,13 +218,19 @@ public class AnimalController {
                 : "No animal found with ID: " + id);
     }
 
-    // === PROMPT HELPERS ===
+    // === INPUT HELPERS ===
 
+    /**
+     * Prompts the user with a custom message and returns their input.
+     */
     private String prompt(String msg) {
         System.out.print(msg);
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Prompts for a boolean value.
+     */
     private boolean promptBoolean(String message) {
         while (true) {
             String input = prompt(message);
@@ -197,6 +241,9 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Prompts the user for an integer within a range.
+     */
     private int promptInt(String message, int min, int max) {
         while (true) {
             try {
@@ -207,21 +254,29 @@ public class AnimalController {
         }
     }
 
+    /**
+     * Prompts the user for an enum-like choice.
+     *
+     * @param message  The prompt message.
+     * @param allowed  Allowed values (case-insensitive).
+     * @return A validated input value from the allowed list.
+     */
     public String promptEnum(String message, List<String> allowed) {
         while (true) {
             String input = prompt(message);
             for (String option : allowed) {
                 if (option.equalsIgnoreCase(input)) {
-                    return option;  // return the allowed option with original casing
+                    return option;  // return original casing
                 }
             }
             System.out.println("Invalid input. Allowed: " + allowed);
         }
     }
 
-    // shutting down the thread
+    /**
+     * Gracefully shuts down the background executor service.
+     */
     public void shutdown() {
         executor.shutdown();
     }
-
 }

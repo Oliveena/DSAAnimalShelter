@@ -8,17 +8,33 @@ import services.MedicalRecordService;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Controller class for veterinary operations, including viewing and updating animal medical records.
+ * Primarily interacts with {@link AnimalRegistry} and {@link MedicalRecordService}.
+ */
 public class VetController {
+
     private final AnimalRegistry registry;
     private final MedicalRecordService medicalService;
     private final Scanner scanner;
 
+    /**
+     * Constructs a new VetController.
+     *
+     * @param registry        The animal registry containing all shelter animals.
+     * @param medicalService  Service used for collecting and displaying medical records.
+     * @param scanner         Scanner for user input.
+     */
     public VetController(AnimalRegistry registry, MedicalRecordService medicalService, Scanner scanner) {
         this.registry = registry;
         this.medicalService = medicalService;
         this.scanner = scanner;
     }
 
+    /**
+     * Updates the medical record of a specific animal selected by ID.
+     * Prompts the user for new medical information via the console.
+     */
     public void updateMedicalRecord() {
         Animal animal = findAnimalById();
         if (animal == null) return;
@@ -28,6 +44,9 @@ public class VetController {
         System.out.println("Medical record updated.");
     }
 
+    /**
+     * Displays the medical record of a specific animal selected by ID.
+     */
     public void viewMedicalRecord() {
         Animal animal = findAnimalById();
         if (animal == null) return;
@@ -35,7 +54,11 @@ public class VetController {
         medicalService.displayMedicalRecord(animal);
     }
 
-    // Helper method to reduce duplication
+    /**
+     * Helper method to prompt the user for an animal ID and return the corresponding animal.
+     *
+     * @return The {@link Animal} with the given ID, or {@code null} if not found.
+     */
     private Animal findAnimalById() {
         System.out.print("Enter animal ID: ");
         String id = scanner.nextLine();
@@ -46,9 +69,12 @@ public class VetController {
         return animal;
     }
 
-    // TODO: implement bulk medical record update for a batch of animals (e.g. vaccination clinic for ALL dogs, flea treatment for ALL cats, etc.)
-
-    // Bulk update medical records for a list of animal IDs, mostly public health related, realistic user story
+    /**
+     * Performs a bulk update of medical records for a list of animals, typically used
+     * for public health tasks such as vaccinations or treatments.
+     *
+     * @param animalIds A list of animal IDs to update.
+     */
     public void updateMedicalRecordsBulk(List<String> animalIds) {
         animalIds.stream()
                 .map(registry::findById)
@@ -61,7 +87,11 @@ public class VetController {
                 });
     }
 
-    // Bulk view medical records for a list of animal IDs
+    /**
+     * Displays the medical records for a batch of animals by their IDs.
+     *
+     * @param animalIds A list of animal IDs whose records should be shown.
+     */
     public void viewMedicalRecordsBulk(List<String> animalIds) {
         animalIds.stream()
                 .map(registry::findById)

@@ -19,6 +19,7 @@ public class Cat extends Animal implements Adoptable {
      *
      * @param name the name of the cat
      * @param age the age of the cat
+     * @param breed the breed of the cat
      * @param furLength the length of the cat's fur (e.g., "Short", "Long")
      * @param isIndoor whether the cat is an indoor cat
      */
@@ -30,22 +31,15 @@ public class Cat extends Animal implements Adoptable {
 
     /**
      * Returns detailed information about the cat, including its fur length and indoor status.
-     * <p>
-     * This method overrides the {@link Animal#getDetails()} method to provide more specific details
-     * about the cat, such as its fur length and whether it is indoor or not.
      *
      * @return a string representing the cat's details
      */
     @Override
     public String getDetails() {
         return String.format("Cat [ID: %s, Name: %s, Age: %d, Fur Length: %s, Indoor: %s]",
-                id, name, age, furLength, isIndoor ? "Yes" : "No");
+                getId(), getName(), getAge(), furLength, isIndoor ? "Yes" : "No");
     }
 
-    @Override
-    public Species getSpecies() {
-        return Species.CAT;
-    }
     @Override
     public String getBreed() {
         return this.breed;
@@ -53,12 +47,12 @@ public class Cat extends Animal implements Adoptable {
 
     @Override
     public void adopt() {
-
+        // TODO: implement adoption logic
+        System.out.println(getName() + " the cat has been adopted.");
     }
 
     @Override
     public void returnToShelter() {
-        System.out.println(name + " the cat has been returned to the shelter.");
+        System.out.println(getName() + " the cat has been returned to the shelter.");
     }
-
 }

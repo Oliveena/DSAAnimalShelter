@@ -8,7 +8,7 @@ import patterns.behavioral.observer.VolunteerObserver;
  * Volunteers receive updates via the Observer pattern (see {@link VolunteerObserver})
  * and are notified when relevant shelter events occur (e.g., animal intake, tasks, emergencies).
  */
-public class Volunteer implements VolunteerObserver {
+public class Volunteer extends Employee implements VolunteerObserver {
     private String name;
 
     /**

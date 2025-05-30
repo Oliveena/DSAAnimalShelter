@@ -24,16 +24,16 @@ public class Lizard extends Animal {
     @Override
     public String getDetails() {
         return String.format("Lizard [ID: %s, Name: %s, Age: %d, Breed: %s, Venomous: %s]",
-                getId(), getName(), age, breed, isVenomous ? "Yes" : "No");
+                getId(), getName(), getAge(), getBreed(), isVenomous ? "Yes" : "No");
     }
 
     @Override
-    public Species getSpecies() {
-        return Species.LIZARD;
-    }
-    @Override
     public String getBreed() {
         return breed;
+    }
+
+    public boolean isVenomous() {
+        return isVenomous;
     }
 
     @Override

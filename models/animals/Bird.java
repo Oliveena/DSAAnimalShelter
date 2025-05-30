@@ -1,6 +1,5 @@
 package models.animals;
 
-import models.Adoptable;
 import models.MedicalRecord;
 
 /**
@@ -9,7 +8,8 @@ import models.MedicalRecord;
  * This class extends {@link Animal} and provides additional properties specific to birds,
  * such as breed and whether the bird can fly.
  */
-public class Bird extends Animal implements Adoptable {
+public class Bird extends Animal {
+
     private boolean canFly;
 
     /**
@@ -17,8 +17,8 @@ public class Bird extends Animal implements Adoptable {
      * <p>
      * The animal's ID is automatically generated via the {@link Animal} constructor.
      *
-     * @param name the name of the bird
-     * @param age the age of the bird
+     * @param name  the name of the bird
+     * @param age   the age of the bird
      * @param breed the breed of the bird
      * @param canFly whether the bird can fly
      */
@@ -28,10 +28,21 @@ public class Bird extends Animal implements Adoptable {
     }
 
     /**
+     * Constructs a new bird with a medical record.
+     *
+     * @param name          the name of the bird
+     * @param age           the age of the bird
+     * @param breed         the breed of the bird
+     * @param canFly        whether the bird can fly
+     * @param medicalRecord the medical record of the bird
+     */
+    public Bird(String name, int age, String breed, boolean canFly, MedicalRecord medicalRecord) {
+        this(name, age, breed, canFly);
+        this.medicalRecord = medicalRecord;
+    }
+
+    /**
      * Returns detailed information about the bird, including breed and flying capability.
-     * <p>
-     * This method overrides the {@link Animal#getDetails()} method to provide more specific details
-     * about the bird, including breed and whether it can fly.
      *
      * @return a string representing the bird's details
      */
@@ -45,33 +56,17 @@ public class Bird extends Animal implements Adoptable {
     }
 
     @Override
-    public Species getSpecies() {
-        return Species.BIRD;
-    }
-
-    @Override
     public String getBreed() {
         return this.breed;
     }
 
     @Override
     public void adopt() {
-
+        System.out.println(getName() + " has been adopted.");
     }
 
     @Override
     public void returnToShelter() {
-        System.out.println(name + " the bird has been returned to the shelter.");
-    }
-
-
-    /**
-     * Returns a string representation of the bird, including its breed and flying capability.
-     *
-     * @return a string representation of the bird
-     */
-    public Bird(String name, int age, String breed, boolean canFly, MedicalRecord medicalRecord) {
-        super(name, age, Species.BIRD, breed);
-        this.canFly = canFly;
+        System.out.println(getName() + " the bird has been returned to the shelter.");
     }
 }

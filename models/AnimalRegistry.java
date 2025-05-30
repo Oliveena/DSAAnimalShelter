@@ -9,15 +9,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The {@code AnimalRegistry} class maintains a registry of all animals in the shelter.
+ * The {@code AnimalRegistry} class maintains a thread-safe registry of all animals in the shelter.
  * <p>
  * It supports basic operations such as adding, removing, retrieving, and searching animals.
- * Capacity limits are enforced to ensure the shelter does not exceed its predefined maximum.
+ * The registry enforces a maximum capacity to ensure the shelter does not exceed its limit.
+ * </p>
+ * <p>
+ * Animals are stored in a synchronized list to support concurrent access.
+ * </p>
+ *
+ * @see models.animals.Animal
  */
 public class AnimalRegistry {
-// use of Collections to make thread-safe
+    // Thread-safe list to hold animals
     private final List<Animal> animalList = Collections.synchronizedList(new ArrayList<>());
-    private  int maxCapacity;
+    private int maxCapacity;
 
     /**
      * Constructs a new {@code AnimalRegistry} with a default maximum capacity of 20.
@@ -27,10 +33,10 @@ public class AnimalRegistry {
     }
 
     /**
-     * Constructs a new {@code AnimalRegistry} with a specified capacity.
+     * Constructs a new {@code AnimalRegistry} with the specified maximum capacity.
      *
      * @param maxCapacity the maximum number of animals allowed in the registry
-     * @throws IllegalArgumentException if the specified capacity is not positive
+     * @throws IllegalArgumentException if {@code maxCapacity} is less than or equal to zero
      */
     public AnimalRegistry(int maxCapacity) {
         if (maxCapacity <= 0) {
@@ -39,6 +45,12 @@ public class AnimalRegistry {
         this.maxCapacity = maxCapacity;
     }
 
+    /**
+     * Sets the maximum capacity of the shelter registry.
+     *
+     * @param capacity the new maximum capacity
+     * @throws IllegalArgumentException if {@code capacity} is less than or equal to zero
+     */
     public void setMaxCapacity(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than zero.");
@@ -46,13 +58,11 @@ public class AnimalRegistry {
         this.maxCapacity = capacity;
     }
 
-
-
     /**
-     * Adds a new animal to the registry.
+     * Adds a new animal to the registry if capacity allows.
      *
      * @param animal the animal to add
-     * @throws IllegalStateException if the registry is at full capacity
+     * @throws IllegalStateException if the registry is already at full capacity
      */
     public synchronized void addAnimal(Animal animal) {
         if (animal == null) {
@@ -68,10 +78,10 @@ public class AnimalRegistry {
     }
 
     /**
-     * Removes an animal by its unique ID.
+     * Removes an animal from the registry by its unique ID.
      *
-     * @param id the ID of the animal to remove
-     * @return true if the animal was found and removed; false otherwise
+     * @param id the unique identifier of the animal to remove
+     * @return {@code true} if the animal was found and removed; {@code false} otherwise
      */
     public boolean removeAnimalById(String id) {
         if (id == null || id.isEmpty()) return false;
@@ -79,10 +89,10 @@ public class AnimalRegistry {
     }
 
     /**
-     * Searches animals by name (case-insensitive, partial match).
+     * Searches for animals by partial or full name (case-insensitive).
      *
-     * @param name the name or partial name to search for
-     * @return a list of animals matching the name
+     * @param name the name or part of the name to search for
+     * @return a list of animals whose names contain the search string
      */
     public List<Animal> searchByName(String name) {
         if (name == null || name.isEmpty()) return new ArrayList<>();
@@ -93,9 +103,9 @@ public class AnimalRegistry {
     }
 
     /**
-     * Returns all animals currently registered in the shelter.
+     * Returns a list of all animals currently registered in the shelter.
      *
-     * @return a list of all registered animals
+     * @return list of all registered animals
      */
     public List<Animal> getAllAnimals() {
         return animalList;
@@ -103,28 +113,26 @@ public class AnimalRegistry {
 
     /**
      * Finds an animal by its exact ID using binary search.
-     * The animal list is first sorted by ID before performing the search.
+     * <p>
+     * The list is sorted by ID before performing the search.
+     * </p>
      *
-     * @param id the ID to search for
-     * @return the animal if found; null otherwise
+     * @param id the unique ID of the animal to find
+     * @return the {@code Animal} if found, or {@code null} if no animal matches the ID
      */
     public Animal findById(String id) {
-        // if no animals in a shelter
         if (id == null || id.isEmpty()) return null;
 
-        // sorting the animal list with stream before binary search
         List<Animal> sorted = animalList.stream()
                 .sorted(Comparator.comparing(Animal::getId))
                 .collect(Collectors.toList());
 
-        // attribute an index to each sorted element
         int index = binarySearchById(sorted, id);
-        // if no animals, nothing to sort, no indexes
         return (index >= 0) ? sorted.get(index) : null;
     }
 
     /**
-     * Performs a binary search to find an animal by ID in a sorted list.
+     * Performs a binary search on a sorted list of animals by their ID.
      *
      * @param sortedList the sorted list of animals
      * @param id         the ID to search for
@@ -135,7 +143,6 @@ public class AnimalRegistry {
         int high = sortedList.size() - 1;
 
         while (low <= high) {
-            // start with middle
             int middle = (low + high) >>> 1;
             Animal midAnimal = sortedList.get(middle);
             int cmp = midAnimal.getId().compareTo(id);
@@ -148,43 +155,43 @@ public class AnimalRegistry {
     }
 
     /**
-     * Checks whether the registry is empty.
+     * Checks if the registry currently has no animals.
      *
-     * @return true if the registry has no animals; false otherwise
+     * @return {@code true} if no animals are registered, {@code false} otherwise
      */
     public boolean isEmpty() {
         return animalList.isEmpty();
     }
 
     /**
-     * Returns the maximum capacity of the shelter.
+     * Returns the maximum number of animals allowed in the registry.
      *
-     * @return the maximum number of animals that can be registered
+     * @return the maximum capacity
      */
     public int getMaxCapacity() {
         return maxCapacity;
     }
 
     /**
-     * Checks if the registry has reached its capacity limit.
+     * Checks whether the registry has reached or exceeded its maximum capacity.
      *
-     * @return true if the number of animals equals or exceeds capacity; false otherwise
+     * @return {@code true} if the registry is at or above capacity, {@code false} otherwise
      */
     public boolean isAtCapacity() {
         return animalList.size() >= maxCapacity;
     }
 
     /**
-     * Returns the current number of animals in the registry.
+     * Returns the current count of animals in the registry.
      *
-     * @return the number of animals currently registered
+     * @return the number of animals registered
      */
     public int getAnimalCount() {
         return animalList.size();
     }
 
     /**
-     * Returns a list of animals filtered by species.
+     * Returns a list of animals filtered by a given species (case-insensitive).
      *
      * @param species the species to filter by
      * @return a list of animals matching the specified species
